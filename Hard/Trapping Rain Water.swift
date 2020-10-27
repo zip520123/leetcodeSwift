@@ -40,3 +40,6 @@ class Solution {
         return res
     }
 }
+let input = [0,1,0,2,1,0,1,3,2,1,2,1]
+let output = 6
+print(Solution().trap(input) == output)
