@@ -30,31 +30,31 @@ The substring with start index = 1 is "ba", which is an anagram of "ab".
 The substring with start index = 2 is "ab", which is an anagram of "ab".*/
 
 func findAnagrams(_ s: String, _ p: String) -> [Int] {
-    var res = [Int]()
-    var dict = [String:Int]()
+    var dict = [Character: Int]()
     for c in p {
-        let s = String(c)
-        dict[s] = dict[s] == nil ? 1 : dict[s]! + 1
+        dict[c, default:0] += 1
     }
-    var count = p.count
+    var pcount = p.count
+    var scount = s.count //each ".count" costs O(n), store the value for loop checking
     var left = 0, right = 0
+    var res = [Int]()
     let arrS = Array(s)
-    while(right<s.count){
-        let w = String(arrS[right])
-        if(dict[w] == nil) {
-            dict[w] = 0
+    while(right<scount) {
+        let w = arrS[right]
+        dict[w, default:0] -= 1
+        if dict[w]! >= 0 {
+            pcount -= 1
         }
-        if(dict[w]! > 0){
-            count-=1
+        while(dict[w]! < 0) {
+            dict[arrS[left]]! += 1
+            if dict[arrS[left]]! > 0 {
+                pcount += 1
+            }
+            left += 1
         }
-        dict[w]!-=1
-        while(dict[w]!<0){
-            let leftW = String(arrS[left])
-            dict[leftW]!+=1
-            if(dict[leftW]!>0){count+=1}
-            left+=1
+        if pcount == 0 {
+            res.append(left)
         }
-        if(count==0){res.append(left)}
         right+=1
     }
     
