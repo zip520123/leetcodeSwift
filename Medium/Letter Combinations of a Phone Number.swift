@@ -85,4 +85,71 @@ class Solution {
     }
 }
 
+func letterCombinations(_ digits: String) -> [String] {
+    if digits.count == 0 { return [] }
+    var res = [String]()
+    
+    let dict: [Character : String] = 
+            ["2" : "abc",
+            "3" : "def",
+            "4" : "ghi",
+            "5" : "jkl",
+            "6" : "mno",
+            "7" : "pqrs",
+            "8" : "tuv",
+            "9" : "wxyz"]
+    
+    let dcount = digits.count
+    let aDigits = Array(digits)
+
+    func dfs(_ index: Int,_ list: [Character]) {
+        if index == dcount {
+            res.append(list.map{String($0)}.joined())
+            return
+        }
+        var list = list
+        if let word = dict[aDigits[index]] {
+            for c in word {
+                list.append(c)
+                dfs(index+1,list)
+                list.removeLast()
+            }
+        }
+    }
+
+    dfs(0,[])
+    return res
+}
+func letterCombinations(_ digits: String) -> [String] {
+    if digits.count == 0 { return [] }
+    var res = [String]()
+    
+    let dict: [Character : String] = 
+        ["2" : "abc",
+            "3" : "def",
+            "4" : "ghi",
+            "5" : "jkl",
+            "6" : "mno",
+            "7" : "pqrs",
+            "8" : "tuv",
+            "9" : "wxyz"]
+    
+    let dcount = digits.count
+    let aDigits = Array(digits)
+
+    func dfs(_ index: Int,_ curr: String) {
+        if index == dcount {
+            res.append(curr)
+            return
+        }
+        if let word = dict[aDigits[index]] {
+            for c in word {
+                dfs(index+1,curr+String(c))
+            }
+        }
+    }
+    dfs(0,"")
+
+    return res
+}
 print(Solution().letterCombinations("22"))
