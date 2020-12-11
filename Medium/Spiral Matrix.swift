@@ -53,3 +53,43 @@ func spiralOrder(_ matrix: [[Int]]) -> [Int] {
     
     return res
 }
+//time O(n) space O(1)
+enum Direction {
+        case top, left, right, bottom
+    }
+func spiralOrder(_ matrix: [[Int]]) -> [Int] {
+    var res = [Int]()
+    let row = matrix.count
+    let col = matrix[0].count
+    var left = 0, right = col - 1, top = 0, bottom = row - 1
+    var d = Direction.right
+    while(left <= right && top <= bottom) {
+        switch d {
+            case .right:
+                for i in left...right {
+                    res.append(matrix[top][i])
+                }
+                top += 1
+                d = .bottom
+            case .bottom:
+                for i in top...bottom {
+                    res.append(matrix[i][right])
+                }
+                right -= 1
+                d = .left
+            case .left:
+                for i in (left...right).reversed() {
+                    res.append(matrix[bottom][i])
+                }
+                bottom -= 1
+                d = .top
+            case .top:
+                for i in (top...bottom).reversed() {
+                    res.append(matrix[i][left])
+                }
+                left += 1
+                d = .right
+        }
+    }
+    return res
+}
