@@ -33,3 +33,20 @@ func maxProfit(_ prices: [Int]) -> Int {
     
     return res
 }
+
+func maxProfit(_ prices: [Int]) -> Int {
+    let pcount = prices.count
+    if pcount <= 1 {return 0}
+    var min = prices[0]
+    var res = 0
+    for i in 1..<pcount {
+        let n = prices[i]
+        if n < min {
+            min = n
+        }
+        if n - min > res {
+            res = n - min
+        }
+    }
+    return res
+}
