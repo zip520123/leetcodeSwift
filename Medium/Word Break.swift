@@ -29,37 +29,35 @@ func wordBreak(_ s: String, _ wordDict: [String]) -> Bool {
     }
     return dfs(s)
 }
-//dp time O(n) space O(2n)
+//dp time O(n) space O(n)
 func wordBreak(_ s: String, _ wordDict: [String]) -> Bool {
-    let set = Set(wordDict)
-    var dp = [String: Bool]()
+    var dict = [String:Bool]()
     func dfs(_ s: String) -> Bool {
-        if let res = dp[s] {
+        if let res = dict[s] {
             return res
         }
-        let arrS = Array(s)
-        let scount = arrS.count
+        let scount = s.count
         if scount == 0 {
             return true
         }
+        let arrS = Array(s)
+        
         var res = false
-        for word in set {
-            var wordIndex = 0
-            
-            var wcount = word.count
-            var arrW = Array(word)
-            
-            while wordIndex < wcount && wordIndex < scount {
-                if arrW[wordIndex] != arrS[wordIndex] {
+        for word in wordDict {
+            let arrW = Array(word)
+            let wcount = arrW.count
+            var i = 0
+            while (i < wcount && i < scount) {
+                if arrW[i] != arrS[i] {
                     break
                 }
-                wordIndex += 1
+                i += 1
             }
-            if wordIndex == wcount {
-                res = res || dfs(String(arrS[wcount..<scount])) 
+            if i == wcount {
+                res = res || dfs(String(arrS[wcount..<scount]))
             }
         }
-        dp[s] = res
+        dict[s] = res
         return res
     }
     return dfs(s)
