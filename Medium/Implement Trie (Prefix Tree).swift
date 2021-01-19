@@ -1,7 +1,7 @@
 /*Implement Trie (Prefix Tree)*/
 
 class Trie {
-
+    //struct is not work for this case, we need reference
     class Node {
         var dict: Dictionary<Character, Node> = [:]
         var isEnd: Bool = false
