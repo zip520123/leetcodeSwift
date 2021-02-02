@@ -20,7 +20,7 @@ class MedianFinder {
     }
     
     func findMedian() -> Double {
-        //O (log n)
+        //O (1)
         if arr.endIndex % 2 == 1 {
             return Double(arr[arr.endIndex / 2])
         } else {
