@@ -68,3 +68,19 @@ func coinChange(_ coins: [Int], _ amount: Int) -> Int {
     
     return dfs(amount)
 }
+
+//bottom up
+func coinChange(_ coins: [Int], _ amount: Int) -> Int {
+    var arr = Array<Int>(repeating: Int.max, count: amount+1)
+    arr[0] = 0
+    var i = 1
+    while i <= amount {
+        for coin in coins {
+            if coin <= i && arr[i - coin] != Int.max {
+                arr[i] = min(arr[i],arr[i - coin] + 1)
+            }
+        }
+        i+=1
+    }
+    return arr[amount] == Int.max ? -1 : arr[amount]
+}
