@@ -43,6 +43,30 @@ func merge(_ intervals: [[Int]]) -> [[Int]] {
     return res
 }
 
+func merge(_ intervals: [[Int]]) -> [[Int]] {
+    if intervals.endIndex <= 1 {
+        return intervals
+    }
+    let sortedIntervals = intervals.sorted(by: {
+        a,b in
+        return a[0] < b[0]
+    })
+    var res = [[Int]]()
+    var currInterval = sortedIntervals.first!
+    var index = 1
+    while index < intervals.endIndex {
+        let rightInterval = sortedIntervals[index]
+        if currInterval[1] < rightInterval[0] {
+            res.append(currInterval)
+            currInterval = rightInterval
+        } else {
+            currInterval[1] = max(currInterval[1], rightInterval[1])
+        }
+        index += 1
+    }
+    res.append(currInterval)
+    return res
+}
 
 let input = [[1,3],[2,6],[8,10],[15,18]]
 
