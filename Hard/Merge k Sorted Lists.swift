@@ -76,6 +76,27 @@ func mergeList(_ l1:ListNode?, _ l2:ListNode?) -> ListNode? {
     return dummy!.next
 }
 
+func mergeKLists(_ lists: [ListNode?]) -> ListNode? {
+    
+    var arr = [Int]()
+    for list in lists {
+        var curr: ListNode? = list 
+        while curr != nil {
+            arr.append(curr!.val)
+            curr = curr!.next
+        }
+    }
+    
+    let sortedArr = arr.sorted(by: <)
+    var head = ListNode()
+    var curr: ListNode? = head
+    for n in sortedArr {
+        curr!.next = ListNode(n)
+        curr = curr!.next
+    }
+    return head.next
+}
+
 let input = [[1,4,5],[1,3,4],[2,6]]
 var input2 = [ListNode?]()
 for list in input {
