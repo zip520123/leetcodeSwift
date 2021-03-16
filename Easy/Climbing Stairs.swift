@@ -20,3 +20,18 @@ func climbStairs(_ n: Int) -> Int {
     }
     return res
 }
+//time O(n) space O(n)
+func climbStairs(_ n: Int) -> Int {
+    var dict = Dictionary<Int,Int>()
+
+    func dfs(_ n: Int) -> Int {
+        if n == 1 {return 1}
+        if n == 2 {return 2}
+        if dict[n] == nil {
+            dict[n] = dfs(n - 1) + dfs(n - 2)
+        } 
+        return dict[n]!
+    } 
+
+    return dfs(n)
+}
