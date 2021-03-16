@@ -14,9 +14,8 @@ func canJump(_ nums: [Int]) -> Bool {
     }
     return dp[ncount - 1]
 }
-//time O(n) space O(n)
+//time O(n) space O(1)
 func canJump(_ nums: [Int]) -> Bool {
-    var dp = nums.map{_ in false}
     let ncount = nums.count
     var pos = ncount - 1
     for i in (0..<ncount).reversed() {
