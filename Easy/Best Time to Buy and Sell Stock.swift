@@ -50,3 +50,14 @@ func maxProfit(_ prices: [Int]) -> Int {
     }
     return res
 }
+
+//time O(n) space O(1)
+func maxProfit(_ prices: [Int]) -> Int {
+    var minP = Int.max
+    var res = 0
+    for p in prices {
+        minP = min(minP, p)
+        res = max(res, p - minP)
+    }
+    return res 
+}
