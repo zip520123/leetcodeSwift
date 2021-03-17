@@ -77,3 +77,43 @@ print(minWindow(input, input2))
     
 //     return res
 // }
+
+func minWindow(_ s: String, _ t: String) -> String {
+    
+    var dict = Dictionary<Character, Int>()
+    for char in t {
+        dict[char,default: 0] += 1
+    }
+    let sArr = Array(s)
+    var count = t.count
+    var left = 0, right = 0
+    
+    var length = Int.max
+    var start = 0
+    while right < sArr.endIndex {
+        let char = sArr[right]
+        dict[char,default: 0] -= 1
+        
+        if dict[char]! >= 0 {
+            count -= 1
+        }
+        while count == 0 {
+            let curr = right - left
+            if curr < length {
+                start = left
+                length = curr
+            }
+            
+            let leftChar = sArr[left]
+            dict[leftChar]! += 1
+            if dict[leftChar]! > 0 {
+                count += 1
+            }
+            left += 1
+        }
+        
+        right += 1
+    }
+    
+    return length == Int.max ? "" : sArr[start...start+length].map{String($0)}.joined()
+}
