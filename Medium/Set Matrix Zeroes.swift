@@ -25,3 +25,54 @@ func setZeroes(_ matrix: inout [[Int]]) {
         }
     }
 }
+//time O(n) space O(1)
+func setZeroes(_ matrix: inout [[Int]]) {
+    let row = matrix.endIndex
+    if row == 0 {return}
+    let col = matrix[0].endIndex
+    
+    var i = 0
+    while i < row  {
+        var j = 0
+        while j < col {
+            if matrix[i][j] == 0 {
+                matrix[i][j] = -Int.max
+            }
+            j+=1
+        }
+        i+=1
+    }
+    
+    i = 0
+    while i < row {
+        var j = 0
+        while j < col {
+            if matrix[i][j] == -Int.max {
+                for index in 0..<row {
+                    if matrix[index][j] != -Int.max {
+                        matrix[index][j] = 0    
+                    } 
+                }
+                for index in 0..<col {
+                    if matrix[i][index] != -Int.max {
+                        matrix[i][index] = 0    
+                    }
+                }
+            }
+            j+=1
+        }
+        i+=1
+    }
+    
+    i = 0
+    while i < row {
+        var j = 0
+        while j < col {
+            if matrix[i][j] == -Int.max {
+                matrix[i][j] = 0
+            }
+            j+=1
+        }
+        i+=1
+    }
+}
