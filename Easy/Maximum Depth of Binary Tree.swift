@@ -15,3 +15,14 @@ func maxDepth(_ root: TreeNode?) -> Int {
     dfs(root, 0)
     return res
 }
+
+func maxDepth(_ root: TreeNode?) -> Int {
+    
+    func dfs(_ node: TreeNode?, _ curr: Int) -> Int {
+        if node == nil {return curr}
+        let res = max(dfs(node!.left, curr+1),dfs(node!.right, curr+1))
+        return res
+    }
+    
+    return dfs(root, 0)
+}
