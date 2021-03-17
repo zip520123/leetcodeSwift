@@ -11,36 +11,29 @@ func isValidBST(_ root: TreeNode?) -> Bool {
 }
 //time O(n) space O(n) 
 func isValidBST(_ root: TreeNode?) -> Bool {
-    var stack = [TreeNode]()
-    var topStack = [Int]()
-    var bottomStack = [Int]()
-    if let node = root {
-        stack.append(node)
-        topStack.append(Int.max)
-        bottomStack.append(-Int.max)
-    } else {
-        return true
-    }
+    guard let node = root else {return true}
+    var nodeStack = [node]
+    var lowStack = [-Int.max]
+    var highStack = [Int.max]
     
-    while stack.isEmpty == false {
-        let node = stack.removeFirst()
-        let top = topStack.removeFirst()
-        let bottom = bottomStack.removeFirst()
-        if node.val >= top || node.val <= bottom {
+    while !nodeStack.isEmpty {
+        let node = nodeStack.removeFirst()
+        let low = lowStack.removeFirst()
+        let high = highStack.removeFirst()
+        
+        if node.val <= low || node.val >= high {
             return false
         }
         if let left = node.left {
-            stack.append(left)
-            topStack.append(node.val)
-            bottomStack.append(bottom)
+            nodeStack.append(left)
+            lowStack.append(low)
+            highStack.append(node.val)
         }
-        
         if let right = node.right {
-            stack.append(right)
-            topStack.append(top)
-            bottomStack.append(node.val)
+            nodeStack.append(right)
+            lowStack.append(node.val)
+            highStack.append(high)
         }
     }
-    
     return true
 }
