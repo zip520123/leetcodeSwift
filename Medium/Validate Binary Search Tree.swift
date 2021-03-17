@@ -1,19 +1,13 @@
 /*Validate Binary Search Tree*/
 //time O(n) space O(n)
 func isValidBST(_ root: TreeNode?) -> Bool {
-    func dfs(_ curr: TreeNode?, _ top: Int,_ bottom: Int) -> Bool{
-        if curr == nil {return true}
+    func dfs(_ node: TreeNode?, _ low: Int, _ high: Int) -> Bool {
+        guard let node = node else {return true}
+        if node.val <= low || node.val >= high {return false}
+        return dfs(node.left, low, node.val) && dfs(node.right, node.val, high)
         
-        if curr!.val >= top || curr!.val <= bottom {
-            return false
-        }
-        
-        let left = dfs(curr!.left, curr!.val, bottom)
-        let right = dfs(curr!.right, top, curr!.val)
-        return left && right
     }
-    
-    return dfs(root,Int.max, -Int.max)
+    return dfs(root, -Int.max, Int.max )
 }
 //time O(n) space O(n) 
 func isValidBST(_ root: TreeNode?) -> Bool {
