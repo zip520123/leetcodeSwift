@@ -21,3 +21,25 @@ func buildTree(_ preorder: [Int], _ inorder: [Int]) -> TreeNode? {
     
     return dfs(0, 0, pcount - 1)
 }
+
+func buildTree(_ preorder: [Int], _ inorder: [Int]) -> TreeNode? {
+    
+    func dfs(_ start: Int, _ end: Int, _ index: Int) -> TreeNode? {
+        if start > end || index >= preorder.endIndex {return nil}
+        let value = preorder[index]
+        let tree = TreeNode(value) 
+        var inIndex = 0
+        for i in start...end {
+            if inorder[i] == value {
+                inIndex = i
+                break
+            }
+        }
+        
+        tree.left = dfs(start, inIndex - 1, index + 1)
+        tree.right = dfs(inIndex + 1, end,  index + 1 + inIndex - start)
+        return tree
+    }
+    
+    return dfs(0, preorder.endIndex - 1, 0)
+}
