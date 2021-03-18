@@ -62,3 +62,26 @@ func wordBreak(_ s: String, _ wordDict: [String]) -> Bool {
     }
     return dfs(s)
 }
+
+func wordBreak(_ s: String, _ wordDict: [String]) -> Bool {
+    var dict = Dictionary<String, Bool>()
+    
+    func dfs(_ s:String) -> Bool {
+        if s.count == 0 {return true}
+        if dict[s] != nil {
+            return dict[s]!
+        }
+        var res = false
+        for word in wordDict {
+            if s.hasPrefix(word) {
+                let sArr = Array(s)
+                let rest = Array(sArr[word.count..<sArr.endIndex]).map{String($0)}.joined()
+                res = res || dfs(rest)
+            }
+        }
+        dict[s] = res
+        return res
+    }
+    
+    return dfs(s)
+}
