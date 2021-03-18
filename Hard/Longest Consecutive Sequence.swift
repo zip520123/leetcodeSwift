@@ -1,33 +1,22 @@
 /*Longest Consecutive Sequence*/
 //sorted time O(n log n) space O(n)
 func longestConsecutive(_ nums: [Int]) -> Int {
-    var ncount = nums.count
-    if ncount == 0 {
-        return 0
-    }
-    if ncount == 1 {
-        return 1
-    }
-    let nums = Array(Set(nums)).sorted { a, b in
-        return a < b
-    }
-    ncount = nums.count
+    let arr = Array(Set(nums)).sorted()
+    if arr.endIndex == 0 {return 0}
+    if arr.endIndex == 1 {return 1}
+    var localMax = 1
     var res = 1
-    var local = 1
-    var p = nums[0]
-    for i in 1..<ncount {
-        let n = nums[i]
-        if n == p + 1 {
-            local += 1
-            if local > res {
-                res = local
-            }
+    var prev = arr[0]
+    for i in 1..<arr.endIndex {
+        let n = arr[i]
+        if n - 1 == prev {
+            localMax += 1
+            res = max(res, localMax)
         } else {
-            local = 1
+            localMax = 1
         }
-        p = n
+        prev = n
     }
-    
     return res
 }
 
