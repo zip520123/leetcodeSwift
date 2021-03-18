@@ -22,19 +22,11 @@ func reorderList(_ head: ListNode?) {
     
     var l1 = head
     var l2 = prev
-    var flip = true
-    while l1 != nil && l2 != nil {
-        if flip == true {
-            curr = l1!.next
-            l1!.next = l2
-            l1 = curr
-        } else {
-            curr = l2!.next
-            l2!.next = l1
-            l2 = curr
-        }
-        flip = !flip
+    while l2 != nil {
+        let temp = l1!.next
+        l1!.next = l2
+        l1 = l2
+        l2 = temp    
     }
-    
     
 }
