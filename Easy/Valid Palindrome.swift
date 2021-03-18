@@ -21,3 +21,20 @@ func isPalindrome(_ s: String) -> Bool {
     }
     return true
 }
+
+func isPalindrome(_ s: String) -> Bool {
+    let set = Set(Array("abcdefghijklmnopqrstuvwxyz0123456789"))
+    let sArr = Array(s.lowercased()).filter { c in
+        return set.contains(c)
+    }
+    var left = 0, right = sArr.endIndex - 1
+    while left < right {
+        if sArr[left] != sArr[right] {
+            return false
+        }
+        
+        left += 1
+        right -= 1
+    }
+    return true
+}
