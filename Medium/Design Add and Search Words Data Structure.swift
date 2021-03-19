@@ -57,7 +57,50 @@ class WordDictionary {
     }
 }
 
-
+    class Trie {
+        var dict = [Character: Trie]()
+        var isEnd = false
+    }   
+    
+    let head = Trie()
+    
+    func addWord(_ word: String) {
+        var curr = head
+        for char in word {
+            if curr.dict[char] == nil {
+                let newNode = Trie()
+                curr.dict[char] = newNode
+                curr = newNode
+            } else {
+                curr = curr.dict[char]!
+            }
+        }
+        curr.isEnd = true
+    }
+    
+    func search(_ node: Trie, _ word: String) -> Bool {
+        var curr = node 
+        for (i,char) in word.enumerated() {
+            if char == "." {
+                var res = false
+                let sArr = Array(word)
+                for (key, node) in curr.dict {
+                    res = res || search(node, String(sArr[i+1..<sArr.endIndex]))
+                    if res == true {return true}
+                }
+                return res
+            } else if curr.dict[char] != nil {
+                curr = curr.dict[char]!
+            } else {
+                return false
+            }
+        }
+        return curr.isEnd
+    }
+    
+    func search(_ word: String) -> Bool {
+        return search(head,word)
+    }
 
 
 /**
