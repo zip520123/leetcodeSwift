@@ -1,5 +1,5 @@
 /*Valid Anagram*/
-//time O(s + t), space O(s)
+//time O(2s + t), space O(s)
 func isAnagram(_ s: String, _ t: String) -> Bool {
     var dict = Dictionary<Character, Int>()
     let sArr = Array(s)
@@ -23,4 +23,17 @@ func isAnagram(_ s: String, _ t: String) -> Bool {
         }
     }
     return true
+}
+
+//time O(s+t) space O(s)
+func isAnagram(_ s: String, _ t: String) -> Bool {
+    var sdict = Dictionary<Character,Int>()
+    for char in s {
+        sdict[char,default:0]+=1
+    }
+    var tdict = Dictionary<Character,Int>()
+    for char in t {
+        tdict[char,default:0]+=1
+    }
+    return sdict == tdict
 }
