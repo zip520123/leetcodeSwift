@@ -13,3 +13,21 @@ func lowestCommonAncestor(_ root: TreeNode?, _ p: TreeNode?, _ q: TreeNode?) -> 
     return right
     
 }
+
+//time O(n) space O(1)
+func lowestCommonAncestor(_ root: TreeNode?, _ p: TreeNode?, _ q: TreeNode?) -> TreeNode? {
+    let pVal = p!.val
+    let qVal = q!.val
+    var curr = root
+    
+    while let node = curr {
+        if pVal > node.val && qVal > node.val {
+            curr = node.right
+        } else if pVal < node.val && qVal < node.val {
+            curr = node.left
+        } else {
+            return node
+        }
+    }
+    return nil
+}
