@@ -1,5 +1,5 @@
 /*Kth Smallest Element in a BST*/
-//time O(n) space O(log n, height of the tree)
+//time O(h + k), tree height,  space O(H, height of the tree)
 //iterative
 func kthSmallest(_ root: TreeNode?, _ k: Int) -> Int {
     var stack = [TreeNode]()
