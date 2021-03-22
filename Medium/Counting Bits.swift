@@ -23,3 +23,14 @@ func countBits(_ num: Int) -> [Int] {
     
     return res
 }
+//time O(n) space O(1)
+func countBits(_ num: Int) -> [Int] {
+    if num == 0 {return [0]}
+    var res = [0]
+    for n in 1...num {
+        var curr = n & 1
+        curr += res[n>>1]
+        res.append(curr)
+    }
+    return res
+}
