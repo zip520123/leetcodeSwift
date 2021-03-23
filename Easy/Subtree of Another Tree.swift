@@ -61,7 +61,7 @@ func isSubtree(_ s: TreeNode?, _ t: TreeNode?) -> Bool {
     
     return travers(s,t)
 }
-
+//O(s * t) O(s)
 func isSubtree(_ s: TreeNode?, _ t: TreeNode?) -> Bool {
     func dfs(_ s:TreeNode?) -> Bool {
         return s != nil && (isEqual(s,t) || dfs(s!.left) || dfs(s!.right))
