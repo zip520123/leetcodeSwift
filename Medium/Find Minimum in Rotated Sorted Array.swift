@@ -42,4 +42,17 @@ func findMin(_ nums: [Int]) -> Int {
     return nums[left]
 }
 
-let input = [4,5,6,7,0,1,2]
+//time O(log n)
+func findMin(_ nums: [Int]) -> Int {
+    
+    func dfs(_ l:Int, _ r: Int) -> Int {
+        if l+1 >= r {return min(nums[l],nums[r])} // elements < 2    
+        if nums[l] < nums[r] { //sorted 
+            return nums[l]
+        }
+        let mid = l + (r-l) >> 1
+        return min(dfs(l,mid),dfs(mid+1,r))
+    }
+    
+    return dfs(0,nums.endIndex - 1)
+}
