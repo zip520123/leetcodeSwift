@@ -69,7 +69,7 @@ func coinChange(_ coins: [Int], _ amount: Int) -> Int {
     return dfs(amount)
 }
 
-//bottom up
+//bottom up time O(coins * amount) space O(amount)
 func coinChange(_ coins: [Int], _ amount: Int) -> Int {
     var arr = Array<Int>(repeating: Int.max, count: amount+1)
     arr[0] = 0
