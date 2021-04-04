@@ -43,3 +43,23 @@ func buildTree(_ preorder: [Int], _ inorder: [Int]) -> TreeNode? {
     
     return dfs(0, preorder.endIndex - 1, 0)
 }
+
+    func buildTree(_ preorder: [Int], _ inorder: [Int]) -> TreeNode? {
+        var preIndex = 0
+        var dict = [Int:Int]()
+        for (i,n) in inorder.enumerated() {
+            dict[n] = i
+        }
+        
+        func dfs(_ start:Int, _ end: Int) -> TreeNode? {
+            if start > end {return nil}
+            let node = TreeNode(preorder[preIndex])
+            preIndex += 1
+            let inIndex = dict[node.val]!
+            node.left = dfs(start,inIndex - 1)
+            node.right = dfs(inIndex+1, end)
+            return node
+        }
+        
+        return dfs(0,inorder.endIndex - 1)
+    }
