@@ -29,3 +29,24 @@ class Solution {
     }
     
 }
+
+class Solution {
+    func allPossibleFBT(_ n: Int) -> [TreeNode?] {
+        if n % 2 == 0 {return []}
+        if n == 1 {return [TreeNode()]}
+        var res = [TreeNode?]()
+        for i in 1..<n {
+            let left = allPossibleFBT(i)
+            let right = allPossibleFBT(n-i-1)
+            for leftTree in left {
+                for rightTree in right {
+                    let root = TreeNode()
+                    root.left = leftTree
+                    root.right = rightTree
+                    res.append(root)
+                }
+            }
+        }
+        return res
+    }
+}

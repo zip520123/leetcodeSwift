@@ -1,25 +1,23 @@
 /*Combination Sum*/
 //time O(n!) space O(n)
-func combinationSum(_ candidates: [Int], _ target: Int) -> [[Int]] {
-    var res = [[Int]]()
-    let count = candidates.count
-    func dfs(_ curr: Int,_ list: [Int],_ index: Int) {
-        if curr == 0 { 
-            res.append(list)
-            return
-        }
-        var list = list
-        for i in index..<count {
-            let n = candidates[i]
-            let rest = curr - n
-            if rest >= 0 {
-                list.append(n)
-                dfs(rest, list, i)
-                list.removeLast()
+    func combinationSum(_ candidates: [Int], _ target: Int) -> [[Int]] {
+        var res = [[Int]]()
+        let nums = candidates
+        func dfs(_ curr:Int, _ path:[Int], _ index: Int) {
+            if curr < 0 {return}
+            if curr == 0 {
+                res.append(path)
+                return
             }
+            
+            for i in index..<nums.endIndex {
+                let n = nums[i]
+                dfs(curr - n, path+[n], i)
+            }
+            
         }
+        
+        dfs(target,[],0)
+        return res
     }
-    dfs(target, [], 0)
-    return res
-}
 

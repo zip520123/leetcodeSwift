@@ -13,27 +13,25 @@ Output:
   [3,1,2],
   [3,2,1]
 ]*/
-class Solution {
     func permute(_ nums: [Int]) -> [[Int]] {
-        var result = [[Int]]()
-        func dfs(_ arr: [Int], _ curr: [Int]) {
-            if (arr.count == 0) {
-                result.append(curr)
-                return
+        var res = [[Int]]()
+        
+        func dfs(_ restNums: [Int], _ path: [Int]) {
+            var restNums = restNums
+            if restNums.endIndex == 0 {
+                res.append(path)
+                return 
             }
-            var i = 0
-            var cArr = arr
-            var cCurr = curr
-            while(i<cArr.count) {
-                let n = cArr.remove(at: i)
-                cCurr.append(n)
-                dfs(cArr,cCurr)
-                cCurr.removeLast()
-                cArr.insert(n, at:i)
-                i+=1
+            
+            var i = 0 
+            while i < restNums.endIndex {
+                let n = restNums[i]
+                restNums.remove(at:i)
+                dfs(restNums, path+[n])
+                restNums.insert(n, at:i)
+                i += 1
             }
         }
         dfs(nums,[])
-        return result
+        return res
     }
-}

@@ -53,3 +53,26 @@ func deserialize(_ data: String) -> TreeNode? {
     
     return dfs()
 }
+
+class Codec {
+    func serialize(_ root: TreeNode?) -> String {
+        guard let node = root else {return "x"}
+        let left = serialize(node.left)
+        let right = serialize(node.right)
+        return String(node.val) + "," + left + "," + right + ","
+    }
+    
+    func deserialize(_ data: String) -> TreeNode? {
+        var arr = data.split(separator: ",")
+        func dfs() -> TreeNode? {
+            guard arr.first != nil else {return nil}
+            let s = arr.removeFirst()
+            if s == "x" {return nil}
+            let node = TreeNode(Int(s)!)
+            node.left = dfs()
+            node.right = dfs()
+            return node
+        }
+        return dfs()
+    }
+}

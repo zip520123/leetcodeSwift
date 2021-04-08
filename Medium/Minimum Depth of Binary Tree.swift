@@ -1,13 +1,11 @@
 //Minimum Depth of Binary Tree
 //O(n) O(h)
     func minDepth(_ root: TreeNode?) -> Int {
-        
-       guard let node = root else {return 0}
-        if node.left == nil && node.right == nil {return 1}
+        guard let node = root else {return 0}
         if node.left == nil || node.right == nil {
-            return max(minDepth(node.left), minDepth(node.right)) + 1    
+            return max(minDepth(node.left), minDepth(node.right)) + 1
         }
-        return min(minDepth(node.left), minDepth(node.right)) + 1    
+        return min(minDepth(node.left), minDepth(node.right)) + 1
     }
 
 
