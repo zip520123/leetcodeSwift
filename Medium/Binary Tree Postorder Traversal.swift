@@ -26,3 +26,18 @@
         }
         return res.reversed()
     }
+
+    func postorderTraversal(_ root: TreeNode?) -> [Int] {
+        guard let node = root else {return []}
+        var res = [Int]()
+        var queue = [node]
+        
+        while queue.isEmpty == false {
+            let node = queue.removeLast()
+            res.insert(node.val, at:0)
+            if node.left != nil {queue.append(node.left!)}
+            if node.right != nil {queue.append(node.right!)}
+        }
+        
+        return res
+    }

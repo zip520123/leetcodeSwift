@@ -28,6 +28,69 @@ func longestPalindrome(_ s: String) -> String {
     
     return res
 }
-// let input = "babad"
-let input = "ccc"
-print(longestPalindrome(input))
+
+    func longestPalindrome(_ s: String) -> String {
+        var sArr = Array(s)
+
+        func findCenter(_ index: Int) -> [Int] {
+            var left = index
+            var right = index
+            while right < sArr.endIndex && sArr[left] == sArr[right] {
+                right += 1
+            }
+            right -= 1
+            return [left, right]
+        }
+        
+        func expend(_ point:[Int]) -> [Int] {
+            var left = point[0]
+            var right = point[1]
+            while left >= 0 && right < sArr.endIndex && sArr[left] == sArr[right] {
+                left-=1
+                right+=1 
+            }
+            return [left + 1, right - 1]
+        }
+        
+        var index = 0
+        var count = 0
+        var res = ""
+        while index < sArr.endIndex {
+            let center = findCenter(index)
+            let edges = expend(center)
+            count = max(count, edges[1] - edges[0] + 1)
+            if edges[1] - edges[0] + 1 >= count {
+                res = (sArr[edges[0]...edges[1]]).map{String($0)}.joined()
+            }
+            index+=1
+        }
+        
+        return res
+    }
+
+    func longestPalindrome(_ s: String) -> String {
+        let sArr = Array(s)
+        var length = 0
+        var start = 0
+        for i in 0..<sArr.endIndex {
+            var l = i, r = i + 1
+            while r < sArr.endIndex && sArr[l] == sArr[r] {
+                r += 1    
+            }
+            r-=1
+            l-=1
+            r+=1
+            while l >= 0 && r < sArr.endIndex && sArr[l] == sArr[r] {
+                l-=1
+                r+=1
+            }
+            l+=1
+            r-=1
+
+            if r - l + 1 > length {
+                length = r - l + 1
+                start = l
+            }
+        }
+        return String(sArr[start..<start+length])
+    }
