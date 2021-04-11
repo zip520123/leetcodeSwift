@@ -31,3 +31,31 @@ func eraseOverlapIntervals(_ intervals: [[Int]]) -> Int {
     }
     return count
 }
+
+func eraseOverlapIntervals(_ intervals: [[Int]]) -> Int {
+        
+        let sorted = intervals.sorted {
+            a,b in
+            if a[0] != b[0]{
+                return a[0] < b[0]
+            } else {
+                return a[1] < b[1]
+            }}
+        var left = 0, right = 1
+        var count = 0
+        while right < sorted.endIndex {
+            if sorted[left][1] <= sorted[right][0] {
+                left = right
+                right += 1
+            } else {
+                count += 1
+                if sorted[left][1] < sorted[right][1] {
+                    right += 1
+                } else {
+                    left = right
+                    right += 1
+                }
+            }
+        }
+        return count
+    }

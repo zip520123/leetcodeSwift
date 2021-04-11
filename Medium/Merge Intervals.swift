@@ -1,29 +1,4 @@
 /*Merge Intervals*/
-//time O(n log n + n) space O(n)
-func overlappings(_ item1:[Int], _ item2:[Int]) -> Bool {
-    return item1[1] >= item2[0]
-}
-
-// func merge(_ intervals: [[Int]]) -> [[Int]] {
-//     var res = [[Int]]()
-//     var icount = intervals.count
-//     var list = intervals.sorted {$0[0]<$1[0]}
-//     while (list.isEmpty == false) {
-//         var item = list.removeFirst()
-//         var i = 0 
-//         while (i < list.count) {
-//             let item2 = list[i]
-//             if overlappings(item,item2) {
-//                 item[1] = max(item[1],item2[1])
-//                 list.remove(at: i)
-//             } else {
-//                 i+=1
-//             }
-//         }
-//         res.append(item)
-//     }
-//     return res
-// }
 
 func merge(_ intervals: [[Int]]) -> [[Int]] {
     var res = [[Int]]()
@@ -66,6 +41,30 @@ func merge(_ intervals: [[Int]]) -> [[Int]] {
     }
     res.append(currInterval)
     return res
+}
+
+func merge(_ intervals: [[Int]]) -> [[Int]] {
+    var sortedArr = intervals.sorted {
+        a,b in
+        if a[0] != b[0] {
+            return a[0] < b[0]
+        } else {
+            return a[1] < b[1]
+        }
+    }
+    
+    var l = 0, r = 1
+    while r < sortedArr.endIndex {
+        if sortedArr[l][1] >= sortedArr[r][0] {
+            sortedArr[l][1] = max(sortedArr[l][1],sortedArr[r][1])
+            sortedArr.remove(at: r)
+            
+        } else {
+            l = r
+            r += 1
+        }
+    }
+    return sortedArr
 }
 
 let input = [[1,3],[2,6],[8,10],[15,18]]

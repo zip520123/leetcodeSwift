@@ -80,9 +80,77 @@ class LRUCache {
     }
 }
 
-/**
- * Your LRUCache object will be instantiated and called as such:
- * let obj = LRUCache(capacity)
- * let ret_1: Int = obj.get(key)
- * obj.put(key, value)
- */
+class LRUCache {
+    class Node {
+        var prev: Node?
+        var next: Node?
+        var key: Int
+        var val: Int
+        init(_ key: Int, _ val: Int) {
+            self.key = key
+            self.val = val
+        }
+    }
+    var dict = [Int:Node]()
+    let capacity : Int
+    let head: Node
+    
+    
+    var size = 0
+    init(_ capacity: Int) {
+        self.capacity = capacity
+        let node = Node(-1,-1)
+        head = node
+        head.next = head
+        head.prev = head
+    }
+    
+    func remove(_ node: Node) {
+        let next = node.next
+        let prev = node.prev
+        prev?.next = next
+        next?.prev = prev
+        dict[node.key] = nil
+    }
+    
+    func add(_ node: Node) {
+        let currHead = head.next
+        head.next = node
+        node.prev = head
+        node.next = currHead
+        currHead?.prev = node
+        dict[node.key] = node
+    }
+    
+    func removeLast() {
+        remove(head.prev!)
+    }
+    
+    func get(_ key: Int) -> Int {
+        if dict[key] == nil {
+            return -1
+        } else {
+            let node = dict[key]!
+            remove(node)
+            add(node)
+            return node.val
+        }
+    }
+    
+    func put(_ key: Int, _ value: Int) {
+        if capacity == 0 {return}
+        if let node = dict[key] {
+            node.val = value
+            remove(node)
+            add(node)
+        } else {
+            if size == capacity {
+                removeLast()
+                size -= 1
+            }
+            let node = Node(key,value)
+            add(node)
+            size += 1
+        }
+    }
+}

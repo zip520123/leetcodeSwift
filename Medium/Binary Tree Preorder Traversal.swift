@@ -12,19 +12,6 @@
         return res
     }
 
-    func postorderTraversal(_ root: TreeNode?) -> [Int] {
-        if root == nil {return []}
-        var stack = [root!]
-        var res = [Int]()
-        while !stack.isEmpty {
-            let node = stack.removeLast()
-            res.insert(node.val,at:0)
-            if node.left != nil {stack.append(node.left!)}
-            if node.right != nil {stack.append(node.right!)}
-        }
-        
-        return res
-    }
 
     func preorderTraversal(_ root: TreeNode?) -> [Int] {
         guard let node = root else {return []}
