@@ -108,6 +108,30 @@ class Solution {
         return res
     }
 }
+
+    func trap(_ height: [Int]) -> Int {
+        var l = 0, r = height.endIndex - 1
+        var res = 0
+        var leftMax = 0, rightMax = 0
+        while l < r {
+            if height[l] < height[r] {
+                if height[l] > leftMax {
+                    leftMax = height[l]
+                } else {
+                    res += leftMax - height[l]
+                }
+                l += 1
+            } else {
+                if height[r] > rightMax {
+                    rightMax = height[r]
+                } else {
+                    res += rightMax - height[r]
+                }
+                r -= 1
+            }
+        }
+        return res
+    }
 let input = [0,1,0,2,1,0,1,3,2,1,2,1]
 let output = 6
 print(Solution().trap(input) == output)

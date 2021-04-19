@@ -21,3 +21,29 @@
         head2.next = nil
         return lessHead.next
     }
+
+    func partition(_ head: ListNode?, _ x: Int) -> ListNode? {
+        var lessHead = ListNode()
+        var lessList: ListNode? = lessHead
+        
+        var greaterHead = ListNode()
+        var greaterEqualList: ListNode? = greaterHead
+        
+        var curr = head
+        while curr != nil {
+            if curr!.val < x {
+                lessList!.next = curr
+                curr = curr!.next
+                lessList = lessList!.next
+            } else {
+                greaterEqualList!.next = curr
+                curr = curr!.next
+                greaterEqualList = greaterEqualList!.next
+            }
+        }
+        
+        lessList!.next = greaterHead.next
+        greaterEqualList!.next = nil  //prevent cycle
+        return lessHead.next
+        
+    }
