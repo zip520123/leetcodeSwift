@@ -14,13 +14,12 @@ func maxSubArray(_ nums: [Int]) -> Int {
 }
 //time O(n) space O(1)
 func maxSubArray(_ nums: [Int]) -> Int {
-    let ncount = nums.count
+    if nums.endIndex == 0 {return 0}
     var prev = nums[0]
     var res = nums[0]
-    for i in 1..<nums.count {
-        let n = nums[i]
-        prev = max(n, prev + n)
+    for i in 1..<nums.endIndex {
+        prev = max(nums[i], nums[i] + prev)
         res = max(res,prev)
     }
-    return res
+    return res    
 }

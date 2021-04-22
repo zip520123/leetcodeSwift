@@ -39,3 +39,20 @@ func removeNthFromEnd(_ head: ListNode?, _ n: Int) -> ListNode? {
     
     return dummy.next
 }
+//dict O(n) O(n)
+func removeNthFromEnd(_ head: ListNode?, _ n: Int) -> ListNode? {
+    let dummy = ListNode()
+    dummy.next = head
+    var curr = head
+    var count = 0
+    var dict = [Int:ListNode]()
+    dict[-1] = dummy
+    while curr != nil {
+        dict[count] = curr!
+        curr = curr!.next
+        count += 1
+    }
+    let node = dict[count - n - 1]!
+    node.next = node.next?.next
+    return dummy.next
+}
