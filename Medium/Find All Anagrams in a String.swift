@@ -1,33 +1,3 @@
-/*Find All Anagrams in a String
-Given a string s and a non-empty string p, find all the start indices of p's anagrams in s.
-
-Strings consists of lowercase English letters only and the length of both strings s and p will not be larger than 20,100.
-
-The order of output does not matter.
-
-Example 1:
-
-Input:
-s: "cbaebabacd" p: "abc"
-
-Output:
-[0, 6]
-
-Explanation:
-The substring with start index = 0 is "cba", which is an anagram of "abc".
-The substring with start index = 6 is "bac", which is an anagram of "abc".
-Example 2:
-
-Input:
-s: "abab" p: "ab"
-
-Output:
-[0, 1, 2]
-
-Explanation:
-The substring with start index = 0 is "ab", which is an anagram of "ab".
-The substring with start index = 1 is "ba", which is an anagram of "ab".
-The substring with start index = 2 is "ab", which is an anagram of "ab".*/
 
 func findAnagrams(_ s: String, _ p: String) -> [Int] {
     var dict = [Character: Int]()
@@ -148,9 +118,41 @@ func findAnagrams(_ s: String, _ p: String) -> [Int] {
 
         return result
     }
-// let input1 = "cbaebabacd"
-// let input2 = "abc"
-
-let input1 = "abab"
-let input2 = "ab"
-print(findAnagrams(input1, input2))
+    
+    func findAnagrams(_ s: String, _ p: String) -> [Int] {
+        var dict = [Character:Int]()
+        
+        for char in p {
+            dict[char,default:0] += 1
+        }
+        var count = p.count
+        var l = 0, r = 0
+        var res = [Int]()
+        let sArr = Array(s)
+        while r < sArr.endIndex {
+            let char = sArr[r]
+            dict[char,default:0] -= 1
+            if dict[char]! >= 0 {
+                count -= 1
+                if count == 0 {
+                    res.append(l)
+                    let leftChar = sArr[l]
+                    dict[leftChar]! += 1
+                    if dict[leftChar]! > 0 {
+                        count += 1
+                    }
+                    l += 1
+                }
+            }
+            while dict[char]! < 0 {
+                let leftChar = sArr[l]
+                dict[leftChar]! += 1
+                if dict[leftChar]! > 0 {
+                    count += 1
+                }
+                l += 1
+            }
+            r += 1
+        }
+        return res
+    }
