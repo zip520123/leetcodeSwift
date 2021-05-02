@@ -20,3 +20,21 @@
         }
         return res
     }
+
+//O(n log n) O(n)
+    func minMeetingRooms(_ intervals: [[Int]]) -> Int {
+        var dict = [Int:Int]()
+        
+        for interval in intervals {
+            dict[interval[0],default:0] += 1
+            dict[interval[1],default:0] -= 1
+        }
+        let timeline = dict.keys.sorted()
+        var curr = 0
+        var res = 0
+        for t in timeline {
+            curr += dict[t]!
+            res = max(curr,res)
+        }
+        return res
+    }

@@ -16,3 +16,21 @@
             }
         }
     }
+
+    func wiggleSort(_ nums: inout [Int]) {
+        let arr = nums.sorted(by: <)
+        var i = arr.endIndex >> 1
+        var j = arr.endIndex - 1
+        if arr.endIndex % 2 == 0 {
+            i -= 1
+        }
+        for n in 0..<nums.endIndex {
+            if n % 2 == 0 {
+                nums[n] = arr[i]
+                i -= 1
+            } else {
+                nums[n] = arr[j]
+                j -= 1
+            }
+        }
+    }

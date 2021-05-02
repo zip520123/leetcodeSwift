@@ -39,3 +39,28 @@
         }
         return dp[row-1][col-1]
     }
+
+    func uniquePathsWithObstacles(_ grid: [[Int]]) -> Int {
+        let rows = grid.endIndex, cols = grid[0].endIndex
+        var dp = [[Int]](repeating: [Int](repeating:0, count: cols), count: rows)
+        dp[0][0] = grid[0][0] == 1 ? 0 : 1
+        for i in 1..<cols {
+            if grid[0][i] == 0 {
+                dp[0][i] = dp[0][i-1]    
+            }
+        }
+        for i in 1..<rows {
+            if grid[i][0] == 0 {
+                dp[i][0] = dp[i-1][0]
+            }
+        }
+        
+        for i in 1..<rows {
+            for j in 1..<cols {
+                if grid[i][j] == 0 {
+                    dp[i][j] = dp[i][j-1] + dp[i-1][j]
+                }
+            }
+        }
+        return dp[rows-1][cols-1]
+    }
