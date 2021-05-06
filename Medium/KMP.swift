@@ -22,6 +22,29 @@ func kmpSearch(_ s: String, _ pat: String) -> [Int] {
     }
     return res
 }
+    func findSubstr(_ s: String, _ sub: String) -> Bool {
+        let lgs = lgsl(sub)
+        var i = 0, j = 0
+        let sArr = Array(s), suArr = Array(sub)
+        var res = [Int]()
+        while i < sArr.endIndex {
+            if sArr[i] == suArr[j] {
+                i+=1;j+=1
+                if j == suArr.endIndex {
+                    res.append(i-j)
+                    j = lgs[j-1]
+                }
+            } else {
+                if j != 0 {
+                    j = lgs[j-1]
+                } else {
+                    i += 1
+                }
+            }
+            
+        }
+        return res.endIndex != 0
+    }
 func longestSuffixList(_ s: String) -> [Int] {
     var i = 1, len = 0
     let sArr = Array(s)
