@@ -82,3 +82,81 @@ class Solution {
         return true
     }
 }
+
+//O(s*words) O(words) map
+    func findSubstring(_ s: String, _ words: [String]) -> [Int] {
+        var count = [String: Int]()
+        for word in words {
+            count[word, default:0] += 1
+        }
+        var res = [Int]()
+        let sArr = Array(s), len = words[0].count, numOfwords = words.endIndex
+        for i in 0..<sArr.endIndex - len * numOfwords + 1 {
+            var seen = [String: Int]()
+            var j = 0
+            while j < numOfwords {
+                let currWord = String(sArr[i+j*len..<i+(j+1)*len])
+                if count[currWord] != nil {
+                    seen[currWord, default: 0] += 1
+                    if seen[currWord]! > count[currWord]! {
+                        break
+                    }
+                } else {
+                    break
+                }
+                j += 1 
+            }
+            if j == numOfwords {
+                res.append(i)
+            }
+        }
+        return res
+    }
+
+class Solution {
+    class Trie {
+        var dict = [Character: Trie]()
+        var word : String?
+    }
+    func findSubstring(_ s: String, _ words: [String]) -> [Int] {
+        let root = Trie()
+        var count = [String: Int]()
+        for word in words {
+            count[word, default:0] += 1
+            var curr = root
+            let sArr = Array(word)
+            for char in sArr {
+                if curr.dict[char] == nil {
+                    curr.dict[char] = Trie()
+                }
+                curr = curr.dict[char]!
+            }
+            curr.word = word
+        }
+        let sArr = Array(s), len = words[0].count, numOfWords = words.endIndex
+        var res = [Int]()
+        nextChar: for i in 0..<sArr.endIndex - len * numOfWords + 1 {
+            var j = 0
+            var seen = [String: Int]()
+            while j < numOfWords {
+                var curr = root
+                for k in i+j*len..<i+(j+1)*len {
+                    let char = sArr[k]
+                    if curr.dict[char] == nil {
+                        continue nextChar
+                    }
+                    curr = curr.dict[char]!
+                }
+                
+                let word = curr.word!
+                seen[word, default:0] += 1
+                if seen[word]! > count[word]! {
+                    continue nextChar
+                }
+                j += 1
+            }
+            res.append(i)
+        }
+        return res
+    }
+}
