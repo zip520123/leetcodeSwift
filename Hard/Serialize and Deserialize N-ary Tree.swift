@@ -103,3 +103,36 @@ class Codec {
         return dfs()
     }
 }
+
+class Codec {
+    func serialize(_ root: Node?) -> String {
+    	guard let node = root else {return ""}
+        var res = ""
+        func dfs(_ node: Node) {
+            res += String(node.val)
+            res += ","
+            res += String(node.children.endIndex)
+            res += ","
+            node.children.forEach {dfs($0)}
+            
+        }
+        dfs(node)
+        return res
+    }
+    
+    func deserialize(_ data: String) -> Node? {
+    	if data == "" {return nil}
+        let list = data.split(separator: ",")
+        var index = 0
+        func dfs() -> Node? {
+            let val = Int(list[index])!
+            let node = Node(val)
+            index += 1
+            let count = Int(list[index])!
+            index += 1
+            node.children = (0..<count).compactMap{_ in dfs() }
+            return node
+        }
+        return dfs()
+    }
+}
