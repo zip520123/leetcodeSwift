@@ -37,3 +37,25 @@
         if left == nil {return right}
         return left
     }
+
+//O(n) O(h)
+class Solution {
+    func lowestCommonAncestor(_ p: Node?,_ q: Node?) -> Node? {
+        var root = p
+        while root!.parent != nil {
+            root = root!.parent
+        }
+        
+        func dfs(_ node: Node?) -> Node? {
+            guard let node = node else {return nil}
+            if node === p || node === q {return node}
+            let left = dfs(node.left), right = dfs(node.right)
+            if left != nil && right != nil {return node}
+            if left != nil {return left}
+            return right
+            
+        }
+        
+        return dfs(root)
+    }
+}

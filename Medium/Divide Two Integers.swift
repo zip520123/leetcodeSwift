@@ -59,3 +59,16 @@ func divide(_ dividend: Int, _ divisor: Int) -> Int {
     }
     return res
 }
+//
+class Solution {
+    func divide(_ dividend: Int, _ divisor: Int) -> Int {
+        let res = dividend / divisor
+        if res < -2147483648 {
+            return -2147483648
+        }
+        if res > 2147483647 {
+            return 2147483647
+        }
+        return res
+    }
+}

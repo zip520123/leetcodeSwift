@@ -176,34 +176,30 @@ func numberToWords(_ num: Int) -> String {
     let words0_19 = ["", "One", "Two", "Three", "Four", "Five", "Six", "Seven", "Eight", "Nine", "Ten", "Eleven", "Twelve", "Thirteen", "Fourteen", "Fifteen", "Sixteen", "Seventeen", "Eighteen", "Nineteen"]
 	let wordsTens = ["", "Ten", "Twenty", "Thirty", "Forty", "Fifty", "Sixty", "Seventy", "Eighty", "Ninety"]
 	let thousands = ["", "Thousand", "Million", "Billion"]
-	func numberToWords(_ num: Int) -> String {
-		
-		guard num != 0 else { return "Zero" }
-		
-		var num = num
-		
-		var i = 0
-		var answer = ""
-		while num > 0 {
-			if num % 1000 != 0 {
-				answer = helper(num % 1000) + thousands[i] + " " + answer
-			}
-			num /= 1000
-			i += 1
-		}
-		return answer.trimmingCharacters(in: .whitespaces)
-	}
-	
-	// helper take care of cases less than 1000
-	private func helper(_ num: Int) -> String {
-		if num == 0 {
-			return ""
-		} else if num < 20 {
-			return words0_19[num] + " "
-		} else if num < 100 {
-			return wordsTens[num/10] + " " + helper(num%10)
-		} else {
-			return words0_19[num/100] + " Hundred " + helper(num%100)
-		}
-	}
+    func numberToWords(_ num: Int) -> String {
+        if num == 0 {return "Zero"}
+        var i = 0
+        var num = num
+        var res = ""
+        while num > 0 {
+            if num % 1000 > 0 {
+                res = helper(num%1000) + thousands[i] + " " + res 
+            }
+            num /= 1000
+            i += 1
+        }
+        return res.trimmingCharacters(in: .whitespaces)
+    }
+    
+    func helper(_ num: Int) -> String {
+        if num == 0 {
+            return ""
+        } else if num < 20 {
+            return words0To19[num] + " "
+        } else if num < 100 {
+            return wordsTens[num/10] + " " +  helper(num%10)
+        } else {
+            return words0To19[num/100] + " Hundred " + helper(num%100)
+        }
+    }
 }
