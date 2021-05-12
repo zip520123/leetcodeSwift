@@ -54,3 +54,53 @@ extension TreeNode: Hashable {
         hasher.combine(ObjectIdentifier(self).hashValue)
     }
 }
+
+class Solution {
+    func distanceK(_ root: TreeNode?, _ target: TreeNode?, _ k: Int) -> [Int] {
+        guard let root = root else {return []}
+        var graph = [TreeNode:TreeNode]()
+        var queue = [(TreeNode, TreeNode)]()
+        if root.left != nil {
+            queue.append((root, root.left!))
+        }
+        if root.right != nil {
+            queue.append((root, root.right!))
+        }
+        while queue.isEmpty == false {
+            let (parent, node) = queue.removeFirst()
+            graph[node] = parent
+            if node.left != nil {
+                queue.append((node, node.left!))
+            }
+            if node.right != nil {
+                queue.append((node, node.right!))
+            }
+        }
+        var seen = Set<TreeNode>()
+        var level = k
+        var nodeQueue = [target!]
+        var tempQueue = [TreeNode]()
+        seen.insert(target!)
+        while level >= 0 {
+            level -= 1
+            tempQueue = nodeQueue
+            nodeQueue.removeAll()
+            for node in tempQueue {
+                if node.left != nil && seen.contains(node.left!) == false {
+                    seen.insert(node.left!)
+                    nodeQueue.append(node.left!)
+                }
+                if node.right != nil && seen.contains(node.right!) == false {
+                    seen.insert(node.right!)
+                    nodeQueue.append(node.right!)
+                }
+                if let parent = graph[node], seen.contains(parent) == false {
+                    seen.insert(parent)
+                    nodeQueue.append(parent)
+                }
+                
+            }
+        }
+        return tempQueue.map { $0.val }
+    }
+}
