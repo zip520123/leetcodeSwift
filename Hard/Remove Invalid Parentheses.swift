@@ -113,3 +113,56 @@
             return (false, "(")
         }         
     }
+
+    //bfs
+    class Solution {
+    func removeInvalidParentheses(_ s: String) -> [String] {
+        var res = [String]()
+        var seen = Set<String>()
+        var queue = [s]
+        while !queue.isEmpty {
+            let curr = queue.removeFirst()
+            if let prev = res.last, prev.count > curr.count {break}
+            let (isValid, charNeedToRemove) = validate(curr)
+            if isValid {
+                res.append(curr)
+                continue
+            }
+            let sArr = Array(curr)
+            for i in 0..<sArr.endIndex {
+                if sArr[i] == charNeedToRemove {
+                    let newString = String(sArr[0..<i] + sArr[(i+1)...])
+                    if seen.contains(newString) == false {
+                        seen.insert(newString)
+                        queue.append(newString)
+                    }
+                }
+            }
+        }
+        return res
+    }
+    
+    func validate(_ s: String) -> (Bool, Character) {
+        var stack = [Character]()
+        for char in s {
+            if char == "(" {
+                stack.append(char)
+            } else if char == ")" {
+                if stack.isEmpty == false {
+                    if stack.last! == "(" {
+                        stack.removeLast()
+                    } else {
+                        return (false, ")")
+                    }
+                } else {
+                    stack.append(char)
+                }
+            }
+        }
+        if stack.isEmpty == false {
+            return (false, stack.last!)
+        } else {
+            return (true, " ")
+        }
+    }
+}

@@ -52,3 +52,28 @@ class Solution {
     
 }
 
+    func exclusiveTime(_ n: Int, _ logs: [String]) -> [Int] {
+        var stack = [Int]()
+        var res = (0..<n).map { _ in 0 }
+        var startTime = 0
+        for log in logs {
+            let data = log.split(separator: ":")
+            let id = Int(data[0])!, op = data[1], time = Int(data[2])!
+            switch op {
+                case "start":
+                   if !stack.isEmpty {
+                       let lastId = stack.last!
+                       res[lastId] += time - startTime - 1
+                   }
+                   stack.append(id) 
+                   startTime = time
+                case "end":
+                    let lastId = stack.removeLast()
+                    res[lastId] += time - startTime + 1 
+                    startTime = time
+                default:
+                    break
+            }
+        }
+        return res
+    }

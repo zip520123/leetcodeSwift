@@ -22,19 +22,16 @@ func isPalindrome(_ s: String) -> Bool {
     return true
 }
 
-func isPalindrome(_ s: String) -> Bool {
-    let set = Set(Array("abcdefghijklmnopqrstuvwxyz0123456789"))
-    let sArr = Array(s.lowercased()).filter { c in
-        return set.contains(c)
-    }
-    var left = 0, right = sArr.endIndex - 1
-    while left < right {
-        if sArr[left] != sArr[right] {
-            return false
-        }
+    func isPalindrome(_ s: String) -> Bool {
         
-        left += 1
-        right -= 1
+        let set = Set("abcdefghijklmnopqrstuvwxyz0123456789")
+        var sArr = Array(s.lowercased()).filter { set.contains($0) }
+        
+        var l = 0, r = sArr.endIndex-1
+        while l < r {
+            if sArr[l] != sArr[r] {return false}    
+            l += 1
+            r -= 1
+        }
+        return true
     }
-    return true
-}

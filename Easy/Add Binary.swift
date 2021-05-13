@@ -35,3 +35,40 @@
     }
     return String(res.reversed())
 }
+
+    func addBinary(_ a: String, _ b: String) -> String {
+        var aArr = Array(a.reversed()), bArr = Array(b.reversed())
+        var carry = 0
+        var i = 0
+        var res = ""
+        while i < aArr.endIndex && i < bArr.endIndex {
+            let curr = Int(String(aArr[i]))! + Int(String(bArr[i]))! + carry
+            carry = curr >= 2 ? 1 : 0
+            
+            res.append(String(curr%2))
+            i += 1
+        }
+        while i < aArr.endIndex {
+            let curr = Int(String(aArr[i]))! + carry
+            carry = curr >= 2 ? 1 : 0
+            res.append(String(curr%2))
+            i += 1
+        }
+        while i < bArr.endIndex {
+            let curr = Int(String(bArr[i]))! + carry
+            carry = curr >= 2 ? 1 : 0
+            res.append(String(curr%2))
+            i += 1
+        }
+        if carry == 1 {
+            res.append("1")
+        }
+        return String(res.reversed())
+    }
+
+    //crash
+    func addBinary(_ a: String, _ b: String) -> String {
+        let left = Int(a, radix: 2)!, right = Int(b, radix:2)!    
+        let res = String(left+right, radix:2)
+        return res
+    }
