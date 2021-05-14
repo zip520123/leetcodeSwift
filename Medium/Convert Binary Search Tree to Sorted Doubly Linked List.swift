@@ -40,3 +40,27 @@
         prev.right = dummy.right
         return dummy.right
     }
+
+//O(n), O(n)
+    func treeToDoublyList(_ root: Node?) -> Node? {
+        guard let node = root else {return nil}
+        var dummy = Node(0)
+        var prev: Node? = dummy
+        var stack = [Node]()
+        var curr = root
+        while !stack.isEmpty || curr != nil {
+            while curr != nil {
+                stack.append(curr!)
+                curr = curr!.left
+            }
+            let node = stack.removeLast()
+            prev?.right = node
+            node.left = prev
+            prev = node
+            curr = node.right
+        }
+        
+        dummy.right?.left = prev
+        prev?.right = dummy.right
+        return dummy.right
+    }
