@@ -34,3 +34,25 @@
         
         return tasks.endIndex + (idle < 0 ? 0 : idle)
     }
+
+    func leastInterval(_ tasks: [Character], _ n: Int) -> Int {
+        var dict = [Character: Int]()
+        for task in tasks {
+            dict[task, default:0] += 1
+        }
+        
+        var arr = [Int]()
+        var currMax = 0
+        for (_, value) in dict {
+            arr.append(value)
+            currMax = max(currMax, value)
+        }
+        
+        var count = 0
+        for n in arr {
+            if n == currMax {
+                count += 1
+            }
+        }
+        return max(tasks.endIndex, (currMax-1)*(n+1) + count)
+    }

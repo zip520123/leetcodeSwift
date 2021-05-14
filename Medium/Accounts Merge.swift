@@ -196,3 +196,39 @@ class Solution {
         }
         return res
     }
+
+    //O(n log n), O(n), n = accounts.emails.len
+        func accountsMerge(_ accounts: [[String]]) -> [[String]] {
+        var emailToName = [String: String]()
+        var emailToRoot = [String: String]() 
+        func union(_ email1: String, _ email2: String) {
+            let root1 = find(email1), root2 = find(email2)
+            emailToRoot[root1] = root2
+        }
+        for acc in accounts {
+            let name = acc[0]
+            let rootMail = acc[1]
+            for email in acc[1...] {
+                emailToName[email] = name
+                union(rootMail, email)
+            }
+        }
+        func find(_ email: String) -> String {
+            if emailToRoot[email, default: email] == email {
+                return email
+            }
+            emailToRoot[email] = find(emailToRoot[email]!)
+            return emailToRoot[email]!
+        }
+
+        var rootToEmails = [String: Set<String>]()
+        for (email, name) in emailToName {
+            let root = find(email)
+            rootToEmails[root, default:[]].insert(email)
+        }
+        var res = [[String]]()
+        for (root, emails) in rootToEmails {
+            res.append([emailToName[root]!] + emails.sorted())
+        }
+        return res
+    }

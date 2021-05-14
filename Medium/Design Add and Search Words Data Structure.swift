@@ -103,14 +103,47 @@ class WordDictionary {
     }
 
 
-/**
- * Your WordDictionary object will be instantiated and called as such:
- * let obj = WordDictionary()
- * obj.addWord(word)
- * let ret_2: Bool = obj.search(word)
- */
+class WordDictionary {
+    class Trie {
+        var dict = [Character: Trie]()
+        var isEnd = false
+    }
+    let root = Trie()
 
- let obj = WordDictionary()
- obj.addWord("a")
- print(obj.search(".a"))
- print(obj.search("a."))
+    func addWord(_ word: String) {
+        var curr = root
+        for char in word {
+            if curr.dict[char] == nil {
+                curr.dict[char] = Trie()               
+            }
+            curr = curr.dict[char]!
+        }
+        curr.isEnd = true
+    }
+    
+    func searchWith(_ node: Trie, _ word: String) -> Bool {
+        var curr = node
+        let wArr = Array(word)
+        for i in 0..<wArr.endIndex {
+            let char = wArr[i]
+            if char == "." {
+                var res = false
+                let rest = String(wArr[(i+1)...])
+                for subnode in curr.dict.values {
+                    res = res || searchWith(subnode, rest)
+                }
+                return res
+            } else if curr.dict[char] == nil {
+                return false
+            } else {
+                curr = curr.dict[char]!
+            }
+            
+        }
+        return curr.isEnd
+    }
+    
+    func search(_ word: String) -> Bool {
+        return searchWith(root, word)
+    }
+}

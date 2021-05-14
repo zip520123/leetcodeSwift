@@ -40,3 +40,32 @@
         
         return String(res.reversed())
     }
+
+    func addStrings(_ num1: String, _ num2: String) -> String {
+        var carry = 0
+        let arr1 = Array(num1.reversed()), arr2 = Array(num2.reversed())
+        var i = 0
+        var res = ""
+        while i < arr1.endIndex && i < arr2.endIndex {
+            let sum = Int(String(arr1[i]))! + Int(String(arr2[i]))! + carry
+            carry = sum / 10
+            res.append(String(sum%10))
+            i += 1
+        }
+        while i < arr1.endIndex {
+            let sum = Int(String(arr1[i]))! + carry
+            carry = sum / 10
+            res.append(String(sum%10))
+            i += 1
+        }
+        while i < arr2.endIndex {
+            let sum = Int(String(arr2[i]))! + carry
+            carry = sum / 10
+            res.append(String(sum%10))
+            i += 1
+        }
+        if carry > 0 {
+            res.append(String(carry))
+        }
+        return String(res.reversed())
+    }

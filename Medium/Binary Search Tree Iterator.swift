@@ -28,30 +28,24 @@ class BSTIterator {
 }
 
 class BSTIterator {
-    
-    private var curr: TreeNode? 
-    private var stack = [TreeNode?]()
-    
-    init(_ root: TreeNode?) { //O(1)
+    var stack = [TreeNode]()
+    var curr: TreeNode?
+    init(_ root: TreeNode?) {
         curr = root
     }
     
-    func next() -> Int { //O(h)
-        while stack.isEmpty == false || curr != nil {
-            while curr != nil {
-                stack.append(curr)
-                curr = curr!.left
-            }
-            curr = stack.removeLast()
-            let val = curr!.val
-            curr = curr!.right
-            return val
+    func next() -> Int {  //O(h), h = tree.height
+        while curr != nil {
+            stack.append(curr!)
+            curr = curr!.left
         }
-        return -1
+        let node = stack.removeLast()
+        curr = node.right
+        return node.val
     }
     
-    func hasNext() -> Bool { //O(1)
-        return stack.isEmpty == false || curr != nil
+    func hasNext() -> Bool {
+        !stack.isEmpty || curr != nil
     }
 }
 
