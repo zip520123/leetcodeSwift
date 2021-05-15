@@ -57,3 +57,31 @@ class Solution {
         return res
     }
 }
+
+    func addOperators(_ num: String, _ target: Int) -> [String] {
+        var res = [String]()
+        let arr = Array(num)
+        func dfs(_ index: Int, _ path: String, _ prev: Int, _ curr: Int) {
+            if index == arr.endIndex {
+                if curr == target {
+                    res.append(path)
+                }
+                return
+            }
+            
+            for i in index..<arr.endIndex {
+                if i != index && arr[index] == "0" {continue}
+                let n = Int(String(arr[index...i]))!
+                
+                if index == 0 {
+                    dfs(i+1, "\(n)", n, n)    
+                } else {
+                    dfs(i+1,path+"+\(n)", n, curr+n)
+                    dfs(i+1,path+"-\(n)", -n, curr-n)
+                    dfs(i+1,path+"*\(n)", prev*n , (curr-prev) + (prev*n))
+                }
+            }
+        }
+        dfs(0,"",0,0)
+        return res
+    }

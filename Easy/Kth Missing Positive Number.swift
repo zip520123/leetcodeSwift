@@ -52,3 +52,23 @@
         
         return arr[l-1] + (k - (arr[l-1]-l))
     }
+
+    func findKthPositive(_ arr: [Int], _ k: Int) -> Int {
+        let n = arr.endIndex
+        if arr[n-1] - n < k {
+            return arr[n-1] + (k-(arr[n-1]-n))
+        }
+        if arr[0] - (0+1) >= k {
+            return k
+        }
+        var l = 0, r = n-1
+        while l<r {
+            let mid = (l+r)>>1
+            if arr[mid] - (mid+1) < k {
+                l = mid + 1
+            } else {
+                r = mid
+            }
+        }
+        return arr[l-1] + (k-(arr[l-1]-l))
+    }

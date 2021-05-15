@@ -1,76 +1,160 @@
 //Valid Number
 class Solution {
     func isNumber(_ s: String) -> Bool {
-        var eIndex: Int?
-        for (i,char) in s.enumerated() {
-            if char == "e" || char == "E" {
-                if eIndex == nil {
-                    eIndex = i    
+        var arr = Array(s.lowercased())
+        var eIndex :Int?
+        for i in 0..<arr.endIndex {
+            if arr[i] == "e" {
+                eIndex = i
+            }
+        }
+        if eIndex != nil {
+            let left = String(arr[0..<eIndex!])
+            let right = String(arr[(eIndex!+1)...])
+            return decimal(left) && integer(right)
+        } 
+        return decimal(s) || integer(s)
+    }
+    
+    func decimal(_ s: String) -> Bool {
+        var seenDigit = false
+        var seenDot = false
+        var seenSign = false
+        for char in s {
+            if char == "+" || char == "-" {
+                if seenSign || seenDigit || seenDot {return false}
+                seenSign = true
+            } else if char == "." {
+                if seenDot {return false}
+                seenDot = true
+            } else {
+                if let n = Int(String(char)) {
+                    seenDigit = true
                 } else {
                     return false
                 }
             }
         }
-        let sArr = Array(s)
-        if eIndex != nil {
-            let left = String(sArr[0..<eIndex!])
-            let right = String(sArr[eIndex!+1..<sArr.endIndex])
-            if isDecimal(left) && validateNumber(right) {
-                return true
-            } else {
-                return false
-            }
-        }
-        return isDecimal(s) || validateNumber(s)
+        return seenDigit
     }
     
-    func isDecimal(_ s: String) -> Bool {
-        let sArr = Array(s)
-        var i = 0
-        var hasSign = false
-        var hasDot = false
-        var hasNum = false
-        while i < sArr.endIndex {
-            let char = sArr[i]
+    func integer(_ s: String) -> Bool {
+        var seenSign = false
+        var seenDigit = false
+        for char in s {
             if char == "+" || char == "-" {
-                if hasSign || hasDot || hasNum {
+                if seenSign || seenDigit {return false}
+                seenSign = true
+            } else {
+                if Int(String(char)) == nil {
                     return false
                 }
-                hasSign = true
-            } else if char == "." {
-                if hasDot {
-                    return false
-                } 
-                hasDot = true
-            } else if Int(String(char)) != nil {
-                hasNum = true 
-            } else {
-                return false
-            } 
-            i += 1
+                seenDigit = true
+            }
         }
-        return hasValue
+        return seenDigit
     }
     
-    func validateNumber(_ s: String) -> Bool {
-        let sArr = Array(s)
-        var i = 0
-        var hasNum = false
-        var hasSign = false
-        while i < sArr.endIndex {
-            let char = sArr[i]
-            if char == "-" || char == "+" {
-                if hasSign || hasNum {
+}
+
+//Deterministic Finite Automaton (DFA)
+enum ValidSymbol {
+    case space  // ' '
+    case sign   // +-
+    case dot    // .
+    case exp    // e
+    case digit  // 0-9
+}
+
+let state: [[ValidSymbol: Int]] = [
+    [.space: 0, .sign: 1, .digit: 2, .dot: 3],
+    [.digit: 2, .dot: 3],
+    [.digit: 2, .dot: 4, .exp: 5, .space: 8],
+    [.digit: 4],
+    [.digit: 4, .exp: 5, .space: 8],
+    [.sign: 6, .digit: 7],
+    [.digit: 7],
+    [.digit: 7, .space: 8],
+    [.space: 8]
+]
+
+func isNumber(_ str: String) -> Bool {
+    var stateCounter = 0
+    for c in str {
+        var symb: ValidSymbol
+        switch c {
+        case "0"..."9":
+            symb = .digit
+        case "+", "-":
+            symb = .sign
+        case "e":
+            symb = .exp
+        case ".":
+            symb = .dot
+        case " ":
+            symb = .space
+        default:
+            return false
+        }
+        if let nextState = state[stateCounter][symb] {
+            stateCounter = nextState
+        } else {
+            return false
+        }
+    }
+    switch stateCounter {
+    case 2, 4, 7, 8:
+        return true
+    default:
+        return false
+    }
+}
+
+class Solution {
+    enum Symbol {
+        case sign
+        case dot
+        case exp
+        case digit
+    }
+    let statusArr: [[Symbol: Int]] = [
+    [.sign: 2, .digit: 1, .dot: 3],
+    [.digit: 1, .dot: 4, .exp: 5],
+    [.digit: 1, .dot: 3],
+    [.digit: 4],
+    [.digit: 4, .exp: 5],
+    [.sign: 6, .digit:7],
+    [.digit: 7],
+    [.digit: 7]]
+    
+    func isNumber(_ s: String) -> Bool {
+        var currStatus = 0
+        for char in s {
+            var symbol: Symbol
+            switch char {
+                case "0"..."9":
+                    symbol = .digit
+                case "+", "-":
+                    symbol = .sign
+                case "e", "E":
+                    symbol = .exp
+                case ".":
+                    symbol = .dot
+                default:
                     return false
-                }
-                hasSign = true
-            } else if let n = Int(String(char)) {
-                hasNum = true
+            }
+            if let nextStatus = statusArr[currStatus][symbol] {
+                currStatus = nextStatus
             } else {
                 return false
             }
-            i += 1
         }
-        return hasNum
+        switch currStatus {
+            case 1,4,7:
+                return true
+            default:
+                return false
+        }
     }
+    
 }

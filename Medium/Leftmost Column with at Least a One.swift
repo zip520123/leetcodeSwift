@@ -37,3 +37,17 @@
         }
         return res == Int.max ? -1 : res
     }
+
+    func leftMostColumnWithOne(_ binaryMatrix: BinaryMatrix) -> Int {
+        let matrix = binaryMatrix.dimensions()
+		let rows = matrix[0], cols = matrix[1]
+        var x = 0, y = cols-1
+        while x < rows && y >= 0 {
+            if binaryMatrix.get(x,y) == 0 {
+                x += 1
+            } else {
+                y -= 1
+            }
+        }
+        return y == cols-1 ? -1 : y+1
+    }

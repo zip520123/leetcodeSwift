@@ -67,6 +67,23 @@ func merge(_ intervals: [[Int]]) -> [[Int]] {
     return sortedArr
 }
 
+    func merge(_ intervals: [[Int]]) -> [[Int]] {
+        var sorted = intervals.sorted { a, b in  a[0] < b[0] }
+        
+        var l = 0, r = 1
+        while r < sorted.endIndex {
+            let left = sorted[l], right = sorted[r]
+            if left[1] >= right[0] {
+                sorted[l][1] = max(sorted[l][1], sorted[r][1])
+                sorted.remove(at: r)
+            } else {
+                l = r
+                r += 1
+            }
+        }
+        return sorted
+    }
+
 let input = [[1,3],[2,6],[8,10],[15,18]]
 
 print(merge(input))
