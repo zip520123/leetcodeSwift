@@ -31,7 +31,6 @@
     }
 
     //Union find O(Edges) O(nodes)
-class Solution {
     func countComponents(_ n: Int, _ edges: [[Int]]) -> Int {
         var arr = [Int](0..<n)
         
@@ -58,9 +57,7 @@ class Solution {
         }
         return set.count
     }
-}
 
-class Solution {
     func countComponents(_ n: Int, _ edges: [[Int]]) -> Int {
         var arr = [Int](0..<n)
         var count = n
@@ -78,11 +75,36 @@ class Solution {
             }
             arr[root1] = root2
         }
-        var set = Set<Int>()
         for edge in edges {
             union(edge[0],edge[1])
         }
-        
         return count
     }
-}
+
+
+    //O(n+e), O(n), n = node, e = edges
+    func countComponents(_ n: Int, _ edges: [[Int]]) -> Int {
+        var graph = [Int:Int]()
+        for i in 0..<n {
+            graph[i] = i
+        }
+        
+        func find(_ node: Int) -> Int {
+            if graph[node, default: node] == node {return node}
+            graph[node] = find(graph[node]!)
+            return graph[node]!
+        }
+        func union(_ node1: Int, _ node2: Int) {
+            let root1 = find(node1), root2 = find(node2)
+            graph[root1] = root2
+        }
+        var set = Set<Int>()
+        for edge in edges {
+            union(edge[0], edge[1])
+        }
+        for i in 0..<n {
+            let root = find(i)
+            set.insert(root)
+        }
+        return set.count
+    }

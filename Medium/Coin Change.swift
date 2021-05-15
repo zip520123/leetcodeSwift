@@ -71,7 +71,7 @@ func coinChange(_ coins: [Int], _ amount: Int) -> Int {
 
 //bottom up time O(coins * amount) space O(amount)
 func coinChange(_ coins: [Int], _ amount: Int) -> Int {
-    var arr = Array<Int>(repeating: Int.max, count: amount+1)
+    var arr = (0...amount).map{ _ in Int.max }
     arr[0] = 0
     var i = 1
     while i <= amount {

@@ -42,18 +42,16 @@ func lengthOfLIS(_ nums: [Int]) -> Int {
     }
     return dp.endIndex
 }
+
 //time O(n^2) space O(n)
 func lengthOfLIS(_ nums: [Int]) -> Int {
-    var dp = [Int](repeating: 1, count: nums.endIndex)
-    var res = 1
-    for i in 0..<nums.endIndex {
+    var arr = (0..<nums.endIndex).map {_ in 1 }
+    for i in 1..<nums.endIndex{
         for j in 0..<i {
             if nums[j] < nums[i] {
-                dp[i] = max(dp[i], dp[j] + 1)
-                res = max(res, dp[i])
+                arr[i] = max(arr[i], arr[j]+1)
             }
         }
     }
-    
-    return res
+    return arr.max()!
 }

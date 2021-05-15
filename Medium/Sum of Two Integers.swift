@@ -16,3 +16,8 @@ func getSum(_ a: Int, _ b: Int) -> Int {
 func getSum_Recursive(_ a: Int, _ b: Int) -> Int {
     return b == 0 ? a : getSum_Recursive(a ^ b, (a & b) << 1)
 }
+
+func getSum(_ a: Int, _ b: Int) -> Int {
+    if b == 0 {return a}
+    return getSum(a^b, (a&b)<<1)
+}
