@@ -42,16 +42,15 @@ class Codec {
     }
     
     func decode(_ s: String) -> [String] {
-        var res = [String]()
         let sArr = Array(s)
+        var res = [String]()
         var i = 0
         while i < sArr.endIndex {
-            var j = i
-            var n = 0
+            var j = i, n = 0
             while let num = Int(String(sArr[j])) {
                 n = n*10 + num
                 j += 1
-            } 
+            }
             let curr = String(sArr[j+1..<j+1+n])
             res.append(curr)
             i = j+1+n
