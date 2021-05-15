@@ -27,3 +27,23 @@ func characterReplacement(_ s: String, _ k: Int) -> Int {
     }
     return maxLength
 }
+
+    func characterReplacement(_ s: String, _ k: Int) -> Int {
+        var count = 0, len = 0
+        var l = 0, r = 0
+        var dict = [Character: Int]()
+        let sArr = Array(s)
+        while r < sArr.endIndex {
+            let char = sArr[r]
+            dict[char, default:0] += 1
+            count = max(count, dict[char]!)
+            while r-l+1 - count - k > 0 {
+                let leftChar = sArr[l]
+                dict[leftChar]! -= 1
+                l += 1
+            }
+            len = max(len, r-l+1)
+            r += 1
+        }
+        return len
+    }

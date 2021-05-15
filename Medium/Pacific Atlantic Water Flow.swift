@@ -1,5 +1,5 @@
 /*Pacific Atlantic Water Flow*/
-//time O(mn * mn) space O(1)
+//time O(mn * mn) space O(mn)
 func pacificAtlantic(_ matrix: [[Int]]) -> [[Int]] {
     var res = [[Int]]()
     let row = matrix.endIndex
@@ -109,51 +109,6 @@ func pacificAtlantic(_ heights: [[Int]]) -> [[Int]] {
     return res
 }
 
-//bottom up O(mn) space O(mn)
-class Solution {
-    let directions = [[1, 0], [-1, 0], [0, 1], [0, -1]]
-    func pacificAtlantic(_ matrix: [[Int]]) -> [[Int]] {
-        if matrix.count == 0 || matrix[0].count == 0 {
-            return [[Int]]()
-        }
-        
-        let n = matrix.count
-        let m = matrix[0].count
-        var result = [[Int]]()
-        var pacific = [[Bool]](repeatElement([Bool](repeatElement(false, count: m)), count: n))
-        var atlantic = [[Bool]](repeatElement([Bool](repeatElement(false, count: m)), count: n))
-        
-        for i in 0..<n {
-            DFS(matrix, Int.min, i, 0, &pacific)
-            DFS(matrix, Int.min, i, m - 1, &atlantic)
-        }
-        for i in 0..<m {
-            DFS(matrix, Int.min, 0, i, &pacific)
-            DFS(matrix, Int.min, n - 1, i, &atlantic)
-        }
-        for i in 0..<n {
-            for j in 0..<m {
-                if pacific[i][j] && atlantic[i][j] {
-                    result.append([i, j])
-                }
-            }
-        }
-        
-        return result
-    }
-    
-    private func DFS(_ matrix: [[Int]], _ height: Int, _ x: Int, _ y: Int, _ visited: inout [[Bool]]) {
-        let n = matrix.count
-        let m = matrix[0].count
-        if x < 0 || x >= n || y < 0 || y >= m || visited[x][y] || matrix[x][y] < height {
-            return
-        }
-        visited[x][y] = true
-        for direction in self.directions {
-            DFS(matrix, matrix[x][y], x + direction[0], y + direction[1], &visited)
-        }
-    }
-}
 
 //bottom up O(mn) space O(mn)
 func pacificAtlantic(_ heights: [[Int]]) -> [[Int]] {
@@ -192,3 +147,43 @@ func pacificAtlantic(_ heights: [[Int]]) -> [[Int]] {
     }
     return res
 }
+
+//O(mn), O(mn), m = rows, n = cols
+    func pacificAtlantic(_ heights: [[Int]]) -> [[Int]] {
+        var pacific = [[Int]: Bool](), atlantic = [[Int]: Bool]()
+        let rows = heights.endIndex, cols = heights[0].endIndex
+        let direction = [0,1,0,-1,0]
+        func dfs(_ x:Int, _ y: Int, _ visited: inout [[Int]: Bool]) {
+            visited[[x,y]] = true
+            for k in 0..<4 {
+                let newX = x+direction[k]
+                let newY = y+direction[k+1]
+                
+                if newX >= 0 && newX<rows && newY >= 0 && newY < cols {
+                    if visited[[newX,newY], default: false] == false && heights[newX][newY] >= heights[x][y]  {
+                        dfs(newX,newY, &visited)    
+                    }
+                }
+            }
+        }
+        
+        for i in 0..<cols {
+            dfs(0,i, &pacific)
+            dfs(rows-1,i,&atlantic)
+        }
+        
+        for i in 0..<rows {
+            dfs(i,0, &pacific)
+            dfs(i,cols-1, &atlantic)
+        }
+        var res = [[Int]]()
+        
+        for i in 0..<rows {
+            for j in 0..<cols {
+                if pacific[[i,j], default: false] && atlantic[[i,j], default:false] {
+                    res.append([i,j])
+                }
+            }
+        }
+        return res
+    }
