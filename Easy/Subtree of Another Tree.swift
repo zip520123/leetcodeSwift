@@ -76,3 +76,18 @@ func isSubtree(_ s: TreeNode?, _ t: TreeNode?) -> Bool {
     
     return dfs(s)
 }
+
+class Solution {
+    func isSame(_ tree1: TreeNode?, _ tree2: TreeNode?) -> Bool {
+        if tree1 == nil && tree2 == nil {return true}
+        if tree1 == nil || tree2 == nil {return false}
+        return tree1!.val == tree2!.val && isSame(tree1!.left, tree2!.left) && isSame(tree1!.right, tree2!.right)
+    }
+    
+    func isSubtree(_ root: TreeNode?, _ subRoot: TreeNode?) -> Bool {
+        func dfs(_ node: TreeNode?) -> Bool {
+            return node != nil && (isSame(node, subRoot) || dfs(node!.left) || dfs(node!.right))
+        }   
+        return dfs(root)
+    }
+}
