@@ -59,3 +59,34 @@ func eraseOverlapIntervals(_ intervals: [[Int]]) -> Int {
         }
         return count
     }
+/*
+if two intervals are overlapping, 
+we want to remove the interval that has the longer end point -- 
+the longer interval will always overlap with more or the same number of future intervals compared to the shorter one
+*/
+        func eraseOverlapIntervals(_ intervals: [[Int]]) -> Int {
+        var sorted = intervals.sorted {a, b in 
+                                       if a[0] != b[0] {
+                                           return a[0] < b[0]
+                                       } else {
+                                           return a[1] < b[1]
+                                       }}
+        var l = 0, r = 1
+        var res = 0
+        while r < sorted.endIndex {
+            if sorted[l][1] > sorted[r][0] {
+                res += 1
+                if sorted[l][1] < sorted[r][1] {
+                    r += 1
+                } else {
+                    l = r
+                    r += 1
+                }
+            } else {
+                l = r
+                r += 1    
+            }
+            
+        }
+        return res
+    }
