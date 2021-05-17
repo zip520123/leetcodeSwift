@@ -56,3 +56,37 @@ func findMin(_ nums: [Int]) -> Int {
     
     return dfs(0,nums.endIndex - 1)
 }
+//time O(log n)
+class Solution {
+    func findMin(_ nums: [Int]) -> Int {
+        var l = 0, r = nums.endIndex-1
+        while l<r {
+            let mid = (l+r)>>1
+            if nums[l] > nums[r] { //not sorted
+                if nums[l]<=nums[mid] {
+                    l = mid+1
+                } else {
+                    r = mid 
+                }
+            } else { //sorted
+                r = mid 
+            }    
+        }
+        return nums[l]
+    }
+}
+/*
+       v
+[4,5,6,7,0,1,2]
+ l
+             r
+if l > r
+
+    l<mid left sorted
+        r = mid+1
+    else right sorted
+        l = mid+1
+else 
+    r = mid
+
+*/

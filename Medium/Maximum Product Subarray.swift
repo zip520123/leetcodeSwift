@@ -37,3 +37,20 @@ func maxProduct(_ nums: [Int]) -> Int {
     }
     return res
 }
+
+    func maxProduct(_ nums: [Int]) -> Int {
+        var maxN = nums[0]
+        var minN = nums[0]
+        var i = 1
+        var res = maxN
+        while i < nums.endIndex {
+            let n = nums[i]
+            let newMax = max(n, maxN*n, minN*n)
+            let newMin = min(n, maxN*n, minN*n)
+            res = max(res, newMax)
+            maxN = newMax
+            minN = newMin
+            i += 1
+        }
+        return res
+    }

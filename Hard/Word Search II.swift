@@ -126,12 +126,13 @@ func findWords(_ board: [[Character]], _ words: [String]) -> [String] {
     
     func dfs(_ x: Int, _ y: Int, _ node: Trie) {
         if x < 0 || y < 0 || x == row || y == col { return }
-        guard let next = node.dict[board[x][y]] else {return}
+        let temp = board[x][y]
+        guard let next = node.dict[temp] else {return}
         if let word = next.word {
             res.append(word)
             next.word = nil
         }
-        let temp = board[x][y]
+        
         
         board[x][y] = "_"
         dfs(x+1,y,next)
@@ -166,4 +167,56 @@ func findWords(_ board: [[Character]], _ words: [String]) -> [String] {
     }
 
     return res
+}
+
+class Solution {
+    //O(n+m), O(n+m), n = words.len, m = board
+    class Trie {
+        var dict = [Character: Trie]()
+        var word: String?
+    }
+    func findWords(_ board: [[Character]], _ words: [String]) -> [String] {
+        var board = board
+        let root = Trie()
+        for word in words {
+            var curr = root
+            for char in word {
+                if curr.dict[char] == nil {
+                    curr.dict[char] = Trie()
+                }
+                curr = curr.dict[char]!
+            }
+            curr.word = word
+        }
+        var res = [String]()
+        let rows = board.endIndex, cols = board[0].endIndex
+        let direction = [0,1,0,-1,0]
+        func dfs(_ node: Trie, _ x: Int, _ y: Int) {
+            if node.word != nil {
+                res.append(node.word!)
+                node.word = nil
+            }
+            guard x>=0, x<rows, y>=0, y<cols else {return}
+            let char = board[x][y]
+            if let next = node.dict[char] {
+                board[x][y] = "±"
+                for k in 0..<4 {
+                    let newX = x+direction[k], newY = y+direction[k+1]
+                    dfs(next,newX,newY)    
+                }
+                board[x][y] = char
+                /*speed up magic*/
+                if next.dict.isEmpty {
+                    node.dict[char] = nil
+                }
+            }
+        }
+        
+        for i in 0..<rows {
+            for j in 0..<cols {
+                dfs(root,i,j)
+            }
+        }
+        return res
+    }
 }

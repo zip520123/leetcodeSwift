@@ -50,3 +50,21 @@ func kthSmallest(_ root: TreeNode?, _ k: Int) -> Int {
     dfs(root)
     return res
 }
+
+    func kthSmallest(_ root: TreeNode?, _ k: Int) -> Int {
+        var count = 0, res = 0
+        func dfs(_ node: TreeNode?) {
+            guard let node = node else {return}
+            dfs(node.left)
+            
+            if count == k {
+                return
+            }
+            res = node.val
+            count += 1
+            
+            dfs(node.right)
+        }
+        dfs(root)
+        return res
+    }

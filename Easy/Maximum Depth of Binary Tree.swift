@@ -26,3 +26,9 @@ func maxDepth(_ root: TreeNode?) -> Int {
     
     return dfs(root, 0)
 }
+
+func maxDepth(_ root: TreeNode?) -> Int {
+    guard let node = root else {return 0}
+    let left = maxDepth(node.left), right = maxDepth(node.right)
+    return max(left, right) + 1
+}

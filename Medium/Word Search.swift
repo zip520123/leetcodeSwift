@@ -30,3 +30,48 @@ func exist(_ board: [[Character]], _ word: String) -> Bool {
     
     return false
 }
+//Trie
+class Solution {
+    class Trie {
+        var dict = [Character: Trie]()
+        var isEnd = false
+    }
+    func exist(_ board: [[Character]], _ word: String) -> Bool {
+        let root = Trie()
+        var curr = root
+        for char in word {
+            if curr.dict[char] == nil {
+                curr.dict[char] = Trie()
+            }
+            curr = curr.dict[char]!
+        }
+        curr.isEnd = true
+        var board = board
+        let rows = board.endIndex, cols = board[0].endIndex
+        let direction = [0,1,0,-1,0]
+        func dfs(_ node: Trie, _ x: Int, _ y: Int) -> Bool {
+            if node.isEnd == true {return true}
+            guard x>=0, x<rows, y>=0, y<cols else {return false}
+            let char = board[x][y]
+            var res = false
+            if let next = node.dict[char] {
+                board[x][y] = "±"
+                for k in 0..<4 {
+                    let newX = x+direction[k], newY = y+direction[k+1]
+                    res = res || dfs(next,newX,newY)
+                }
+                board[x][y] = char
+            }
+            return res
+        }
+        
+        for i in 0..<rows {
+            for j in 0..<cols {
+                if dfs(root,i,j) == true {
+                    return true
+                }
+            }
+        }
+        return false
+    }
+}

@@ -34,11 +34,32 @@ func rob(_ nums: [Int]) -> Int {
         var dp2 = max(nums[0],nums[1])
         var i = 2
         while i < nums.endIndex {
-            let n = nums[i]
-            let curr = max(dp2,dp1 + n)
+            let n = max(dp2, dp1+nums[i])
             dp1 = dp2
-            dp2 = curr
-            i+=1
+            dp2 = n
+            i += 1
         }
         return dp2
     }
+
+//O(n), O(n)
+    class Solution {
+    func rob(_ nums: [Int]) -> Int {
+        if nums.endIndex == 0 {return 0}
+        if nums.endIndex == 1 {return nums[0]}
+        return max(rob2(Array(nums[0..<nums.endIndex-1])), rob2(Array(nums[1...])))
+    }
+    func rob2(_ nums: [Int]) -> Int {
+        if nums.endIndex == 0 {return 0}
+        if nums.endIndex == 1 {return nums[0]}
+        var arr = [Int]()
+        arr.append(nums[0])
+        arr.append(max(nums[0],nums[1]))
+        var i = 2 
+        while i < nums.endIndex {
+            arr.append(max(arr[i-1], arr[i-2] + nums[i]))
+            i += 1
+        }
+        return arr.last!
+    }
+}

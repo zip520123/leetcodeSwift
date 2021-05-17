@@ -102,7 +102,14 @@ class WordDictionary {
         return search(head,word)
     }
 
-
+//O(n), O(n), n = word.len
+/*
+Time complexity: O(M) for the "well-defined" words without dots, 
+where MM is the key length, and NN is a number of keys, and O(N⋅26 M) for the "undefined" words. 
+ That corresponds to the worst-case situation of searching an undefined word text M times
+  which is one character longer than all inserted keys.
+Space complexity: O(1) for the search of "well-defined" words without dots, and up to O(M) for the "undefined" words, to keep the recursion stack.
+*/
 class WordDictionary {
     class Trie {
         var dict = [Character: Trie]()

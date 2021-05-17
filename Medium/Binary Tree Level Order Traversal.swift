@@ -49,3 +49,21 @@ func levelOrder(_ root: TreeNode?) -> [[Int]] {
     dfs(root,0)
     return res
 }
+
+    func levelOrder(_ root: TreeNode?) -> [[Int]] {
+        guard let node = root else {return []}
+        var res = [[Int]]()
+        var queue = [node]
+        while queue.isEmpty == false {
+            let temp = queue
+            queue.removeAll()
+            var curr = [Int]()
+            for node in temp {
+                curr.append(node.val)
+                if node.left != nil {queue.append(node.left!)}
+                if node.right != nil {queue.append(node.right!)}
+            }
+            res.append(curr)
+        }
+        return res
+    }

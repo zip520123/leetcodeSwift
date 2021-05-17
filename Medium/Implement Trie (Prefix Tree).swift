@@ -20,27 +20,26 @@ class Trie {
         curr.isEnd = true
     }
 
-    //time O(n) space O(1)
-    func search(_ word: String) -> Bool {
+    func searchNode(_ word: String) -> TrieNode? {
         var curr = root
         for char in word {
-            if curr.dict[char] == nil {
-                return false
-            }
+            if curr.dict[char] == nil {return nil}
             curr = curr.dict[char]!
         }
-        return curr.isEnd == true
+        return curr
+    }
+
+    //time O(n) space O(1)
+    func search(_ word: String) -> Bool {
+        var curr = searchNode(word)
+        return curr != nil && curr!.isEnd
     }
     
     //time O(n) space O(1)
     func startsWith(_ prefix: String) -> Bool {
-        var curr = root
-        for char in prefix {
-            if curr.dict[char] == nil {
-                return false
-            }
-            curr = curr.dict[char]!
-        }
-        return true
+        var curr = searchNode(prefix)
+        return curr != nil
     }
+
+
 }
