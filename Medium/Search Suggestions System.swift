@@ -1,5 +1,5 @@
 //Search Suggestions System
-//O(n log n + m),O(n*k), n = products.len * product.len , m = searchWord
+//O(n log n + m),O(n), n = products.len * product.len , m = searchWord
     class Trie {
         var dict = [Character: Trie]()
         var words = [String]()
