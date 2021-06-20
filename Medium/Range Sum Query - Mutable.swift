@@ -1,5 +1,6 @@
 //Range Sum Query - Mutable
-class NumArray {
+//TLE
+class NumArray { 
     var arr = [Int]()
     init(_ nums: [Int]) { //O(n)
         arr = nums
