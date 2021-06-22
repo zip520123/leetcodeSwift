@@ -91,3 +91,35 @@ c: ["cd", "ce"]
         }
         return count
     }
+
+//O(s.len*w.len), O(w)
+    func numMatchingSubseq(_ s: String, _ words: [String]) -> Int {
+        var res = 0
+        let sArr = Array(s)
+        var includeSet = Set<String>(), excludeSet = Set<String>()
+        
+        for word in words {
+            if includeSet.contains(word) {
+                res += 1
+                continue
+            }
+            if excludeSet.contains(word) {
+                continue
+            }
+            let wArr = Array(word)
+            var l = 0, r = 0
+            while l < sArr.endIndex && r < wArr.endIndex {
+                if sArr[l] == wArr[r] {
+                    r += 1
+                }
+                l += 1    
+            }
+            if r == wArr.endIndex {
+                res += 1
+                includeSet.insert(word)
+            } else {
+                excludeSet.insert(word)
+            }
+        }
+        return res
+    }
