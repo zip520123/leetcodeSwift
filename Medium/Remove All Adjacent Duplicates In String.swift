@@ -28,3 +28,16 @@ class Solution {
         return String(res)
     }
 }
+//
+    func removeDuplicates(_ s: String) -> String {
+        
+        var queue = [Character]()
+        for char in s {
+            if !queue.isEmpty && queue.last! == char {
+                queue.removeLast()
+            } else{
+                queue.append(char)
+            }
+        }
+        return String(queue)
+    }
