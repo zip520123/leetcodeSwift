@@ -23,3 +23,21 @@
         return res
     
     }
+//
+    func longestOnes(_ nums: [Int], _ k: Int) -> Int {
+        var l = 0, r = 0, res = 0, k = k
+        while r < nums.endIndex {
+            if nums[r] == 0 {
+                k -= 1
+                while k == -1 {
+                    if nums[l] == 0 {
+                        k += 1
+                    }
+                    l += 1
+                }
+            }
+            res = max(res, r-l+1)
+            r += 1
+        }
+        return res
+    }
