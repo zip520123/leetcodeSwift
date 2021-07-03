@@ -24,3 +24,31 @@
         }
         return Array(arr[l..<l+k])
     }
+
+//O(log n + k), O(1)
+    func findClosestElements(_ arr: [Int], _ k: Int, _ x: Int) -> [Int] {
+        var l = 0, r = arr.endIndex-1
+        while l<r {
+            let m = (l+r)>>1
+            if arr[m] < x {
+                l = m + 1
+            } else {
+                r = m
+            }
+        }
+        l -= 1
+        while r-l-1 < k {
+            if l >= 0 && r < arr.endIndex {
+                if abs(arr[l]-x) <= abs(arr[r]-x) {
+                    l -= 1
+                } else {
+                    r += 1
+                }
+            } else if l >= 0 {
+                l -= 1
+            } else if r < arr.endIndex {
+                r += 1
+            }
+        }
+        return Array(arr[l+1..<r])
+    }
