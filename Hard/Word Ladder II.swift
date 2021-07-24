@@ -74,3 +74,38 @@
         }
         return res
     }
+
+    //BFS
+    func findLadders(_ beginWord: String, _ endWord: String, _ wordList: [String]) -> [[String]] {
+        var res = [[String]]()
+        var queue = [[String]]()
+        var seen = Set<String>()
+        queue.append([beginWord])
+        seen.insert(beginWord)
+        let wordSet = Set(wordList)
+        while !queue.isEmpty {
+            let tempQueue = queue
+            queue.removeAll()
+            var tempSeen = Set<String>()
+            for list in tempQueue {
+                let word = list.last!
+                let wArr = Array(word)
+                for i in 0..<wArr.endIndex {
+                    for char in "abcdefghijklmnopqrstuvwxyz" {
+                        let newWord = String(wArr[0..<i]) + String(char) + String(wArr[(i+1)...])
+                        if wordSet.contains(newWord) && seen.contains(newWord) == false {
+                            tempSeen.insert(newWord)
+                            queue.append(list+[newWord])
+                            if newWord == endWord {
+                                res.append(list+[newWord])
+                            }
+                        }
+                    }
+                    
+                }
+            }
+            seen = seen.union(tempSeen)
+            if !res.isEmpty {return res}
+        }
+        return res
+    }
