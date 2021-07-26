@@ -12,3 +12,12 @@
         return createNode(0,nums.endIndex - 1)
     }
     
+    func sortedArrayToBST(_ nums: [Int]) -> TreeNode? {
+        if nums.endIndex == 0 {return nil}
+        if nums.endIndex == 1 {return TreeNode(nums[0])}
+        let mid = nums.endIndex/2
+        let node = TreeNode(nums[mid])
+        node.left = sortedArrayToBST(Array(nums[0..<mid]))
+        node.right = sortedArrayToBST(Array(nums[(mid+1)...]))  
+        return node
+    }
