@@ -128,3 +128,60 @@ class Solution {
         return res == 0 ? 1 : res   
     }
 }
+
+//
+    func largestIsland(_ grid: [[Int]]) -> Int {
+        var pToID = [[Int]:Int]()
+        var id = 0
+        var idToSpace = [Int: Int]()
+        let rows = grid.endIndex, cols = grid[0].endIndex
+        let direction = [(0,1),(1,0),(0,-1),(-1,0)]
+        var zeroPositions = [[Int]]()
+        var res = 0
+        for i in 0..<rows {
+            for j in 0..<cols {
+                if grid[i][j] == 1 && pToID[[i,j]] == nil {
+                    var count = 1
+                    var queue = [(i,j)]
+                    pToID[[i,j]] = id
+                    while !queue.isEmpty {
+                        let (x,y) = queue.removeFirst()
+                        for (dx,dy) in direction {
+                            let newX = x+dx, newY = y+dy
+                            guard newX>=0, newX<rows, newY>=0, newY<cols else {continue}
+                            if grid[newX][newY] == 1 && pToID[[newX, newY]] == nil {
+                                count += 1
+                                pToID[[newX,newY]] = id
+                                queue.append((newX,newY))
+                            }
+                        }
+                    }
+                    idToSpace[id] = count
+                    id += 1
+                    res = max(res, count)
+                }
+                if grid[i][j] == 0 {
+                    zeroPositions.append([i,j])
+                }
+            }
+        }
+        if zeroPositions.count == 0 {return res}
+        if id == 1 {
+            if zeroPositions.count == 0 {return res}
+            return res + 1
+        }
+        for positions in zeroPositions {
+            let x = positions[0], y = positions[1]
+            var jointId = Set<Int>()
+            for (dx,dy) in direction {
+                let newX = x+dx, newY = y+dy
+                guard newX>=0, newX<rows, newY>=0, newY<cols else {continue}
+                if pToID[[newX, newY]] != nil {
+                    jointId.insert(pToID[[newX, newY]]!)
+                }
+            }
+            let curr = Array(jointId).map{ idToSpace[$0]! }.reduce(1, +)
+            res = max(curr, res)
+        }
+        return res
+    }
