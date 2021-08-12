@@ -1,45 +1,4 @@
 /*Group Anagrams*/
-//time O(strs^2) space O(n)
-// func groupAnagrams(_ strs: [String]) -> [[String]] {
-//     var strs = strs
-//     var res = [[String]]()
-//     while(strs.isEmpty == false) {
-//         let word = strs.first!
-//         strs.removeFirst()
-//         print(word,strs)
-//         var dict = [Character: Int]()
-//         let wcount = word.count
-//         for c in word {
-//             dict[c,default:0] += 1
-//         }
-//         var currGroup = [word]
-//         var indices = [Int]()
-//         matchWords: for i in 0..<strs.count {
-//             let w = strs[i]
-//             var dict2 = dict
-//             var currCount = wcount
-//             for c in w {
-//                 if dict2[c,default:0] > 0 {
-//                     dict2[c,default:0] -= 1
-//                     currCount -= 1   
-//                 } else {
-//                     continue matchWords
-//                 }
-//             }
-//             if currCount == 0 {
-//                 indices.append(i)
-//                 currGroup.append(w)
-//             }    
-//         }
-//         for index in indices.reversed() {
-//             strs.remove(at: index)
-//         }
-        
-//         res.append(currGroup)
-//     }
-//     return res
-// }
-
 //Sorted Word as key
 //time O(strs * n log n) space O(n), 164 ms, faster than 43.92%
 func groupAnagrams(_ strs: [String]) -> [[String]] {
