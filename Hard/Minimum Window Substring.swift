@@ -1,5 +1,5 @@
 /*Minimum Window Substring*/
-//time O(n) space O(1) or O(n)
+//time O(s+t) space O(1) or O(s+t)
 func minWindow(_ s: String, _ t: String) -> String {
     var dict = [Character: Int]()
     for c in t {
@@ -104,4 +104,38 @@ func minWindow(_ s: String, _ t: String) -> String {
         }
         if len == Int.max {return ""}
         return String(sArr[start..<start+len])
+    }
+
+    func minWindow(_ s: String, _ t: String) -> String {
+        var dict = [Character: Int]()
+        var count = t.count
+        for char in t {
+            dict[char, default:0] += 1
+        }
+        let sArr = Array(s)
+        var l = 0, r = 0, start = 0, length = Int.max
+        while r < sArr.endIndex {
+            let char = sArr[r]
+            dict[char, default:0] -= 1
+            if dict[char]! >= 0 {
+                count -= 1
+                while count == 0 {
+                    if length > r-l {
+                        length = r-l
+                        start = l
+                    }
+                    let leftChar = sArr[l]
+                    dict[leftChar]! += 1
+                    if dict[leftChar]! > 0 {
+                        count += 1
+                    }
+                    l += 1
+                }
+            }
+            r += 1
+        }
+        if length == Int.max {
+            return ""
+        }
+        return String(sArr[start...start+length])
     }
