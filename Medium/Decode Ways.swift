@@ -90,3 +90,19 @@ func numDecodings(_ s: String) -> Int {
         }
         return dp1
     }
+    //O(n), O(n)
+    func numDecodings(_ s: String) -> Int {
+        let sArr = Array(s)
+        if sArr[0] == "0" {return 0}
+        var dp = (0...sArr.endIndex).map{_ in 0}
+        dp[0] = 1
+        for i in 0..<sArr.endIndex {
+            if Int(String(sArr[i]))! > 0 {
+                dp[i+1] = dp[i]
+            }
+            if i > 0 && Int(String(sArr[i-1...i]))! >= 10 && Int(String(sArr[i-1...i]))! <= 26 {
+                dp[i+1] += dp[i-1]
+            }
+        }
+        return dp.last!
+    }
