@@ -31,3 +31,35 @@
         }
         return true
     }
+
+class Solution {
+    func isValidSudoku(_ board: [[Character]]) -> Bool {
+        for i in 0..<9 {
+            for j in 0..<9 {
+                if board[i][j] != "." {
+                    if check(board[i][j], i,j,board) == false {
+                        return false
+                    }
+                }
+            }
+        }
+        return true
+    }
+    
+    func check(_ char: Character, _ row: Int, _ col: Int, _ board: [[Character]]) -> Bool {
+        var count = 0
+        for i in 0..<9 {
+            if board[row][i] == char {count += 1}
+            if board[i][col] == char {count += 1}
+            if board[(row/3)*3+i/3][(col/3)*3+i%3] == char {count += 1}
+        }
+        return count <= 3
+    }
+    /*
+    x,y
+    000111222
+    333444555
+    678678678
+    012012012
+    */
+}
