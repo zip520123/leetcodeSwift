@@ -75,18 +75,21 @@ class Solution {
         return nums[l]
     }
 }
-/*
-       v
-[4,5,6,7,0,1,2]
- l
-             r
-if l > r
 
-    l<mid left sorted
-        r = mid+1
-    else right sorted
-        l = mid+1
-else 
-    r = mid
-
-*/
+//O(log n)
+    func findMin(_ nums: [Int]) -> Int {
+        var l = 0, r = nums.endIndex-1
+        while l<r {
+            let mid = (l+(r-l)>>1)
+            if nums[l] < nums[r] { //all sorted
+                r = mid
+            } else {
+                if nums[mid] < nums[r] { // right side sorted
+                    r = mid
+                } else { //left side sorted
+                    l = mid+1
+                }
+            }
+        }
+        return nums[l]
+    }
