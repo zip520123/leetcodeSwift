@@ -27,3 +27,27 @@ class Solution {
         return dict[n]!
     }
 }
+
+//O(n), O(n)
+    func arrayNesting(_ nums: [Int]) -> Int {
+        var visited = (0..<nums.endIndex).map{_ in false}
+        var res = 0
+        for i in 0..<nums.endIndex {
+            if visited[nums[i]] == false {
+                let start = nums[i]
+                var count = 1
+                var curr = nums[start]
+                visited[curr] = true
+                
+                while curr != start {
+                    count += 1
+                    curr = nums[curr]
+                    visited[curr] = true
+                } 
+                
+                res = max(res, count)
+            }
+            
+        }
+        return res
+    }
