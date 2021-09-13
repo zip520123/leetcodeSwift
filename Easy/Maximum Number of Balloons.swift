@@ -32,3 +32,19 @@
 
         return min(b, a, l, o, n)
     }
+    
+//O(n), O(n)
+    func maxNumberOfBalloons(_ text: String) -> Int {
+        var dict = [Character: Int]()
+        for char in text {
+            dict[char, default: 0] += 1
+        }
+        var res = Int.max
+        for char in "ban" {
+            res = min(res, dict[char, default:0])
+        }
+        for char in "lo" {
+            res = min(res, dict[char, default:0] / 2)
+        }
+        return res
+    }
