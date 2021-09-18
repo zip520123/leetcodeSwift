@@ -85,3 +85,31 @@ class Solution {
         dfs(0,"",0,0)
         return res
     }
+
+    func addOperators(_ num: String, _ target: Int) -> [String] {
+        var res = [String]()
+        let sArr = Array(num)
+        func dfs( _ p: Int, _ curr: Int, _ index: Int, _ path: String) {
+            if index == sArr.endIndex {
+                if curr == target {
+                    res.append(path)
+                }
+            }
+            var n = 0
+            for i in index..<sArr.endIndex {
+                if i != index && sArr[index] == "0" {break}
+                n = n*10 + Int(String(sArr[i]))!
+                
+                if index == 0 {
+                    dfs(n, n, i+1, path + "\(n)" )    
+                } else {
+                    dfs(n, curr+n, i+1, path + "+\(n)" )
+                    dfs(-n, curr-n, i+1, path + "-\(n)")
+                    dfs(p*n, curr-p+p*n , i+1, path + "*\(n)" ) 
+                }
+            }
+        }
+        
+        dfs(0,0,0,"")
+        return res
+    }
