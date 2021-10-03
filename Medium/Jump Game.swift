@@ -42,3 +42,14 @@ func canJump(_ nums: [Int]) -> Bool {
 
     return true        
 }
+
+//O(n), O(1)
+func canJump(_ nums: [Int]) -> Bool {
+    var p = nums.endIndex-1
+    for i in (0..<nums.endIndex-1).reversed() {
+        if nums[i] + i >= p {
+            p = i
+        }     
+    }
+    return p == 0
+}
