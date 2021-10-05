@@ -32,6 +32,18 @@ func climbStairs(_ n: Int) -> Int {
     }
     return b
 }
+//O(n),O(1)
+func climbStairs(_ n: Int) -> Int {
+    if n == 1 {return 1}
+    if n == 2 {return 2}
+    var a = 1, b = 2
+    for _ in 2..<n {
+        let t = a+b
+        a = b
+        b = t
+    }
+    return b
+}
 //time O(n) space O(n)
 func climbStairs(_ n: Int) -> Int {
     var dict = Dictionary<Int,Int>()
