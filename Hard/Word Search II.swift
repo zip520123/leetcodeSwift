@@ -173,48 +173,53 @@ class Solution {
     //O(n+m), O(n+m), n = words.len, m = board
     class Trie {
         var dict = [Character: Trie]()
-        var word: String?
+        var endWord: String?
     }
+    
     func findWords(_ board: [[Character]], _ words: [String]) -> [String] {
-        var board = board
         let root = Trie()
+        
         for word in words {
             var curr = root
             for char in word {
                 if curr.dict[char] == nil {
                     curr.dict[char] = Trie()
-                }
+                } 
                 curr = curr.dict[char]!
             }
-            curr.word = word
+            curr.endWord = word
         }
+        
+        var board = board
         var res = [String]()
         let rows = board.endIndex, cols = board[0].endIndex
-        let direction = [0,1,0,-1,0]
-        func dfs(_ node: Trie, _ x: Int, _ y: Int) {
-            if node.word != nil {
-                res.append(node.word!)
-                node.word = nil
-            }
-            guard x>=0, x<rows, y>=0, y<cols else {return}
+        
+        func dfs(_ x:Int, _ y: Int, _ node: Trie) {
+            guard x>=0, y>=0, x<rows, y<cols else {return}
             let char = board[x][y]
+            
             if let next = node.dict[char] {
-                board[x][y] = "±"
-                for k in 0..<4 {
-                    let newX = x+direction[k], newY = y+direction[k+1]
-                    dfs(next,newX,newY)    
+                if let word = next.endWord {
+                    res.append(word)
+                    next.endWord = nil
                 }
+                board[x][y] = "_"
+                dfs(x+1,y,next)
+                dfs(x-1,y,next)
+                dfs(x,y+1,next)
+                dfs(x,y-1,next)
                 board[x][y] = char
-                /*speed up magic*/
-                if next.dict.isEmpty {
+
+                if next.dict.isEmpty { /*speed up magic*/
                     node.dict[char] = nil
                 }
             }
+            
         }
-        
+
         for i in 0..<rows {
             for j in 0..<cols {
-                dfs(root,i,j)
+                dfs(i,j,root)
             }
         }
         return res
