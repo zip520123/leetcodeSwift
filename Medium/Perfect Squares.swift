@@ -1,5 +1,5 @@
 //Perfect Squares
-//O(n), O(n)
+//O(n log n), O(n)
     func numSquares(_ n: Int) -> Int {
         var dp = [0]
         for i in 1...n {
