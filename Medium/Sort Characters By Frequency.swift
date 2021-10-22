@@ -1,5 +1,5 @@
 //Sort Characters By Frequency
-//O(n), O(n)
+//O(n log n), O(n)
     func frequencySort(_ s: String) -> String {
         var dict = [Character : Int]()
         for char in s {
