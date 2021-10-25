@@ -4,12 +4,8 @@ class MinStack {
     var minArr = [Int]()
     func push(_ val: Int) {
         arr.append(val)
-        if let last = minArr.last {
-            if last >= val {
-                minArr.append(val)
-            }
-        } else {
-            minArr.append(val)
+        if minStack.last == nil || minStack.last! >= val {
+            minStack.append(val)
         }
     }
     
