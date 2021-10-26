@@ -11,9 +11,8 @@ func invertTree(_ root: TreeNode?) -> TreeNode? {
 
 //time O(n) space O(1)
 func invertTree(_ root: TreeNode?) -> TreeNode? {
-    if root == nil {return nil}
-    var queue = [TreeNode]()
-    queue.append(root!)
+    guard let node = root else {return nil}
+    var queue = [node]
     while queue.isEmpty == false {
         let node = queue.removeFirst()
         let left = node.left
