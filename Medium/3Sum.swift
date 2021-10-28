@@ -38,9 +38,42 @@ func threeSum(_ nums: [Int]) -> [[Int]] {
     return res
 }
 
-// let input = [Int]()
-// let input = [0]
-// let input = [-1,0,1,2,-1,-4]
-let input = [0,0,0]
-// let input = [-1,-1,-1,0,0,0,0,1,1,1]
-print(threeSum(input))
+//O(n^2), O(n)
+    func threeSum(_ nums: [Int]) -> [[Int]] {
+        var res = [[Int]]()
+        let nums = nums.sorted(by: <)
+        var i = 0
+        while i < nums.endIndex-2 {
+            if i > 0 && nums[i-1] == nums[i] {
+                i += 1
+                continue
+            }
+            var l = i+1, r = nums.endIndex-1
+            while l<r {
+                let sum = nums[i] + nums[l] + nums[r]
+                if sum == 0 {
+                    res.append([nums[i],nums[l],nums[r]])
+                    while l+1 < nums.endIndex && nums[l] == nums[l+1] {
+                        l += 1    
+                    }
+                    while r-1 >= 0 && nums[r] == nums[r-1] {
+                        r -= 1    
+                    }
+                    l += 1
+                    r -= 1
+                } else if sum < 0 {
+                    while l+1 < nums.endIndex && nums[l] == nums[l+1] {
+                        l += 1    
+                    }
+                    l += 1
+                } else {
+                    while r-1 >= 0 && nums[r] == nums[r-1] {
+                        r -= 1    
+                    }
+                    r -= 1
+                }
+            }
+            i += 1
+        }
+        return res
+    }
