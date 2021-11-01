@@ -3,9 +3,7 @@
     func solve(_ board: inout [[Character]]) {
         let row = board.endIndex, col = board[0].endIndex
         func dfs(_ x:Int,_ y:Int) {
-            if x < 0 || x == row || y < 0 || y == col || board[x][y] == "X" || board[x][y] == "*" {
-               return
-            }
+            guard x>=0, x<rows, y>=0, y<cols else {return}
             board[x][y] = "*"
             dfs(x+1,y)
             dfs(x-1,y)
