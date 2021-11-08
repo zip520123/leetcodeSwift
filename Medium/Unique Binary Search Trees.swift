@@ -16,7 +16,7 @@ class Solution {
         return res
     }
 }
-//O(n^2)
+//O(n)
 class Solution {
     var dict = [[Int]:Int]()
     func numTrees(_ n: Int) -> Int {
