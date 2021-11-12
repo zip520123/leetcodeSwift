@@ -13,3 +13,19 @@
         }
         return dummy.next
     }
+
+    func removeElements(_ head: ListNode?, _ val: Int) -> ListNode? {
+        var prev = ListNode()
+        let dammy = prev
+        prev.next = head
+        var curr = head
+        while curr != nil {
+            if curr!.val == val {
+                prev.next = curr!.next
+            } else {
+                prev = curr!
+            }
+            curr = curr!.next
+        }
+        return dammy.next
+    }
