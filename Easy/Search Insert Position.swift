@@ -12,3 +12,17 @@ func searchInsert(_ nums: [Int], _ target: Int) -> Int {
     }
     return left
 }
+
+//O(log n)
+    func searchInsert(_ nums: [Int], _ target: Int) -> Int {
+       var l = 0, r = nums.endIndex
+        while l<r {
+            let mid = l+(r-l)>>1
+            if nums[mid] < target {
+                l = mid+1
+            } else{
+                r = mid
+            }
+        }
+        return l
+    }
