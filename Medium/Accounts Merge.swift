@@ -232,3 +232,52 @@ class Solution {
         }
         return res
     }
+
+
+    func accountsMerge(_ accounts: [[String]]) -> [[String]] {
+        var mailToName = [String: String](), mailToRoot = [String: String]()
+        
+        func find(_ mail: String) -> String {
+            if mailToRoot[mail]! == mail {return mail}
+            mailToRoot[mail] = find(mailToRoot[mail]!)
+            return mailToRoot[mail]!
+        }
+        
+        func union(_ mail1: String, _ mail2: String) {
+            let root1 = find(mail1), root2 = find(mail2)
+            mailToRoot[root2] = root1
+        }
+        
+        for account in accounts {
+            let name = account[0]
+            let mails = Array(account[1...])
+            for mail in mails {
+                mailToName[mail] = name
+                mailToRoot[mail] = mail
+            }
+        }
+        
+        for account in accounts {
+            let mails = Array(account[1...])
+            
+            var i = 0
+            while i < mails.endIndex-1 {
+                let mail1 = mails[i], mail2 = mails[i+1]
+                union(mail1, mail2)
+                i += 1
+            }
+        }
+        
+        var rootMailToMails = [String: [String]]()
+        for (mail, _) in mailToName {
+            let rootMail = find(mail)
+            rootMailToMails[rootMail, default:[]].append(mail)
+        }
+        
+        var res = [[String]]()
+        for (root, mails) in rootMailToMails {
+            let name = mailToName[root]!
+            res.append([name]+mails.sorted())
+        }
+        return res
+    }
