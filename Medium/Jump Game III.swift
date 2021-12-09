@@ -28,27 +28,25 @@
     }
 
 //BFS O(n) O(n)
-class Solution {
     func canReach(_ arr: [Int], _ start: Int) -> Bool {
-        var queue = [start], seen = Set<Int>([start])
+        var queue = [start], set = Set<Int>([start])
         
         while !queue.isEmpty {
-            let currIndex = queue.removeFirst()
-            if arr[currIndex] == 0 {return true}
-            let forwardIndex = currIndex + arr[currIndex]
-            if forwardIndex < arr.endIndex && seen.contains(forwardIndex) == false {
-                queue.append(forwardIndex)
-                seen.insert(forwardIndex)
+            let curr = queue.removeFirst()
+            if arr[curr] == 0 {return true}
+            let left = curr - arr[curr]
+            if left >= 0 && set.contains(left) == false {
+                queue.append(left)
+                set.insert(left)
             }
-            let backwardIndex = currIndex - arr[currIndex]
-            if backwardIndex >= 0 && seen.contains(backwardIndex) == false {
-                queue.append(backwardIndex)
-                seen.insert(backwardIndex)
+            let right = curr + arr[curr]
+            if  right < arr.endIndex && set.contains(right) == false {
+                queue.append(right)
+                set.insert(right)
             }
         }
         return false
-    } 
-}
+    }
 //DFS set O(n) O(n)
 class Solution {
     var set = Set<Int>()
