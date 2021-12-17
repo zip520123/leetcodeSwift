@@ -29,3 +29,41 @@
         }
         return leaves
     }
+
+//O(n^2), O(n) TLE
+    func findMinHeightTrees(_ n: Int, _ edges: [[Int]]) -> [Int] {
+        if n <= 2 {return [Int](0..<n)}
+        var graph = [Int:[Int]]()
+        for edge in edges {
+            graph[edge[0], default:[]].append(edge[1])
+            graph[edge[1], default:[]].append(edge[0])
+        }
+        var treeHeigh = [Int: [Int]]()
+        var minTreeHeigh = Int.max
+        nextNode: for i in 0..<n {
+            var queue = [i]
+            var heigh = 0
+            var seen = Set<Int>([i])
+            while !queue.isEmpty {
+                heigh += 1
+                if heigh > minTreeHeigh {
+                    continue nextNode
+                }
+                let temp = queue
+                queue.removeAll()
+                for node in temp {
+                    for nei in graph[node, default:[]] {
+                        if seen.contains(nei) == false {
+                            seen.insert(nei)
+                            queue.append(nei)
+                        }
+                    }    
+                }
+                
+            }
+            minTreeHeigh = min(minTreeHeigh, heigh) 
+            treeHeigh[heigh, default:[]].append(i)
+                
+        }
+        return treeHeigh[minTreeHeigh]!
+    }
