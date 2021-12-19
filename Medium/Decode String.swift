@@ -41,3 +41,42 @@ func decodeString(_ s: String) -> String {
         }
         return res
     }
+
+    //O(k*s), O(s)
+        func decodeString(_ s: String) -> String {
+        var res = ""
+        let arr = Array(s)
+        var i = 0
+        while i < arr.endIndex {
+            if Int(String(arr[i])) != nil {
+                var rep = 0
+                var l = i
+                while let n = Int(String(arr[l])) {
+                    rep = rep*10 + n
+                    l += 1
+                }
+                var r = l+1
+                var left = 1
+                while left > 0 {
+                    if arr[r] == "]" {
+                        left -= 1
+                    }
+                    if arr[r] == "[" {
+                        left += 1
+                    }
+                    r += 1
+                }
+                r -= 1
+                let s = decodeString(String(arr[l+1..<r]))
+                for _ in 1...rep {
+                    res += s
+                }
+                i = r
+            } else {
+                 res += String(arr[i])
+            }
+            
+            i += 1
+        }
+        return res
+    }
