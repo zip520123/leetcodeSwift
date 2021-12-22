@@ -106,3 +106,34 @@ func reorderList(_ head: ListNode?) {
         }
         
     }
+
+//O(n), O(1)
+    func reorderList(_ head: ListNode?) {
+        guard head != nil else {return}
+        var fast = head, slow = head
+        while fast!.next != nil && fast!.next!.next != nil {
+            slow = slow!.next
+            fast = fast!.next!.next
+        }
+        let mid = slow!.next
+        slow!.next = nil
+        
+        var prev: ListNode?
+        var curr = mid
+        
+        while curr != nil {
+            let temp = curr!.next
+            curr!.next = prev
+            prev = curr
+            curr = temp
+        }
+        
+        curr = head
+        while curr != nil {
+            let temp = curr!.next
+            curr!.next = prev
+            curr = prev
+            prev = temp
+        }
+        
+    }
