@@ -68,3 +68,33 @@ func findOrder(_ numCourses: Int, _ prerequisites: [[Int]]) -> [Int] {
     }
     return res
 }
+
+//O(n), O(3n)
+    func findOrder(_ numCourses: Int, _ prerequisites: [[Int]]) -> [Int] {
+        var courses = [Int: [Int]](), counts = (0..<numCourses).map{_ in 0}
+        for pre in prerequisites {
+            let coures = pre[0], prev = pre[1]
+            courses[prev, default:[]].append(coures)
+            counts[coures] += 1
+        }
+        var res = [Int]()
+        var queue = [Int]()
+        for (course, count) in counts.enumerated() {
+            if count == 0 {
+                queue.append(course)
+            }
+        }
+        
+        while !queue.isEmpty {
+            let course = queue.removeFirst()
+            res.append(course)
+            for node in courses[course, default: []] {
+                counts[node] -= 1
+                if counts[node] == 0 {
+                    queue.append(node)
+                }
+            }
+        }
+        
+        return res.count == numCourses ? res : []
+    }
