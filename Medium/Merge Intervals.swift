@@ -84,6 +84,26 @@ func merge(_ intervals: [[Int]]) -> [[Int]] {
         return sorted
     }
 
-let input = [[1,3],[2,6],[8,10],[15,18]]
+//O(n log n), O(n)
+    func merge(_ intervals: [[Int]]) -> [[Int]] {
+        let arr = intervals.sorted(by: { a,b in
+            return a[0] < b[0]
+        })
+        var res = [[Int]]()
 
-print(merge(input))
+        for curr in arr {
+            if res.isEmpty {
+                res.append(curr)
+            } else {
+                let last = res.last!
+                if last[1] >= curr[0] {
+                    res.removeLast()
+                    res.append([last[0], max(curr[1], last[1])])
+                } else {
+                    res.append(curr)
+                }
+                
+            }
+        }
+        return res
+    }
