@@ -37,7 +37,7 @@
 //O(n),O(1)
     func calculate(_ s: String) -> Int {
         var s = s + "++"
-        var curr = 0, last = 0, sum = 0, sign: Character = "+"
+        var curr = 0, temp = 0, sum = 0, sign: Character = "+"
         
         for char in s {
             if char == " " {continue}
@@ -46,15 +46,15 @@
             } else {
                 switch sign {
                     case "+":
-                        sum += last
-                        last = curr
+                        sum += temp
+                        temp = curr
                     case "-":
-                        sum += last
-                        last = -curr
+                        sum += temp
+                        temp = -curr
                     case "*":
-                        last *= curr
+                        temp *= curr
                     case "/":
-                        last /= curr
+                        temp /= curr
                     default:
                         break
                 }
