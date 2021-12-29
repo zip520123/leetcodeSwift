@@ -1,5 +1,5 @@
 //Populating Next Right Pointers in Each Node
-//O(n) O(h)
+//O(n) O(w)
     func connect(_ root: Node?) -> Node? {
         guard let node = root else {return nil}
         var queue = [node]
@@ -25,7 +25,26 @@
         
         return root
     }
-//O(n) O(1)
+
+    //O(n), O(w)
+    func connect(_ root: Node?) -> Node? {
+        guard let node = root else {return nil}
+        var queue = [node]
+        while !queue.isEmpty {
+            let temp = queue
+            queue.removeAll()
+            for i in 0..<temp.endIndex {
+                if i+1 < temp.endIndex {
+                    temp[i].next = temp[i+1]    
+                }
+                temp[i].left.map{queue.append($0)}
+                temp[i].right.map{queue.append($0)}
+            }
+        }
+        return node
+    }
+
+//O(n) O(1), only work in perfect binary tree
     func connect(_ root: Node?) -> Node? {
         var levelRoot = root
         while levelRoot != nil && levelRoot?.left != nil {
