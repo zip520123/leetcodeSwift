@@ -1,4 +1,5 @@
 //Number Complement O(n) 
+//the same as Completent of Base 10 interger without `0` test case
     func findComplement(_ num: Int) -> Int {
         var res = 0
         var mask = 1
