@@ -1,4 +1,5 @@
 //Palindrome Partitioning
+//O(n!), O(n)
 class Solution {
     func partition(_ s: String) -> [[String]] {
         let sArr = Array(s)
