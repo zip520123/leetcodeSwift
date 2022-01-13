@@ -14,3 +14,18 @@
         }
         return res
     }
+
+//O(n log n), O(n)
+    func findMinArrowShots(_ points: [[Int]]) -> Int {
+        var res = 1
+        let arr = points.sorted { a,b in a[1]<b[1] }
+        var prev = arr[0]
+        for i in 1..<arr.endIndex {
+            let curr = arr[i]
+            if prev[1] < curr[0] {
+                res += 1
+                prev = curr
+            }
+        }
+        return res
+    }
