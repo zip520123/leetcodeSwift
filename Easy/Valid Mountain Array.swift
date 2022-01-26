@@ -33,3 +33,17 @@
         }
         return true
     }
+    
+//O(n), O(1)
+    func validMountainArray(_ arr: [Int]) -> Bool {
+        if arr.endIndex < 3 {return false}
+        var i = 0
+        while i < arr.endIndex-1 && arr[i] < arr[i+1] {
+            i += 1
+        } 
+        if i == 0 || i == arr.endIndex-1 {return false}
+        while i < arr.endIndex-1 && arr[i] > arr[i+1] {
+            i += 1
+        }
+        return i == arr.endIndex-1
+    }
