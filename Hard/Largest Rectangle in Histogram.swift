@@ -28,3 +28,34 @@
         
         return res
     }
+
+    //O(n), O(n)
+    func largestRectangleArea(_ heights: [Int]) -> Int {
+        var stack = [Int](), i = 0, res = 0
+        while i < heights.endIndex {
+            if stack.isEmpty || heights[stack.last!] <= heights[i] {
+                stack.append(i)
+                i += 1
+            } else {
+                let last = stack.removeLast()
+                if stack.isEmpty {
+                    res = max(res, i*heights[last])
+                } else {
+                    let prev = stack.last!
+                    res = max(res, (i-prev-1) * heights[last])
+                }   
+            }    
+        }
+        
+        while !stack.isEmpty {
+            let last = stack.removeLast()
+            if stack.isEmpty {
+                res = max(res, i*heights[last])
+            } else {
+                let prev = stack.last!
+                res = max(res, (i-prev-1) * heights[last])
+            }
+        }
+        
+        return res
+    }
