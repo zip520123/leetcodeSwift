@@ -61,3 +61,13 @@ func maxProfit(_ prices: [Int]) -> Int {
     }
     return res 
 }
+
+//O(n), O(1)
+func maxProfit(_ prices: [Int]) -> Int {
+    var res = 0, n = prices[0]
+    for i in 1..<prices.endIndex {
+        res = max(res, prices[i]-n)
+        n = min(n, prices[i])
+    }  
+    return res
+}
