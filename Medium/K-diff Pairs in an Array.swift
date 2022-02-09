@@ -24,3 +24,26 @@
         }
         return res
     }
+    
+//
+    func findPairs(_ nums: [Int], _ k: Int) -> Int {
+        var res = 0
+        var dict = [Int: Int]()
+        for n in nums {
+            dict[n, default:0] += 1
+        }
+        
+        for (key, val) in dict {
+            if k == 0  {
+                if val >= 2 {
+                    res += 1    
+                }
+            } else {
+                if dict[key+k] != nil {
+                    res += 1
+                } 
+
+            }
+        }
+        return res
+    }
