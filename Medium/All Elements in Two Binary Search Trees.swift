@@ -47,3 +47,17 @@ class Solution {
         return res
     }
 }
+
+//O(n log n), O(h)
+    func getAllElements(_ root1: TreeNode?, _ root2: TreeNode?) -> [Int] {
+        var res = [Int]()
+        func dfs(_ root: TreeNode?) {
+            guard let node = root else {return}
+            dfs(node.left)
+            res.append(node.val)
+            dfs(node.right)
+        }
+        dfs(root1)
+        dfs(root2)
+        return res.sorted()
+    }

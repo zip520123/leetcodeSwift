@@ -1,35 +1,34 @@
-
-func findAnagrams(_ s: String, _ p: String) -> [Int] {
-    var dict = [Character: Int]()
-    for c in p {
-        dict[c, default:0] += 1
-    }
-    var pcount = p.count
-    var scount = s.count //each ".count" costs O(n), store the value for loop checking
-    var left = 0, right = 0
-    var res = [Int]()
-    let arrS = Array(s)
-    while(right<scount) {
-        let w = arrS[right]
-        dict[w, default:0] -= 1
-        if dict[w]! >= 0 {
-            pcount -= 1
+//Find All Anagrams in a String
+//O(s), O(p)
+    func findAnagrams(_ s: String, _ p: String) -> [Int] {
+        var res = [Int]()
+        var dict = [Character: Int](), count = p.count
+        for char in p {
+            dict[char, default:0] += 1
         }
-        while(dict[w]! < 0) {
-            dict[arrS[left]]! += 1
-            if dict[arrS[left]]! > 0 {
-                pcount += 1
+        let arr = Array(s)
+        var l = 0, r = 0 
+        while r < arr.endIndex {
+            let char = arr[r]
+            dict[char,default:0] -= 1
+            if dict[char]! >= 0 {
+                count -= 1
             }
-            left += 1
+            while dict[char]! < 0 {
+                let lchar = arr[l]
+                dict[lchar]! += 1
+                if dict[lchar]! > 0 {
+                    count += 1
+                }
+                l += 1
+            }
+            if count == 0 {
+                res.append(l)
+            }
+            r += 1
         }
-        if pcount == 0 {
-            res.append(left)
-        }
-        right+=1
+        return res
     }
-    
-    return res
-}
 
 func findAnagrams(_ s: String, _ p: String) -> [Int] {
     var dictP = [Character: Int]()

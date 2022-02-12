@@ -79,5 +79,17 @@ func subarraySum(_ nums: [Int], _ k: Int) -> Int {
     }
     return res
 }
+
+//O(n), O(n)
+func subarraySum(_ nums: [Int], _ k: Int) -> Int {
+    var res = 0, sum = 0
+    var dict = [0:1]
+    for n in nums {
+        sum += n
+        res += dict[sum-k, default: 0]
+        dict[sum, default: 0] += 1
+    }
+    return res
+}
 // sum[i,j] = sum[0,j] - sum[0,i]
 // sum[0,i] = sum[0,j] - sum[i,j]
