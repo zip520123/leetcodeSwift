@@ -13,3 +13,17 @@
         dfs([],0)
         return res
     }
+//
+    func subsets(_ nums: [Int]) -> [[Int]] {
+        var res = [[Int]]()
+        
+        func dfs(_ index: Int, _ path: [Int]) {
+            res.append(path)
+            for i in index..<nums.endIndex {
+                dfs(i+1,path+[nums[i]])
+            }
+        }
+        
+        dfs(0,[])
+        return res
+    }
