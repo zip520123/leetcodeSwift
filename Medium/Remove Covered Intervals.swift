@@ -1,5 +1,5 @@
 //Remove Covered Intervals
-//O(n log n)
+//O(n log n), O(1)
     func removeCoveredIntervals(_ intervals: [[Int]]) -> Int {
         let sorted = intervals.sorted(by: {
             a,b in
