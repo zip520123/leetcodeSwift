@@ -20,3 +20,23 @@
         }
         return res
     }
+
+//O(n log n), O(n)
+    func removeCoveredIntervals(_ intervals: [[Int]]) -> Int {
+        var intervals = intervals.sorted { a,b in
+            if a[0] != b[0] {
+                return a[0] < b[0]
+            }
+            return a[1] > b[1]
+        }
+        var l = 0, r = 1
+        while r < intervals.endIndex {
+            if intervals[l][1] < intervals[r][1] {
+                l = r
+                r += 1
+            } else {
+                intervals.remove(at: r)
+            }
+        }
+        return intervals.count
+    }
