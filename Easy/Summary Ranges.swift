@@ -24,3 +24,30 @@ func summaryRanges(_ nums: [Int]) -> [String] {
         }
     }
 }
+
+//O(n), O(1)
+    func summaryRanges(_ nums: [Int]) -> [String] {
+        if nums.endIndex == 0 {return []}
+        var left = nums[0], right = nums[0]
+        var res = [String]()
+        for i in 1..<nums.endIndex {
+            let n = nums[i]
+            if right == n-1 {
+                right = n
+            } else {
+                if left == right {
+                    res.append(String(left))
+                } else {
+                    res.append("\(String(left))->\(String(right))")
+                }
+                left = n
+                right = n
+            }
+        }
+        if left == right {
+            res.append(String(left))
+        } else {
+            res.append("\(String(left))->\(String(right))")
+        }
+        return res
+    }
