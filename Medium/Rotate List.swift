@@ -8,7 +8,7 @@
         }
         if k % n == 0 {return head}
         var middle = head!
-        for _ in 0..<(n-k%n-1) {
+        for _ in 0..<(n-(k%n)-1) {
             middle = middle.next!
         }
         let newHead = middle.next
