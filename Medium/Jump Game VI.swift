@@ -1,5 +1,5 @@
 //Jump Game VI
-//O(n), O(n)
+//O(n*k), O(n)
     func maxResult(_ nums: [Int], _ k: Int) -> Int {
         var dp = (0..<nums.endIndex).map {_ in 0}
         var queue = [0]
