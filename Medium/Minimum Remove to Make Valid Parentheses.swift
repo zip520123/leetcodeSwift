@@ -23,3 +23,38 @@
         }
         return String(sArr)
     }
+
+//O(n), O(n)
+    func minRemoveToMakeValid(_ s: String) -> String {
+        var stack = [Int]()
+        var set = Set<Int>()
+        let arr = Array(s)
+        for i in 0..<arr.endIndex {
+            let char = arr[i]
+            switch char {
+                case "(":
+                    stack.append(i)
+                case ")":
+                    if let last = stack.last, arr[last] == "(" {
+                        set.insert(i)
+                        set.insert(last)
+                        stack.removeLast()
+                    }
+                default:
+                    break
+            }
+        }
+        var res = ""
+        for i in 0..<arr.endIndex {
+            let char = arr[i]
+            switch char {
+                case "(",")":
+                    if set.contains(i) {
+                        res += String(char)
+                    }
+                default:
+                    res += String(char)
+            }
+        }
+        return res
+    }
