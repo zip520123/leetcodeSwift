@@ -15,3 +15,22 @@
         }
         return false
     }
+
+//O(rows+log col), O(1)
+    func searchMatrix(_ matrix: [[Int]], _ target: Int) -> Bool {
+        var row = matrix.endIndex-1
+        while row > 0 && target < matrix[row][0] {
+            row -= 1
+        }
+        
+        var l = 0, r = matrix[row].endIndex-1
+        while l<r {
+            let mid = l+(r-l)>>1
+            if matrix[row][mid] < target {
+                l = mid+1
+            } else {
+                r = mid
+            }
+        }
+        return matrix[row][l] == target
+    }
