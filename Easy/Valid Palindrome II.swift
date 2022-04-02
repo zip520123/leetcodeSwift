@@ -48,3 +48,29 @@
         }
         return true
     }
+
+//O(n),O(1)
+    func validPalindrome(_ s: String) -> Bool {
+        let arr = Array(s)
+        var l = 0, r = arr.endIndex-1
+        while l < r {
+            if arr[l] != arr[r] {
+                var left = l+1, right = r
+                while left < right && arr[left] == arr[right] {
+                    left += 1
+                    right -= 1
+                }
+                if left >= right {return true}
+                left = l; right = r-1
+                while left < right && arr[left] == arr[right] {
+                    left += 1
+                    right -= 1
+                }
+                if left >= right {return true}
+                return false
+            }
+            l += 1
+            r -= 1
+        }
+        return true
+    }
