@@ -14,19 +14,14 @@ func maxArea(_ height: [Int]) -> Int {
 }
 //time O(n) space O(1)
 func maxArea(_ height: [Int]) -> Int {
-    var hcount = height.count
-    var res = 0
-    var left = 0, right = hcount - 1
-    while(left < right) {
-        let d = right - left
-        let h = min(height[left],height[right])
-        let c = d * h
-        res = max(res, c)
-        
-        if height[left] > height[right] {
-            right -= 1
+    var l = 0, r = height.endIndex-1, res = 0
+    while l<r {
+        let curr = min(height[l], height[r]) * (r-l)
+        res = max(res,curr)
+        if height[l] < height[r] {
+            l += 1
         } else {
-            left += 1
+            r -= 1
         }
     }
     return res
