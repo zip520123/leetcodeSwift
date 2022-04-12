@@ -48,3 +48,50 @@ func gameOfLife(_ board: inout [[Int]]) {
         }
         board = cloneBoard
     }
+
+//O(n),O(1)
+    class Solution {
+    func gameOfLife(_ board: inout [[Int]]) {
+        let rows = board.endIndex, cols = board[0].endIndex
+        for row in 0..<rows {
+            for col in 0..<cols {
+                let curr = board[row][col]
+                if curr == 1 {
+                    let neiIsLive = nei(row,col,board, cal: { $0>=1 })
+                    if neiIsLive < 2 || neiIsLive > 3 {
+                        board[row][col] = 2
+                    }
+                } else {
+                    let neiIsLive = nei(row, col,board, cal: {$0>=1})
+                    if neiIsLive == 3 {
+                        board[row][col] = -1
+                    }
+                }
+            }
+        }
+        for row in 0..<rows {
+            for col in 0..<cols {
+                if board[row][col] == 2 {
+                    board[row][col] = 0
+                } else if board[row][col] == -1 {
+                    board[row][col] = 1
+                }
+            }
+        }
+    }
+    
+    func nei(_ row: Int, _ col: Int,_ board: [[Int]], cal: ((Int)->(Bool))) -> Int {
+        var neiCount = 0
+        for x in row-1...row+1 {
+            for y in col-1...col+1 {
+                if x>=0, x<board.endIndex, y>=0, y<board[0].endIndex, !(x==row && y==col) {
+                    if cal(board[x][y]) {
+                        neiCount += 1
+                    }
+                }
+            }
+        }
+        return neiCount
+    }
+
+}
