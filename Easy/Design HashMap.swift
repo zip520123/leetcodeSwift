@@ -1,7 +1,7 @@
 //Design HashMap
 //O(1),O(1)
 class MyHashMap {
-    var arr = (0...Int(1E6+1)).map {_ in -1}
+    var arr = (0...Int(1E6)).map {_ in -1}
 
     func put(_ key: Int, _ value: Int) {
         arr[key] = value
