@@ -4,10 +4,10 @@ class UndergroundSystem {
     typealias ID = Int
     typealias Time = Int
     typealias Station = String
-    typealias StartNameToEndNameStation = String
+    typealias StartNameToEndName = String
     
     var checkIn = [ID: (Time, Station)]()
-    var average = [StartNameToEndNameStation: [Time]]() //O(startStation*endStation)
+    var average = [StartNameToEndName: [Time]]() //O(startStation*endStation)
     
     func checkIn(_ id: Int, _ stationName: String, _ t: Int) { //O(1)
         checkIn[id] = (t, stationName)
