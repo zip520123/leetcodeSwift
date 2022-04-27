@@ -12,9 +12,7 @@
             }
         }
         
-        paths.sort { a,b in
-            return a.wei < b.wei
-        }
+        paths.sort { a,b in a.wei < b.wei }
         
         var graph = [Int: Int]()
         for i in 0..<points.endIndex {
