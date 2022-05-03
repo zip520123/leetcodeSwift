@@ -11,3 +11,25 @@
         }
         return end-start >= 0 ? end-start+1 : 0
     }
+
+//O(n), O(n)
+    func findUnsortedSubarray(_ nums: [Int]) -> Int {
+        var l = nums.endIndex, r = 0
+        var stack = [Int]()
+        for i in 0..<nums.endIndex {
+            while !stack.isEmpty && nums[stack.last!] > nums[i] {
+                l = min(l, stack.last!)
+                stack.removeLast()
+            }
+            stack.append(i)
+        }
+        stack.removeAll()
+        for i in (0..<nums.endIndex).reversed() {
+            while !stack.isEmpty && nums[stack.last!] < nums[i] {
+                r = max(r, stack.last!)
+                stack.removeLast()
+            }
+            stack.append(i)
+        }
+        return r-l > 0 ? r-l+1 : 0
+    }
