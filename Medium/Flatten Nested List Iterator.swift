@@ -43,3 +43,29 @@ class NestedIterator {
         !arr.isEmpty
     }
 }
+
+class NestedIterator {
+    private var index = 0
+    let arr: [Int]
+    init(_ nestedList: [NestedInteger]) {
+        arr = nestedList.flatMap { NestedIterator.toIntArray($0) }
+    }
+    
+    static func toIntArray(_ nestedList: NestedInteger) -> [Int] {
+        if nestedList.isInteger() {
+            return [nestedList.getInteger()]
+        } else {
+            return nestedList.getList().flatMap { NestedIterator.toIntArray($0) }
+        }
+    }
+    
+    func next() -> Int {
+        let res = arr[index]
+        index += 1
+        return res
+    }
+    
+    func hasNext() -> Bool {
+        index < arr.endIndex
+    }
+}
