@@ -100,3 +100,38 @@ class NestedIterator {
         !arr.isEmpty
     }
 }
+
+
+class NestedIterator {
+    private var nestedList: [NestedInteger]
+    private var curr: NestedInteger?
+    
+    init(_ nestedList: [NestedInteger]) {
+        self.nestedList = nestedList
+        curr = getCurrent()
+    }
+    
+    func next() -> Int {
+        let res = curr!.getInteger()
+        curr = getCurrent()
+        return res
+    }
+    
+    func hasNext() -> Bool {
+        curr != nil
+    }
+    
+    
+    func getCurrent() -> NestedInteger? {
+        if nestedList.isEmpty { return nil }
+        let nestInteger = nestedList.removeFirst()
+        
+        if nestInteger.isInteger() {
+            return nestInteger
+        } else {
+            let list = nestInteger.getList()
+            nestedList = list + nestedList
+            return getCurrent()
+        }
+    }
+}
