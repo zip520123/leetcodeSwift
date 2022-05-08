@@ -69,3 +69,34 @@ class NestedIterator {
         index < arr.endIndex
     }
 }
+
+class NestedIterator {
+    private var arr = [Int]()
+    init(_ nestedList: [NestedInteger]) {
+        var queue = nestedList
+        
+        var hasNest = false
+        repeat {
+            let temp = queue
+            queue.removeAll()
+            hasNest = false
+            for node in temp {
+                if node.isInteger() {
+                    queue.append(node)
+                } else {
+                    queue += node.getList()
+                    hasNest = true
+                }
+            }
+        } while hasNest
+        arr = queue.map { $0.getInteger() }
+    }
+    
+    func next() -> Int {
+        arr.removeFirst()
+    }
+    
+    func hasNext() -> Bool {
+        !arr.isEmpty
+    }
+}
