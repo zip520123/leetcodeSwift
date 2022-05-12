@@ -17,3 +17,26 @@
         dfs(nums.sorted(), [])
         return res
     }
+
+    func permuteUnique(_ nums: [Int]) -> [[Int]] {
+        var res = [[Int]]()
+        
+        func dfs(_ path: [Int], _ rest: [Int]) {
+            if path.endIndex == nums.endIndex {
+                res.append(path)
+                return
+            }
+            var rest = rest
+            var prev: Int?
+            for i in 0..<rest.endIndex {
+                let curr = rest.remove(at: i)
+                if prev != curr {
+                    dfs(path + [curr], rest)    
+                }
+                rest.insert(curr, at: i)
+                prev = curr
+            }
+        }
+        dfs([], nums.sorted())
+        return res
+    }
