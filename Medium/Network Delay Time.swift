@@ -29,28 +29,24 @@
 //BFS O(n+E)
     func networkDelayTime(_ times: [[Int]], _ n: Int, _ k: Int) -> Int {
         var arr = (0...n).map {_ in Int.max}
-        var adj = [Int: [(Int,Int)]]()
-        
-        for time in times {
-            let source = time[0], dest = time[1], wei = time[2]
-            adj[source, default: []].append((dest, wei)) 
+        var graph = [Int:[(Int, Int)]]()
+        for t in times {
+            let source = t[0], dest = t[1], time = t[2]
+            graph[source, default: []].append((dest, time))
         }
         
         var queue = [k]
         arr[k] = 0
-
         while !queue.isEmpty {
             let curr = queue.removeFirst()
-            if adj[curr] == nil {continue}
-            for (nei, time) in adj[curr]! {
-                let arrivalTime = arr[curr] + time
-                if arr[nei] > arrivalTime {
-                    arr[nei] = arrivalTime
-                    queue.append((nei))
+            for (next, time) in graph[curr, default: []] {
+                let travelTime = arr[curr] + time
+                if arr[next] > travelTime {
+                    arr[next] = travelTime
+                    queue.append(next)
                 }
             }
         }
-        
         var res = Int.min
         for node in 1...n {
             res = max(res, arr[node])
