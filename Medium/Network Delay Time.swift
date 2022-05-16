@@ -1,5 +1,5 @@
 //Network Delay Time
-//DFS O((n-1)! + E)
+//DFS O((n-1)! + E), O(n+E)
     func networkDelayTime(_ times: [[Int]], _ n: Int, _ k: Int) -> Int {
         
         var dict = [Int: [(node: Int, time: Int)]]()
@@ -26,7 +26,7 @@
         return res == Int.max ? -1 : res
     }
 
-//BFS O(n+E)
+//BFS O(n*E), O(n*E)
     func networkDelayTime(_ times: [[Int]], _ n: Int, _ k: Int) -> Int {
         var arr = (0...n).map {_ in Int.max}
         var graph = [Int:[(Int, Int)]]()
