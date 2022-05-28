@@ -30,6 +30,14 @@ func missingNumber(_ nums: [Int]) -> Int {
     return res
 }
 
+func missingNumber(_ nums: [Int]) -> Int {
+    var k = (0...nums.endIndex).reduce(0, ^)
+    for n in nums {
+        k ^= n
+    }
+    return k
+}
+
 //Gauss' Formula (1+n)*n / 2 time O(N) space O(1)
 func missingNumber(_ nums: [Int]) -> Int {
     let count = nums.endIndex
