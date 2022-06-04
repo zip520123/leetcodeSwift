@@ -19,15 +19,18 @@ class NumMatrix {
 }
 
 
-/**
-[0,0]
-[[3, 0, 1, 4, 2], row 0
- [5, 6, 3, 2, 1], row 1
- [1, 2, 0, 1, 5],     2
- [4, 1, 0, 1, 7],     3
- [1, 0, 3, 0, 5]] row 4
-(2, 1, 4, 3)
-row1 2, col1 1, row2 4, col2 3
-row 2, col 4
-row 4, col 0
- */
+class NumMatrix {
+    var dict = [[Int]: Int]()
+    init(_ matrix: [[Int]]) {
+        let rows = matrix.endIndex, cols = matrix[0].endIndex
+        for i in 0..<rows {
+            for j in 0..<cols {
+                dict[[i,j]] = dict[[i,j-1], default: 0] + dict[[i-1,j],default:0] - dict[[i-1,j-1],default: 0] + matrix[i][j]
+            }
+        }
+    }
+    
+    func sumRegion(_ row1: Int, _ col1: Int, _ row2: Int, _ col2: Int) -> Int {
+        return dict[[row2,col2],default:0] - dict[[row1-1,col2], default:0] - dict[[row2,col1-1], default:0] + dict[[row1-1,col1-1], default: 0]
+    }
+}
