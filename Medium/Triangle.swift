@@ -1,8 +1,7 @@
 //Triangle
-//O(rows*cols) O(rows*cols)
+//bottom-up O(rows*cols) O(rows*cols)
     func minimumTotal(_ triangle: [[Int]]) -> Int {
         var dp = triangle
-        let rows = dp.endIndex
         var i = dp.endIndex - 2
         while i >= 0 {
             let cols = dp[i].endIndex
