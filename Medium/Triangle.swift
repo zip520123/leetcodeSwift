@@ -15,3 +15,22 @@
         }
         return dp[0][0]
     }
+
+//top-down, O(n), O(n)
+    func minimumTotal(_ triangle: [[Int]]) -> Int {
+        var mat = triangle
+        let rows = mat.endIndex
+        for i in 1..<rows {
+            let row = mat[i]
+            for j in 0..<row.endIndex {
+                if j == 0 {
+                    mat[i][j] += mat[i-1][j]
+                } else if j == row.endIndex-1 {
+                    mat[i][j] += mat[i-1][j-1]
+                } else {
+                    mat[i][j] += min(mat[i-1][j-1], mat[i-1][j])    
+                }
+            }
+        }
+        return mat[rows-1].min()!
+    }
