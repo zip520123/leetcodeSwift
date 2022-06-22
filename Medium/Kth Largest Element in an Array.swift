@@ -4,6 +4,7 @@
         return nums.sorted(by: >)[k-1]
     }
 
+//O(n^2), O(n)
     func findKthLargest(_ nums: [Int], _ k: Int) -> Int {
         var nums = nums
         func quickSelect(_ start: Int, _ end: Int) -> Int {
@@ -59,7 +60,31 @@ class Solution {
     }
 }
 
-    let input = [3,2,1,5,6,4]
-    let input2 = 2
-
-    print(findKthLargest(input, input2))
+//O(n^2), O(n)
+    func findKthLargest(_ nums: [Int], _ k: Int) -> Int {
+        var nums = nums
+        
+        func dfs(_ left: Int, _ right: Int) -> Int {
+            var l = left, r = right
+            var i = l
+            while i < r {
+                if nums[r] <= nums[i] {
+                    (nums[i], nums[l]) = (nums[l], nums[i])
+                    l += 1
+                    i += 1
+                } else {
+                    i+=1
+                }    
+            }
+            (nums[l], nums[i]) = (nums[i], nums[l])
+            if l+1 == k {
+                return nums[l]
+            } else if l+1 > k {
+                return dfs(0, l-1)
+            } else {
+                return dfs(l+1, r)
+            }
+        }
+        
+        return dfs(0, nums.endIndex-1)
+    }
