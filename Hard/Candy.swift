@@ -78,3 +78,20 @@ func candy(_ ratings: [Int]) -> Int {
     }
     return arr.reduce(0,+)
 }
+
+//O(n), O(n)
+func candy(_ ratings: [Int]) -> Int {
+    var arr = ratings.map { _ in 1 }
+    for i in 0..<ratings.endIndex-1 {
+        if ratings[i] < ratings[i+1] {
+            arr[i+1] = arr[i] + 1
+        }
+    }
+    
+    for i in (1..<ratings.endIndex).reversed() {
+        if ratings[i] < ratings[i-1] {
+            arr[i-1] = max(arr[i-1], arr[i]+1)
+        }
+    }
+    return arr.reduce(0, +)
+}
