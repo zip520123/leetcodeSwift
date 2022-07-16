@@ -23,3 +23,33 @@
 
         return dfs(startRow, startColumn, 0) 
     }
+
+//O(m*n*maxMove), O(m*n*maxMove)
+    func findPaths(_ m: Int, _ n: Int, _ maxMove: Int, _ startRow: Int, _ startColumn: Int) -> Int {
+        let rows = m, cols = n
+        var dict = [[Int]: Int]()
+        
+        func dfs(_ x: Int, _ y: Int, _ path: Int) -> Int {
+            if dict[[x,y,path]] != nil {
+                return dict[[x,y,path]]!
+            }
+            var res = 0
+            if x<0 || y<0 || x>=rows || y >= cols {
+                res += 1
+                return res
+            }
+            
+            if path == maxMove {
+                return res
+            }
+            
+            res += dfs(x+1,y,path+1)
+            res += dfs(x,y+1,path+1)
+            res += dfs(x-1,y,path+1)
+            res += dfs(x,y-1,path+1)
+            dict[[x,y,path]] = res % (Int(1E9) + 7)
+            return res % (Int(1E9) + 7)
+        }
+        
+        return dfs(startRow, startColumn, 0)
+    }
