@@ -1,48 +1,27 @@
 /*Construct Binary Tree from Preorder and Inorder Traversal*/
-func buildTree(_ preorder: [Int], _ inorder: [Int]) -> TreeNode? {
-    let pcount = preorder.count
-    func dfs(_ index: Int, _ left: Int,_ right: Int) -> TreeNode?{
-        if left > right || index >= pcount {
-            return nil
-        } 
-        let curr = TreeNode(preorder[index])
-        var inIndex = 0
+//O(preorder.len * inorder.len), O(tree height)
+    func buildTree(_ preorder: [Int], _ inorder: [Int]) -> TreeNode? {
+        var preIndex = 0
         
-        for i in left...right {
-            if inorder[i] == preorder[index] {
-                inIndex = i
-                break
+        func dfs(_ left: Int, _ right: Int) -> TreeNode? {
+            if left > right {return nil}
+            let p = preorder[preIndex]
+            let node = TreeNode(p)
+            preIndex += 1
+            var inIndex: Int?
+            for i in left...right {
+                if inorder[i] == p {
+                    inIndex = i
+                }
             }
-        }
-        curr.left = dfs(index+1, left, inIndex - 1)
-        curr.right = dfs(index+1 + inIndex - left, inIndex + 1, right)
-        return curr
-    }
-    
-    return dfs(0, 0, pcount - 1)
-}
-
-func buildTree(_ preorder: [Int], _ inorder: [Int]) -> TreeNode? {
-    
-    func dfs(_ start: Int, _ end: Int, _ index: Int) -> TreeNode? {
-        if start > end || index >= preorder.endIndex {return nil}
-        let value = preorder[index]
-        let tree = TreeNode(value) 
-        var inIndex = 0
-        for i in start...end {
-            if inorder[i] == value {
-                inIndex = i
-                break
-            }
+            
+            node.left = dfs(left, inIndex!-1)
+            node.right = dfs(inIndex!+1, right)
+            return node
         }
         
-        tree.left = dfs(start, inIndex - 1, index + 1)
-        tree.right = dfs(inIndex + 1, end,  index + 1 + inIndex - start)
-        return tree
+        return dfs(0, preorder.endIndex-1)
     }
-    
-    return dfs(0, preorder.endIndex - 1, 0)
-}
 
     func buildTree(_ preorder: [Int], _ inorder: [Int]) -> TreeNode? {
         var preIndex = 0
@@ -83,4 +62,27 @@ func buildTree(_ preorder: [Int], _ inorder: [Int]) -> TreeNode? {
         }
         
         return dfs(0,preorder.endIndex-1)
+    }
+
+//O(preorder.len + inorder.len), O(tree height)
+    func buildTree(_ preorder: [Int], _ inorder: [Int]) -> TreeNode? {
+        var preIndex = 0
+        var dict = [Int: Int]()
+        for (i, n) in inorder.enumerated() {
+            dict[n] = i
+        }
+        
+        func dfs(_ left: Int, _ right: Int) -> TreeNode? {
+            if left > right {return nil}
+            let p = preorder[preIndex]
+            let node = TreeNode(p)
+            preIndex += 1
+            var inIndex = dict[p]
+            
+            node.left = dfs(left, inIndex!-1)
+            node.right = dfs(inIndex!+1, right)
+            return node
+        }
+        
+        return dfs(0, preorder.endIndex-1)
     }

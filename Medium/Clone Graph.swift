@@ -22,3 +22,18 @@ func cloneGraph(_ node: Node?) -> Node? {
         }
         return dict[node]!
     }
+
+//O(n), O(n)
+class Solution {
+    var dict = [Int: Node]()
+    func cloneGraph(_ node: Node?) -> Node? {
+        guard let node = node else {return nil}
+        if let existNode = dict[node.val] {
+            return existNode
+        }
+        let newNode = Node(node.val)
+        dict[node.val] = newNode
+        newNode.neighbors = node.neighbors.map {cloneGraph($0)}
+        return newNode
+    }
+}

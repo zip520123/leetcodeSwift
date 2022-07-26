@@ -23,13 +23,11 @@
         return -1
     }
 
-class WordFilter {
-    let words: [String]
+class WordFilter { // TLE
     var dict = [[String]:Int]()
     init(_ words: [String]) { 
-        self.words = words
         
-        for (index,w) in words.enumerated() { //O(word.len! * words.len)
+        for (index,w) in words.enumerated() { //O(word.len ^ 3 * words.len)
             let wArr = Array(w)
             for i in 0..<wArr.endIndex {
                 let prefix = String(wArr[0...i])
@@ -48,7 +46,8 @@ class WordFilter {
         return -1
     }
 }
-//space O((word.len ^ 2) * words.len )
+
+//space O((word.len ^ 2) * words.len)
 class WordFilter { 
     class Trie {
         var dict = [Character: Trie]()
@@ -57,7 +56,7 @@ class WordFilter {
     let root = Trie()
     init(_ words: [String]) {
        for (index, word) in words.enumerated() { //O((word.len ^ 2) * words.len )
-           
+
            let wArr = Array(word)
            for i in 0..<wArr.endIndex {
                let suffix = String(wArr[i..<wArr.endIndex])

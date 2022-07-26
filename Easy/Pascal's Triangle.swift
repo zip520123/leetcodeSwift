@@ -30,3 +30,19 @@
         }
         return res
     }
+
+    func generate(_ numRows: Int) -> [[Int]] {
+        var res = [[1]]
+        
+        for i in 1..<numRows {
+            var curr = [Int]()
+            curr.append(1)
+            for j in 1..<i {
+                curr.append(res[i-1][j-1] + res[i-1][j])
+            }
+            curr.append(1)
+            res.append(curr)
+        }
+        
+        return res
+    }

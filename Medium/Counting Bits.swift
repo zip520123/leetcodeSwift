@@ -46,3 +46,13 @@ func countBits(_ num: Int) -> [Int] {
     }
     return res
 }
+
+//O(n), O(1)
+func countBits(_ n: Int) -> [Int] {
+    if n == 0 {return [0]}
+    var res = [0]
+    for i in 1...n {
+        res.append((res[i>>1] + i&1))
+    }
+    return res
+}

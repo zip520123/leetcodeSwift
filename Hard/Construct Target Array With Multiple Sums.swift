@@ -1,5 +1,5 @@
 //Construct Target Array With Multiple Sums
-//O(n log n) O(n)
+//O(n^2 log n) O(n) TLE
     func isPossible(_ target: [Int]) -> Bool {
         if target.endIndex == 1 {
             return target[0] == 1
@@ -25,6 +25,7 @@
         }
         return true
     }
+
 //O(log k * log n) n = target.len, k = max(target)
     func isPossible(_ target: [Int]) -> Bool {
         if target.endIndex == 1 {

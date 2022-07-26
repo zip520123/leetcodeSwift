@@ -35,3 +35,22 @@
         }
         return res
     }
+
+//O(n), O(n)
+    func maximumUniqueSubarray(_ nums: [Int]) -> Int {
+        var dict = [Int: Int]()
+        var l = 0, r = 0
+        var res = 0, curr = 0
+        while r<nums.endIndex {
+            dict[nums[r], default:0] += 1
+            curr += nums[r]
+            while dict[nums[r]]! > 1 {
+                dict[nums[l]]! -= 1
+                curr -= nums[l]
+                l += 1
+            }
+            res = max(res, curr)
+            r += 1
+        }
+        return res
+    }

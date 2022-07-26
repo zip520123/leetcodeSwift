@@ -50,6 +50,33 @@ func divide(_ dividend: Int, _ divisor: Int) -> Int {
         }
         return res
     }
+    
+class Solution {
+    func divide(_ dividend: Int, _ divisor: Int) -> Int {
+        if dividend == -2147483648 && divisor == -1 {return 2147483647}
+        var d = abs(dividend)
+        let ds = abs(divisor)
+        var res = 0
+        while d >= ds {
+            var value = ds
+            var pow = 1
+            while value+value <= d {
+                value += value
+                pow += pow
+            }
+            res += pow
+            d -= value
+        }
+        
+        res = Solution.xor(dividend < 0, divisor < 0) ? -res : res
+        return res
+    }
+    
+    static func xor(_ lhs: Bool, _ rhs: Bool) -> Bool {
+        return lhs != rhs
+    }
+}
+
 //
 class Solution {
     func divide(_ dividend: Int, _ divisor: Int) -> Int {

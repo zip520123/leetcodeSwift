@@ -37,3 +37,33 @@ class Solution {
         return String(res)
     }
 }
+
+//O(n), O(n)
+    func removeDuplicates(_ s: String, _ k: Int) -> String {
+        var stack = [(char: Character, count: Int)]()
+        for char in s {
+            if stack.isEmpty {
+                stack.append((char, 1))
+            } else {
+                let last = stack.removeLast()
+                if last.char == char {
+                    let newCount = last.count + 1
+                    if newCount < k {
+                        stack.append((char, newCount))    
+                    }
+                } else {
+                    stack.append(last)
+                    stack.append((char, 1))
+                }
+            }
+        }
+        var res = stack.map { (char, count) -> String in 
+                             var curr = ""
+                             for _ in 0..<count {
+                                 curr += String(char)
+                             }
+                             return curr
+                            }
+                    .joined()
+        return res
+    }

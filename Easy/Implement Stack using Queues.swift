@@ -59,3 +59,36 @@ class MyStack {
         queue.isEmpty
     }
 }
+
+//two queue
+class MyStack {
+    var queue1 = [Int]()
+    var queue2 = [Int]()
+    
+    func push(_ x: Int) {
+        queue1.append(x)
+    }
+    
+    func pop() -> Int {
+        while queue1.endIndex > 1 {
+            let curr = queue1.removeFirst()
+            queue2.append(curr)
+        }
+        let res = queue1.removeFirst()
+        queue1 = queue2
+        queue2.removeAll()
+        return res
+    }
+    
+    func top() -> Int {
+        while queue1.endIndex > 1 {
+            let curr = queue1.removeFirst()
+            queue2.append(curr)
+        }
+        return queue1.first!
+    }
+    
+    func empty() -> Bool {
+        queue1.isEmpty && queue2.isEmpty
+    }
+}

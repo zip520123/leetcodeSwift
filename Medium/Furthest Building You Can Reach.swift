@@ -1,5 +1,5 @@
 //Furthest Building You Can Reach
-//O(n log n) O(n)
+//O(n log n) O(n), TLE
 class Solution {
     func furthestBuilding(_ heights: [Int], _ bricks: Int, _ ladders: Int) -> Int {
         var i = 0, heap = MinHeap() , bricks = bricks
@@ -19,7 +19,7 @@ class Solution {
         }
         return heights.endIndex - 1
     }
-
+//Heap
     class MinHeap {
         var arr: [Int] = []
         func removeMin() -> Int { 

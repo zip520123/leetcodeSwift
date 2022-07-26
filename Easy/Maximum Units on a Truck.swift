@@ -13,3 +13,20 @@
         }
         return res
     }
+
+//O(n log n), O(n)
+    func maximumUnits(_ boxTypes: [[Int]], _ truckSize: Int) -> Int {
+        let arr = boxTypes.sorted { a,b in a[1]>b[1]}
+        var res = 0, curr = truckSize
+        for item in arr {
+            let boxes = item[0], units = item[1]
+            if boxes <= curr {
+                res += boxes * units
+                curr -= boxes
+            } else {
+                res += curr * units
+                break
+            }
+        }
+        return res
+    }

@@ -1,3 +1,4 @@
+//Top K Frequent Elements
 //time O(n log n) space O(nums)
 func topKFrequent(_ nums: [Int], _ k: Int) -> [Int] {
     var dict = Dictionary<Int,Int>()
@@ -18,11 +19,10 @@ func topKFrequent(_ nums: [Int], _ k: Int) -> [Int] {
     func topKFrequent(_ nums: [Int], _ k: Int) -> [Int] {
         var dict = [Int: Int]()
         for n in nums {
-            dict[n, default:0] += 1
+            dict[n, default: 0] += 1
         }
-        var list = Array(dict.keys)
-        list.sort {a,b in dict[a]! > dict[b]! } 
-        return Array(list[0..<k])
+        let arr = dict.keys.sorted { a,b in dict[a]! > dict[b]! }
+        return Array(arr[0..<k])
     }
 
 //quick select O(n)~O(n^2), O(n), n = nums.len
@@ -61,4 +61,27 @@ func topKFrequent(_ nums: [Int], _ k: Int) -> [Int] {
                 .sorted { $0.value > $1.value }
                 .prefix(k)
                 .map {$0.key}
+    }
+
+//
+    func topKFrequent(_ nums: [Int], _ k: Int) -> [Int] {
+        var keysToValue = [Int: Int]()
+        for n in nums {
+            keysToValue[n, default:0] += 1
+        }
+        var valToKeys = [Int: [Int]]()
+        for (key, val) in keysToValue {
+            valToKeys[val, default: []].append(key)
+        }
+        var res = [Int]()
+        var arrs = valToKeys.keys.sorted(by: >)
+        
+        for _ in 0..<k {
+            let n = valToKeys[arrs[0]]!.removeFirst()
+            res.append(n)
+            if valToKeys[arrs[0]]!.count == 0 {
+                arrs.removeFirst()
+            }
+        }
+        return res
     }

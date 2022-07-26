@@ -33,6 +33,7 @@
         return root
     }
 
+//O(n), O(1)
     func connect(_ root: Node?) -> Node? {
         var head : Node? //head of the next level
         var prev: Node? //the leading node on the next level
@@ -63,5 +64,63 @@
             head = nil;
             prev = nil;
         }
+        return root
+    }
+
+//O(n), O(h)
+    func connect(_ root: Node?) -> Node? {
+        if root == nil {return nil}
+        var curr = root
+        var prev: Node?
+        var nextHead: Node?
+        while curr != nil {
+            if curr!.left != nil {
+                prev?.next = curr!.left
+                prev = curr!.left
+                if nextHead == nil {
+                    nextHead = curr!.left
+                }
+            }
+            if curr!.right != nil {
+                prev?.next = curr!.right
+                prev = curr!.right
+                if nextHead == nil {
+                    nextHead = curr!.right
+                }
+            }
+            curr = curr!.next
+        }
+        connect(nextHead)
+        return root
+    }
+    
+//O(n), O(1)
+    func connect(_ root: Node?) -> Node? {
+        var curr = root
+        var prev: Node?
+        var nextHead: Node?
+        while curr != nil {
+            while curr != nil {
+                if curr!.left != nil {
+                    prev?.next = curr!.left
+                    prev = curr!.left
+                    if nextHead == nil {
+                        nextHead = curr!.left
+                    }
+                }
+                if curr!.right != nil {
+                    prev?.next = curr!.right
+                    prev = curr!.right
+                    if nextHead == nil {
+                        nextHead = curr!.right
+                    }
+                }
+                curr = curr!.next
+            }
+            curr = nextHead
+            nextHead = nil
+            prev = nil
+        }
+        
         return root
     }

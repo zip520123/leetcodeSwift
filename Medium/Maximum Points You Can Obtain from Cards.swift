@@ -19,18 +19,35 @@
         return dfs(0, cardPoints.endIndex-1, 0, 0)
     }
 //sliding window O(n), O(1), n = cardPoints.len
-    func maxScore(_ cardPoints: [Int], _ k: Int) -> Int {
-        var res = 0
-        var window = cardPoints.endIndex - k
-        let sum = cardPoints.reduce(0,+)
+    func maxScore(_ cards: [Int], _ k: Int) -> Int {
+        let sum = cards.reduce(0,+)
+        var curr = 0, res = 0
+        let window = cards.endIndex-k
         if window <= 0 {return sum}
-        var curr = 0
-        for i in 0..<cardPoints.endIndex {
-            let point = cardPoints[i]
-            curr += point
-            if i + 1 >= window {
-                res = max(res, sum - curr)
-                curr -= cardPoints[i-window+1]
+        for i in 0..<cards.endIndex {
+            curr += cards[i]
+            if i+1 >= window {
+                res = max(res, sum-curr)
+                curr -= cards[i+1-window]
+            }
+        }
+        return res
+    }
+
+//Queue O(n), O(n)
+    func maxScore(_ cards: [Int], _ k: Int) -> Int {
+        var queue = [Int]()
+        let sum = cards.reduce(0,+)
+        var curr = 0, res = 0
+        let window = cards.endIndex-k
+        if window <= 0 {return sum}
+        for i in 0..<cards.endIndex {
+            queue.append(cards[i])
+            curr += cards[i]
+            if queue.endIndex == window {
+                res = max(res, sum-curr)
+                let first = queue.removeFirst()
+                curr -= first
             }
         }
         return res

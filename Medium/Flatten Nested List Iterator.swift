@@ -43,3 +43,95 @@ class NestedIterator {
         !arr.isEmpty
     }
 }
+
+class NestedIterator {
+    private var index = 0
+    let arr: [Int]
+    init(_ nestedList: [NestedInteger]) {
+        arr = nestedList.flatMap { NestedIterator.toIntArray($0) }
+    }
+    
+    static func toIntArray(_ nestedList: NestedInteger) -> [Int] {
+        if nestedList.isInteger() {
+            return [nestedList.getInteger()]
+        } else {
+            return nestedList.getList().flatMap { NestedIterator.toIntArray($0) }
+        }
+    }
+    
+    func next() -> Int {
+        let res = arr[index]
+        index += 1
+        return res
+    }
+    
+    func hasNext() -> Bool {
+        index < arr.endIndex
+    }
+}
+
+class NestedIterator {
+    private var arr = [Int]()
+    init(_ nestedList: [NestedInteger]) {
+        var queue = nestedList
+        
+        var hasNest = false
+        repeat {
+            let temp = queue
+            queue.removeAll()
+            hasNest = false
+            for node in temp {
+                if node.isInteger() {
+                    queue.append(node)
+                } else {
+                    queue += node.getList()
+                    hasNest = true
+                }
+            }
+        } while hasNest
+        arr = queue.map { $0.getInteger() }
+    }
+    
+    func next() -> Int {
+        arr.removeFirst()
+    }
+    
+    func hasNext() -> Bool {
+        !arr.isEmpty
+    }
+}
+
+
+class NestedIterator {
+    private var nestedList: [NestedInteger]
+    private var curr: NestedInteger?
+    
+    init(_ nestedList: [NestedInteger]) {
+        self.nestedList = nestedList
+        curr = getCurrent()
+    }
+    
+    func next() -> Int {
+        let res = curr!.getInteger()
+        curr = getCurrent()
+        return res
+    }
+    
+    func hasNext() -> Bool {
+        curr != nil
+    }
+    
+    
+    func getCurrent() -> NestedInteger? {
+        if nestedList.isEmpty { return nil }
+        let nestInteger = nestedList.removeFirst()
+        
+        if nestInteger.isInteger() {
+            return nestInteger
+        } else {
+            let list = nestInteger.getList()
+            nestedList = list + nestedList
+            return getCurrent()
+        }
+    }
+}

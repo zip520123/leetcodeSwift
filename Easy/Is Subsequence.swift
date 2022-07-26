@@ -38,3 +38,16 @@
         }
         return false
     }
+//O(t), O(1)
+    func isSubsequence(_ s: String, _ t: String) -> Bool {
+        var l = 0
+        let arrS = Array(s), arrT = Array(t)
+        if s == "" {return true}
+        for r in 0..<arrT.endIndex {
+            if arrS[l] == arrT[r] {
+                l += 1
+                if l == arrS.endIndex {break}
+            }
+        }
+        return l == arrS.endIndex
+    }
