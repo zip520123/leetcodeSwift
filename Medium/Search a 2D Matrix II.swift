@@ -15,3 +15,19 @@
         }
         return false
     }
+
+//O(m+n) O(1)
+    func searchMatrix(_ matrix: [[Int]], _ target: Int) -> Bool {
+        let rows = matrix.endIndex, cols = matrix[0].endIndex
+        var row = 0, col = cols-1
+        while row < rows, col >= 0 {
+            if matrix[row][col] < target {
+                row+=1
+            } else if matrix[row][col] > target {
+                col-=1
+            } else {
+                return true
+            }
+        }
+        return false
+    }
