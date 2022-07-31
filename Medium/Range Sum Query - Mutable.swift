@@ -17,6 +17,7 @@ class NumArray {
     }
 }
 
+//TLE
 class NumArray {
     var dict = [Int:Int]()
     var arr = [Int]()
