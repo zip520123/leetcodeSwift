@@ -1,4 +1,6 @@
 //Convert Sorted Array to Binary Search Tree
+//O(n), O(n^2)
+
     func sortedArrayToBST(_ nums: [Int]) -> TreeNode? {
         
         func createNode(_ left:Int,_ right: Int) -> TreeNode? {
@@ -13,11 +15,10 @@
     }
     
     func sortedArrayToBST(_ nums: [Int]) -> TreeNode? {
-        if nums.endIndex == 0 {return nil}
-        if nums.endIndex == 1 {return TreeNode(nums[0])}
+        if nums.endIndex == 0 { return nil }
         let mid = nums.endIndex/2
         let node = TreeNode(nums[mid])
         node.left = sortedArrayToBST(Array(nums[0..<mid]))
-        node.right = sortedArrayToBST(Array(nums[(mid+1)...]))  
+        node.right = sortedArrayToBST(Array(nums[(mid+1)...]))
         return node
     }
