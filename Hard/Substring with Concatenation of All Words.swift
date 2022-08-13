@@ -160,3 +160,49 @@ class Solution {
         return res
     }
 }
+
+//O(n), O(n)
+class Solution {
+    class Trie {
+        var dict = [Character: Trie]()
+        var word: String?
+    }
+    func findSubstring(_ s: String, _ words: [String]) -> [Int] {
+        let root = Trie()
+        var count = [String: Int]()
+        for word in words {
+            var curr = root
+            for char in word {
+                if curr.dict[char] == nil {
+                    curr.dict[char] = Trie()
+                }
+                curr = curr.dict[char]!
+            }
+            count[word, default: 0] += 1
+            curr.word = word
+        }
+        
+        var res = [Int]()
+        let sArr = Array(s), len = words[0].count, chars = len*words.count
+        next: for i in 0..<sArr.endIndex-chars+1 {
+            var seen = [String: Int]()
+            var curr = root
+            for j in 0..<chars {
+                let char = sArr[i+j]
+                if curr.dict[char] == nil {
+                    continue next
+                }
+                curr = curr.dict[char]!
+                if curr.word != nil {
+                    seen[curr.word!, default:0] += 1
+                    if seen[curr.word!]! > count[curr.word!]! {
+                        continue next
+                    }
+                    curr = root
+                }
+            }
+            res.append(i)
+        }
+        return res
+    }
+}
