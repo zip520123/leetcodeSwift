@@ -161,7 +161,7 @@ class Solution {
     }
 }
 
-//O(n), O(n)
+//O(s.len*words.len*words[0].len), O(n)
 class Solution {
     class Trie {
         var dict = [Character: Trie]()
