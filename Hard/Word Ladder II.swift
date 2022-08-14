@@ -34,7 +34,7 @@
         return res
     }
 
-//BFS 
+//BFS , TLE
 //We don't insert next word to visited immediately. because it's also a possible candidate for other path at the same level. 
 //union tempVisit to visited at each level start, to eliminate duplicate search.
     func findLadders(_ beginWord: String, _ endWord: String, _ wordList: [String]) -> [[String]] {
@@ -75,7 +75,7 @@
         return res
     }
 
-    //BFS
+    //BFS, TLE
     func findLadders(_ beginWord: String, _ endWord: String, _ wordList: [String]) -> [[String]] {
         var res = [[String]]()
         var queue = [[String]]()
