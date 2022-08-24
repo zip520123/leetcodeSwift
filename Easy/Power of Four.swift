@@ -14,6 +14,19 @@
         return false
     }
 
+//O(log n), O(1)
+    func isPowerOfFour(_ n: Int) -> Bool {
+        var p = 1
+        if p == n {return true}
+        while p < n {
+            p *= 4
+            if p == n {
+                return true
+            }
+        }
+        return false
+    }
+
 //O(1), O(1)
     func isPowerOfFour(_ n: Int) -> Bool {
         let mask = Int("1010101010101010101010101010101", radix: 2)!
