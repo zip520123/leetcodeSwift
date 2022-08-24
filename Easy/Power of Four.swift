@@ -1,5 +1,5 @@
 //Power of Four
-//O(log n), O(1)
+//O(log4 n), O(1)
     func isPowerOfFour(_ n: Int) -> Bool {
         if n == 0 {return false}
         var i = 0, curr = 1
@@ -14,7 +14,7 @@
         return false
     }
 
-//O(log n), O(1)
+//O(log4 n), O(1)
     func isPowerOfFour(_ n: Int) -> Bool {
         var p = 1
         if p == n {return true}
