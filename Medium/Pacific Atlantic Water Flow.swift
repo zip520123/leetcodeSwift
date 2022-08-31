@@ -187,3 +187,90 @@ func pacificAtlantic(_ heights: [[Int]]) -> [[Int]] {
         }
         return res
     }
+
+//BFS, O(n), O(2n) 
+    func pacificAtlantic(_ heights: [[Int]]) -> [[Int]] {
+        var pacific = Set<[Int]>(), atlantic = Set<[Int]>()
+        let rows = heights.endIndex, cols = heights[0].endIndex
+        for i in 0..<cols {
+            pacific.insert([0,i])
+            atlantic.insert([rows-1,i])
+        }
+        for i in 0..<rows {
+            pacific.insert([i,0])
+            atlantic.insert([i,cols-1])
+        }
+        
+        var queue = [[Int]]()
+        for i in 0..<cols {
+            queue.append([0,i])
+        }
+        for i in 0..<rows {
+            queue.append([i,0])
+        }
+        
+        while !queue.isEmpty {
+            let curr = queue.removeFirst()
+            let x = curr[0], y = curr[1]
+            let height = heights[x][y]
+            if x+1<rows && heights[x+1][y] >= height && pacific.contains([x+1, y]) == false {
+                pacific.insert([x+1, y])
+                queue.append([x+1, y])
+            } 
+            if x-1>=0 && heights[x-1][y] >= height && pacific.contains([x-1, y]) == false {
+                pacific.insert([x-1, y])
+                queue.append([x-1, y])
+            }
+            
+            if y+1<cols && heights[x][y+1] >= height && pacific.contains([x, y+1]) == false {
+                pacific.insert([x, y+1])
+                queue.append([x, y+1])
+            }
+            
+            if y-1>=0 && heights[x][y-1] >= height && pacific.contains([x, y-1]) == false {
+                pacific.insert([x, y-1])
+                queue.append([x, y-1])
+            }
+        }
+        
+        for i in 0..<cols {
+            queue.append([rows-1,i])
+        }
+        for i in 0..<rows {
+            queue.append([i,cols-1])
+        }
+        
+        while !queue.isEmpty {
+            let curr = queue.removeFirst()
+            let x = curr[0], y = curr[1]
+            let height = heights[x][y]
+            if x+1<rows && heights[x+1][y] >= height && atlantic.contains([x+1, y]) == false {
+                atlantic.insert([x+1, y])
+                queue.append([x+1, y])
+            } 
+            if x-1>=0 && heights[x-1][y] >= height && atlantic.contains([x-1, y]) == false {
+                atlantic.insert([x-1, y])
+                queue.append([x-1, y])
+            }
+            
+            if y+1<cols && heights[x][y+1] >= height && atlantic.contains([x, y+1]) == false {
+                atlantic.insert([x, y+1])
+                queue.append([x, y+1])
+            }
+            
+            if y-1>=0 && heights[x][y-1] >= height && atlantic.contains([x, y-1]) == false {
+                atlantic.insert([x, y-1])
+                queue.append([x, y-1])
+            }
+        }
+        
+        var res = [[Int]]()
+        for i in 0..<rows {
+            for j in 0..<cols {
+                if pacific.contains([i,j]) && atlantic.contains([i,j]) {
+                    res.append([i,j])
+                }
+            }
+        }
+        return res
+    }
