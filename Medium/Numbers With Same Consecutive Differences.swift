@@ -1,5 +1,5 @@
 //Numbers With Same Consecutive Differences
-//O(n), O(n)
+//O(2^n), O(2^n)
     func numsSameConsecDiff(_ n: Int, _ k: Int) -> [Int] {
         var queue = [[Int]]()
         for i in 1...9 {
