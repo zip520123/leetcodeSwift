@@ -87,10 +87,10 @@ class Solution {
         }
         
         var res = [[Int]]()
-        for x in left...right {
+        for y in left...right {
             var curr = [Int]()
-            for y in 0..<deep {
-                curr += dict[[y,x], default:[]].sorted()
+            for x in 0..<deep {
+                curr += dict[[x,y], default:[]].sorted()
             }
             res.append(curr)
         }
