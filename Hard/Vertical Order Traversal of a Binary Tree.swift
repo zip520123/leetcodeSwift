@@ -60,3 +60,39 @@ class Solution {
                          }
         return list
     }
+
+//BFS O(n), O(n)
+    func verticalTraversal(_ root: TreeNode?) -> [[Int]] {
+        var dict = [[Int]:[Int]]()
+        var deep = 0, left = 0, right = 0
+        guard let node = root else {return []}
+        var queue = [(node: node, index: 0)]
+        
+        while !queue.isEmpty {
+            let temp = queue
+            queue.removeAll()
+            for item in temp {
+                let node = item.node, index = item.index
+                left = min(left, index)
+                right = max(right, index)
+                dict[[deep,index], default: []].append(node.val)
+                node.left.flatMap {
+                    queue.append(($0, index-1))
+                }
+                node.right.flatMap {
+                    queue.append(($0, index+1))
+                }
+            }
+            deep += 1
+        }
+        
+        var res = [[Int]]()
+        for x in left...right {
+            var curr = [Int]()
+            for y in 0..<deep {
+                curr += dict[[y,x], default:[]].sorted()
+            }
+            res.append(curr)
+        }
+        return res
+    }
