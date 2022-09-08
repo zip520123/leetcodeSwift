@@ -44,7 +44,7 @@ Output: [1,2]
  * }
  */
 //Recursive time O(n) space O(n)
-class Solution {
+
     func inorderTraversal(_ root: TreeNode?) -> [Int] {
         var result = [Int]()
         func dfs(_ node: TreeNode?) {
@@ -58,9 +58,17 @@ class Solution {
         dfs(root)
         return result
     }
-}
+
+    func inorderTraversal(_ root: TreeNode?) -> [Int] {
+        guard let node = root else {return []}
+        var res = [Int]()
+        res += inorderTraversal(node.left)
+        res.append(node.val)
+        res += inorderTraversal(node.right)
+        return res
+    }
 //Iterative 
-class Solution {
+
     func inorderTraversal(_ root: TreeNode?) -> [Int] {
         var res = [Int]()
         var arr = [TreeNode]()
@@ -78,4 +86,3 @@ class Solution {
         
         return res    
     }
-}
