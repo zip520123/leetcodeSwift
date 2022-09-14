@@ -31,6 +31,38 @@ func pseudoPalindromicPaths (_ root: TreeNode?) -> Int {
     
     dfs(root!,Array<Int>(repeating: 0, count: 10))
     
-    
     return res
 }
+
+//O(n), O(h)
+    func pseudoPalindromicPaths (_ root: TreeNode?) -> Int {
+        guard let root = root else {return 0}
+        var res = 0
+        func dfs(_ node: TreeNode, _ dict: [Int: Int]) {
+            var dict = dict
+            dict[node.val, default: 0] += 1
+            if node.left == nil && node.right == nil {
+                var odd = 0
+                for (key, val) in dict {
+                    if val % 2 == 1 {
+                        if odd == 0 {
+                            odd += 1
+                        } else {
+                            return
+                        }
+                    }
+                }
+                res += 1
+            } else {
+                if let left = node.left {
+                    dfs(left, dict)    
+                }
+                if let right = node.right {
+                    dfs(right, dict)
+                }
+            }
+        }
+        
+        dfs(root, [:])
+        return res
+    }
