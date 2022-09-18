@@ -31,7 +31,7 @@ func isPalindrom(_ word: String) -> Bool {
     return true
 }
 
-//Trie O(n*k^2) O((n+k)^2)
+//Trie O(n*k^2) O((n+k)^2), TLE
 class Solution {
     class Trie {
         var wordIndex: Int = -1
@@ -95,7 +95,7 @@ class Solution {
     
 }
 
-//Dictionary O(k^2*n) O(n),k is word.len, n is words.len, using set remove duplicate pairs.
+//Dictionary O(k^2*n) O(n),k is word.len, n is words.len, using set remove duplicate pairs. TLE
 class Solution {
     func palindromePairs(_ words: [String]) -> [[Int]] {
         var dict = [String: Int]()
