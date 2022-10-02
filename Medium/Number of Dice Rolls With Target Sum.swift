@@ -24,3 +24,20 @@
         
         return dfs(0,0)
     }
+
+//bottom up
+    func numRollsToTarget(_ n: Int, _ k: Int, _ target: Int) -> Int {
+        var dp = [[Int]](repeating: [Int](repeating: 0, count: target+1), count: n+1)
+        let mod = Int(1E9+7)
+        dp[0][0] = 1
+        for dict in 1...n {
+            for num in 1...k {
+                for currTarget in 1...target {
+                    if num <= currTarget {
+                        dp[dict][currTarget] = (dp[dict][currTarget] + dp[dict-1][currTarget-num]) % mod
+                    }
+                }
+            }
+        }
+        return dp[n][target]
+    }
