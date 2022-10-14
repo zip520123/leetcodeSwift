@@ -20,3 +20,16 @@
         curr!.next = curr!.next!.next
         return d.next
     }
+
+//O(n), O(1)
+    func deleteMiddle(_ head: ListNode?) -> ListNode? {
+        let d = ListNode()
+        d.next = head
+        var fast: ListNode = d, slow: ListNode = d
+        while fast.next != nil, fast.next!.next != nil {
+            slow = slow.next!
+            fast = fast.next!.next!
+        }
+        slow.next = slow.next!.next
+        return d.next
+    }
