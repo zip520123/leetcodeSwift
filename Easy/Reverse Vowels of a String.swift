@@ -18,3 +18,30 @@
         }
         return String(sArr)
     }
+
+//O(n), O(n)
+    func reverseVowels(_ s: String) -> String {
+        var temp = [Character]()
+        for char in s {
+            switch char {
+                case "a","e","i","o","u","A","E","I","O","U":
+                    temp.append(char)
+                default:
+                break
+            }
+
+        }
+        temp = temp.reversed()
+        var index = 0, arr = Array(s)
+        
+        for i in 0..<arr.endIndex {
+            switch arr[i] {
+                case "a","e","i","o","u","A","E","I","O","U":
+                    arr[i] = temp[index]
+                    index += 1
+                default:
+                break
+            }
+        }
+        return String(arr)
+    }
