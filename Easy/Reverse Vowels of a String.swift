@@ -1,22 +1,24 @@
 //Reverse Vowels of a String
+//O(n), O(1)
     func reverseVowels(_ s: String) -> String {
         let set = Set<Character>("aeiouAEIOU")
-        var sArr = Array(s)
-        var l = 0, r = sArr.endIndex - 1
-        while l < r {
-            while set.contains(sArr[l]) == false && l < r {
+        var arr = Array(s), l = 0, r = arr.endIndex-1
+        while l<r {
+            while l<r && set.contains(arr[l]) == false {
                 l += 1
             }
-            while set.contains(sArr[r]) == false && l < r {
+            while l<r && set.contains(arr[r]) == false {
                 r -= 1
             }
-            if set.contains(sArr[l]) && set.contains(sArr[r]) {
-                (sArr[l],sArr[r]) = (sArr[r],sArr[l])
+
+            if set.contains(arr[l]) && set.contains(arr[r]) {
+                (arr[l], arr[r]) = (arr[r], arr[l])
                 l += 1
                 r -= 1
             }
+            
         }
-        return String(sArr)
+        return String(arr)
     }
 
 //O(n), O(n)
