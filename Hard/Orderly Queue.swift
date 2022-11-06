@@ -6,16 +6,14 @@ If k = 1, only rotations of s are possible, and the answer is the lexicographica
 If k > 1, any permutation of s is possible, and the answer is the letters of s written in lexicographic order.
 */
     func orderlyQueue(_ s: String, _ k: Int) -> String {
-        var arr = Array(s)
-        
+        let arr = Array(s)
+
         if k == 1 {
-            var res = String(arr)
+            var res = s
             for i in 0..<s.count {
-                res = min(res, String(arr[i..<arr.endIndex] + arr[0..<i]))
+                res = min(res, String(arr[i...] + arr[0..<i]))
             }
             return res
-        } else {
-            return String(arr.sorted { $0 < $1 })
         }
-        
+        return String(arr.sorted { $0 < $1 })
     }
