@@ -35,3 +35,11 @@ func countNodes(_ root: TreeNode?) -> Int {
     }
     
 }
+
+//O(n), O(h)
+func countNodes(_ root: TreeNode?) -> Int {
+    guard let node = root else {return 0}
+    let l = countNodes(node.left)
+    let r = countNodes(node.right)
+    return l+r+1
+}
