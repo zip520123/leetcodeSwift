@@ -28,16 +28,16 @@ class Solution {
         return String(res)
     }
 }
-//
+
+//O(n), O(n)
     func removeDuplicates(_ s: String) -> String {
-        
-        var queue = [Character]()
+        var stack = [Character]()
         for char in s {
-            if !queue.isEmpty && queue.last! == char {
-                queue.removeLast()
-            } else{
-                queue.append(char)
+            if !stack.isEmpty && stack.last! == char {
+                stack.removeLast()
+            } else {
+                stack.append(char)
             }
         }
-        return String(queue)
+        return String(stack)
     }

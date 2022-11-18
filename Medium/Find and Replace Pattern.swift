@@ -23,3 +23,25 @@
         return res
         
     }
+
+        func findAndReplacePattern(_ words: [String], _ pattern: String) -> [String] {
+        var res = [String]()
+        let pArr = Array(pattern)
+        nextWord: for word in words {
+            var dict = [Character: Character]()
+            var dict2 = [Character: Character]()
+            let wArr = Array(word)
+            for i in 0..<word.count {
+                let leftChar = wArr[i]
+                let rightChar = pArr[i]
+                if dict[leftChar] == nil && dict2[rightChar] == nil{
+                    dict[leftChar] = rightChar
+                    dict2[rightChar] = leftChar
+                } else if dict[leftChar] != rightChar || dict2[rightChar] != leftChar {
+                    continue nextWord
+                }
+            } 
+            res.append(word)
+        }
+        return res
+    }

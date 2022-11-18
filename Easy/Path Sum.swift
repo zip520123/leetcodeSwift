@@ -19,7 +19,7 @@
         return dfs(root,0)
     }
     
-        func hasPathSum(_ root: TreeNode?, _ targetSum: Int) -> Bool {
+    func hasPathSum(_ root: TreeNode?, _ targetSum: Int) -> Bool {
         guard let node = root else {return false}
         if node.left == nil && node.right == nil {
             return node.val == targetSum

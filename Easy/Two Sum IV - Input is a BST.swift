@@ -13,3 +13,16 @@
         }
         return dfs(root)
     }
+
+    func findTarget(_ root: TreeNode?, _ k: Int) -> Bool {
+        var set = Set<Int>()
+        func dfs(_ node: TreeNode?) -> Bool {
+            guard let node = node else {return false}
+            if set.contains(k-node.val) {
+                return true
+            }
+            set.insert(node.val)
+            return dfs(node.left) || dfs(node.right)
+        }
+        return dfs(root)
+    }

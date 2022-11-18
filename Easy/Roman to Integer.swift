@@ -32,3 +32,36 @@
         }
         return res
     }
+
+    func romanToInt(_ s: String) -> Int {
+        var prev = 0, res = 0
+        let sArr = Array(s)
+        for char in sArr.reversed() {
+            let curr : Int
+            switch char {
+                case "I":
+                    curr = 1
+                case "V":
+                    curr = 5
+                case "X":
+                    curr = 10
+                case "L":
+                    curr = 50
+                case "C":
+                    curr = 100
+                case "D":
+                    curr = 500
+                case "M":
+                    curr = 1000
+                default:
+                    curr = 0
+            }
+            if curr >= prev {
+                res += curr
+                prev = curr
+            } else {
+                res -= curr
+            }
+        }
+        return res
+    }

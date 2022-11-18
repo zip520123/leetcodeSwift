@@ -1,25 +1,23 @@
 /*Remove Nth Node From End of List*/
 //time O(n) space O(1)
 func removeNthFromEnd(_ head: ListNode?, _ n: Int) -> ListNode? {
-    let dummy = ListNode()
-    dummy.next = head
-    var curr : ListNode? = dummy
-    var count = 0
-    while(curr != nil) {
+    var count = 0 
+    var curr = head
+
+    while curr != nil {
         curr = curr!.next
         count += 1
-    } 
-    
-    count -= n
-    count -= 1
-    curr = dummy
-    while count > 0 {
-        count -= 1
-        curr = curr!.next
     }
-    curr!.next = curr!.next!.next    
-    return dummy.next
+    let d = ListNode()
+    d.next = head
+    curr = d
+    for _ in 0..<(count-n) {
+        curr = curr?.next
+    }
+    curr?.next = curr?.next?.next
+    return d.next
 }
+
 //time O(n) space O(n)
 func removeNthFromEnd(_ head: ListNode?, _ n: Int) -> ListNode? {
     let dummy = ListNode()

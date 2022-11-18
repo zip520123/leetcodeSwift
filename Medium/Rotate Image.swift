@@ -1,27 +1,18 @@
 /*Rotate Image*/
-func rotate(_ matrix: inout [[Int]]) {
-        
-    let row = matrix.count
-    if row == 0 {
-        return
-    }
-    let col = matrix[0].count
-    for i in 0..<row {
-        for j in i..<col {
-            (matrix[i][j],matrix[j][i]) = (matrix[j][i],matrix[i][j])
+//O(n), O(1)
+    func rotate(_ matrix: inout [[Int]]) {
+        let rows = matrix.endIndex, cols = matrix[0].endIndex
+        for i in 0..<rows {
+            for j in i..<cols {
+                (matrix[i][j], matrix[j][i]) = (matrix[j][i], matrix[i][j])
+            }
+        }
+        for row in 0..<rows {
+            var l = 0, r = cols-1
+            while l<r {
+                (matrix[row][l], matrix[row][r]) = (matrix[row][r], matrix[row][l])    
+                l += 1
+                r -= 1
+            }  
         }
     }
-    
-    for i in 0..<row {
-        var left = 0
-        var right = col - 1
-        
-        while (left < right) {
-            (matrix[i][left],matrix[i][right]) = (matrix[i][right],matrix[i][left])
-            left += 1
-            right -= 1
-        }
-        
-    }
-    
-}
