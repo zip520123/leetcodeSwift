@@ -84,3 +84,30 @@
         curr = sign == "+" ? curr + n : curr - n
         return curr 
     }
+
+    //O(n),O(1)
+    func calculate(_ s: String) -> Int {
+        var res = 0, curr = 0
+        var sign: Character = "+"
+        var stack: [(res: Int, sign: Character)] = []
+        for char in s {
+            switch char {
+                case "(":
+                    stack.append((res, sign))
+                    sign = "+"; res = 0; curr = 0
+                case ")":
+                    let last = stack.removeLast()
+                    res = sign == "+" ? res + curr : res - curr
+                    res = last.sign == "+" ? last.res + res : last.res - res
+                    curr = 0; sign = "+"
+                case "+", "-":
+                    res = sign == "+" ? res + curr : res - curr
+                    sign = char; curr = 0
+                case "0"..."9":
+                    curr = curr*10 + Int(String(char))!
+                default:
+                    break
+            }
+        }
+        return sign == "+" ? res + curr : res - curr
+    }
