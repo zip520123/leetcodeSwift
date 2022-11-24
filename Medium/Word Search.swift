@@ -72,3 +72,53 @@ class Solution {
         return false
     }
 }
+
+//O(board*word.len), O(board*word.len)
+class Solution {
+    class Trie {
+        var dict = [Character: Trie]()
+        var isEnd = false
+    }
+    func exist(_ board: [[Character]], _ word: String) -> Bool {
+        var board = board
+        let root = Trie()
+        var curr = root
+        for char in word {
+            if curr.dict[char] == nil {
+                curr.dict[char] = Trie()
+            }
+            curr = curr.dict[char]!
+        }
+        curr.isEnd = true
+
+        let rows = board.endIndex, cols = board[0].endIndex
+
+        func search(_ node: Trie, _ x: Int, _ y: Int) -> Bool {
+            if node.isEnd {return true}
+            guard x>=0, x<rows, y>=0, y<cols else {return false}
+            
+            let temp = board[x][y]
+            board[x][y] = "."
+            var res = false
+            if let next = node.dict[temp] {
+                let top = search(next, x+1, y)
+                let bottom = search(next, x-1, y)
+                let left = search(next, x, y+1)
+                let right = search(next, x, y-1)
+                res = res || top || bottom || left || right
+            }
+            board[x][y] = temp
+            return res
+        }
+
+        for row in 0..<rows {
+            for col in 0..<cols {
+                if search(root, row, col) == true {
+                    return true
+                }
+            }
+        }
+
+        return false
+    }
+}
