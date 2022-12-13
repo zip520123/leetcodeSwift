@@ -39,3 +39,22 @@
         }
         return dp.last!.min() ?? 0
     }
+
+//O(n), O(n)
+    func minFallingPathSum(_ matrix: [[Int]]) -> Int {
+        var matrix = matrix
+        let rows = matrix.endIndex, cols = matrix[0].endIndex
+        for row in 1..<rows {
+            for col in 0..<cols {
+                if col == 0 {
+                    matrix[row][col] += min(matrix[row-1][col], matrix[row-1][col+1])
+                } else if col == cols-1 {
+                    matrix[row][col] += min(matrix[row-1][col], matrix[row-1][col-1])
+                } else {
+                    matrix[row][col] += min(matrix[row-1][col], matrix[row-1][col-1], matrix[row-1][col+1])
+                }
+                
+            }
+        }
+        return matrix[rows-1].min()!
+    }
