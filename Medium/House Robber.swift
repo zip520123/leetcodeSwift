@@ -19,27 +19,29 @@ func rob(_ nums: [Int]) -> Int {
 }
 
 //time O(n) space O(1)
-func rob(_ nums: [Int]) -> Int {
-    let ncount = nums.count
-    if ncount == 0 {return 0}
-    if ncount == 1 {return nums[0]}
-    if ncount == 2 {return max(nums[0],nums[1])}
-    if ncount == 3 {return max(nums[0]+nums[2],nums[1])}
-    
-    var dp0 = nums[0]
-    var dp1 = nums[1]
-    var dp2 = nums[2] + nums[0]
-    
-    for i in 3..<ncount {
-        let n = nums[i]
+    func rob(_ nums: [Int]) -> Int {
+        if nums.endIndex == 0 {
+            return 0
+        }
+        if nums.endIndex == 1 {
+            return nums[0]
+        }
+        if nums.endIndex == 2 {
+            return max(nums[0],nums[1])
+        }
+        var dp0 = nums[0]
+        var dp1 = nums[1]
+        var dp2 = nums[2] + nums[0]
         
-        let temp = max(dp0,dp1) + n
-        dp0 = dp1
-        dp1 = dp2
-        dp2 = temp
+        for i in 3..<nums.endIndex {
+            let curr = max(dp0,dp1) + nums[i]
+            dp0 = dp1
+            dp1 = dp2
+            dp2 = curr 
+        }
+        
+        return max(dp1, dp2)
     }
-    return max(dp1,dp2)
-}
 
 //O(n), O(1)
     func rob(_ nums: [Int]) -> Int {
