@@ -1,5 +1,5 @@
 //Implement Queue using Stacks
-//O(n), O()
+//O(n), O(n)
 class MyQueue {
     var stack = [Int]()
     var stack2 = [Int]()
