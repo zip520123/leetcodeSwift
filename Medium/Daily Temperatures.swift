@@ -51,3 +51,22 @@
         
         return res
     }
+
+//O(n), O(n)
+    func dailyTemperatures(_ temperatures: [Int]) -> [Int] {
+        var res = [Int]()
+        var stack = [Int]()
+        for i in (0..<temperatures.endIndex).reversed() {
+            let curr = temperatures[i]
+            while !stack.isEmpty && temperatures[stack.last!] <= curr {
+                stack.removeLast()
+            }
+            if stack.isEmpty {
+                res.append(0)
+            } else {
+                res.append(stack.last!-i)
+            }
+            stack.append(i)
+        }
+        return res.reversed()
+    }
