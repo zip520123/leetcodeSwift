@@ -38,3 +38,23 @@
         }
         return start
     }
+
+//O(n), O(1)
+    func canCompleteCircuit(_ gas: [Int], _ cost: [Int]) -> Int {
+        let tank = gas.reduce(0, +)
+        let costs = cost.reduce(0, +)
+        if tank < costs {
+            return -1
+        }
+        var start = 0
+        var t = 0
+        for i in 0..<gas.endIndex {
+            t += gas[i]
+            t -= cost[i]
+            if t < 0 {
+                start = i+1
+                t = 0
+            }
+        }
+        return start
+    }
