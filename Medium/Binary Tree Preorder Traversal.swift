@@ -28,3 +28,9 @@
         
         return res
     }
+
+//O(h), O(n)
+    func preorderTraversal(_ root: TreeNode?) -> [Int] {
+        guard let node = root else {return []}
+        return [node.val] + preorderTraversal(node.left) + preorderTraversal(node.right)
+    }
