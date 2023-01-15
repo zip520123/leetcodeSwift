@@ -1,4 +1,5 @@
 //Evaluate Reverse Polish Notation
+//O(n), O(n)
     func evalRPN(_ tokens: [String]) -> Int {
         var stack = [Int]()
         for char in tokens {
@@ -23,4 +24,31 @@
             }
         }
         return stack.last!
+    }
+
+//O(n), O(n)
+    func evalRPN(_ tokens: [String]) -> Int {
+        var stack = [Int]()
+        for token in tokens {
+            if let n = Int(token) {
+                stack.append(n)
+            } else {
+                let a = stack.removeLast()
+                let b = stack.removeLast()
+                switch token {
+                    case "+":
+                        stack.append(b+a)
+                    case "-":
+                        stack.append(b-a)
+                    case "*":
+                        stack.append(b*a)
+                    case "/":
+                        stack.append(b/a)
+                    default:
+                        break
+                }    
+            }
+            
+        }
+        return stack.first!
     }

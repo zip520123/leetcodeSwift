@@ -27,3 +27,44 @@
         }
         return true
     }
+
+//O(n), O(n)
+    func possibleBipartition(_ n: Int, _ dislikes: [[Int]]) -> Bool {
+        var dict = [Int: [Int]]()
+        
+        for dislike in dislikes {
+            let a = dislike[0], b = dislike[1]
+            dict[a, default:[]].append(b)
+            dict[b, default:[]].append(a)
+        }
+        
+        var status = [Int: Int]()
+
+        for p in 1...n {
+            if status[p] == nil {
+                status[p] = 1
+                var queue = [p]
+                while !queue.isEmpty {
+                    let node = queue.removeFirst()
+                    
+                    for next in dict[node, default:[]] {
+                        if status[next] == nil {
+                            if status[node] == 1 {
+                                status[next] = 2
+                            } else {
+                                status[next] = 1
+                            }
+                            queue.append(next)
+                        } else if (status[next] == 1 && status[node] == 1) || 
+                               (status[next] == 2 && status[node] == 2) {
+                            return false
+                        }
+                    }
+                    
+                }
+            }
+            
+        }
+        
+        return true
+    }
