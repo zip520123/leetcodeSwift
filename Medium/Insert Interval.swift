@@ -65,6 +65,30 @@ func insert(_ intervals: [[Int]], _ newInterval: [Int]) -> [[Int]] {
     
     return res
 }
+
+//O(n log n), O(n)
+func insert(_ intervals: [[Int]], _ newInterval: [Int]) -> [[Int]] {
+    let arr = (intervals + [newInterval]).sorted(by: { a, b in
+        return a[0] < b[0]
+    })
+    var res = [arr[0]]
+    
+    for i in 1..<arr.endIndex {
+        let prev = res.last!
+        let curr = arr[i]
+        if curr[0] <= prev[1] {
+            var last = res.removeLast()
+            last[1] = max(last[1], curr[1])
+            res.append(last)
+        } else {
+            res.append(curr)
+        }
+    }
+    
+    return res
+    
+}
+
 //time O(n) space O(n)
 func insert(_ intervals: [[Int]], _ newInterval: [Int]) -> [[Int]] {
     var intervals = intervals
