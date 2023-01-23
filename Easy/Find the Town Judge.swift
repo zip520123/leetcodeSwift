@@ -31,3 +31,19 @@
         
         return -1
     }
+
+//O(n), O(n)
+    func findJudge(_ n: Int, _ trust: [[Int]]) -> Int {
+        var dict = [Int: Int]()
+        var dict2 = [Int: Int]()
+        for t in trust {
+            dict[t[0], default:0] += 1
+            dict2[t[1], default:0] += 1
+        }
+        for p in 1...n {
+            if dict[p, default:0] == 0 && dict2[p, default:0] == n-1 {
+                return p
+            }
+        }
+        return -1
+    }
