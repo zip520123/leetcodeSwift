@@ -88,3 +88,29 @@
         }
         return true
     }
+
+    //O(n)
+    func isAlienSorted(_ words: [String], _ order: String) -> Bool {
+        let words = words.map { s in s + " "}
+        let arr = Array(order)
+        var dict: [Character: Int] = [" ": 0]
+        for i in 1...arr.endIndex {
+            dict[arr[i-1]] = i
+        }
+
+        for i in 0..<words.endIndex-1 {
+            var l = 0
+            let left = Array(words[i]), right = Array(words[i+1])
+            while l < left.endIndex && l < right.endIndex {
+                if left[l] == right[l] {
+                    l += 1
+                    continue
+                }
+                if dict[left[l]]! > dict[right[l]]! {
+                    return false
+                }
+                break
+            }
+        }
+        return true
+    }
