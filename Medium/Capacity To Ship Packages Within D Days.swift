@@ -8,11 +8,11 @@ class Solution {
             total += w
         }
 
-        func feaible(_ c: Int) -> Bool {
+        func feaible(_ capacity: Int) -> Bool {
             var daysNeeded = 1, curr = 0
             for w in weights {
                 curr += w
-                if curr > c {
+                if curr > capacity {
                     daysNeeded += 1
                     curr = w
                 }
