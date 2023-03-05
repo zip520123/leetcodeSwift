@@ -41,5 +41,5 @@
                 }   
             }
         }
-        return steps[arr.endIndex-1]!
+        return -1
     }
