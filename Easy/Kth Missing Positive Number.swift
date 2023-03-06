@@ -18,6 +18,20 @@
         return -1
     }
 
+//O(n), O(1)
+    func findKthPositive(_ arr: [Int], _ k: Int) -> Int {
+        var i = 0, count = 0, n = 1
+        while count < k {
+            if i < arr.endIndex && arr[i] == n {
+                i += 1
+            } else {
+                count += 1
+            }
+            n += 1
+        }
+        return n-1
+    }
+
 //O(log n) O(1)
     func findKthPositive(_ arr: [Int], _ k: Int) -> Int {
         var l = 0, r = arr.endIndex - 1
@@ -71,4 +85,16 @@
             }
         }
         return arr[l-1] + (k-(arr[l-1]-l))
+    }
+
+//O(n), O(n)
+    func findKthPositive(_ arr: [Int], _ k: Int) -> Int {
+        var set = Set(arr), count = k, curr = 1
+        while count > 0 {
+            if set.contains(curr) == false {
+                count -= 1
+            }
+            curr += 1
+        }
+        return curr - 1
     }
