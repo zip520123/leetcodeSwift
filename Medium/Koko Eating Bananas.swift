@@ -17,3 +17,20 @@
         }
         return l
     }
+
+    func minEatingSpeed(_ piles: [Int], _ h: Int) -> Int {
+        if h == piles.endIndex {return piles.max()!}
+        var l = 1, r = piles.max()!
+        while l<r {
+            let mid = l+(r-l)>>1
+            let curr = piles.reduce(0, {a, b in 
+                return a + Int((Double(b)/Double(mid)).rounded(.up))
+            })
+            if curr > h {
+                l = mid+1
+            } else {
+                r = mid
+            }
+        }
+        return l
+    }
