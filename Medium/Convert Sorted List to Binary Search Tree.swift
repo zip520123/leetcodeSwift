@@ -38,12 +38,36 @@
         }
         prev?.next = nil
         let node = TreeNode(slow!.val)
-        let mid = slow!.next
-        slow!.next = nil
-        if slow !== head {
+        if head !== slow {
             node.left = sortedListToBST(head)
-        } 
-        node.right = sortedListToBST(mid)
+        }
+        node.right = sortedListToBST(slow!.next)
         return node
-
     }
+
+//O(n log n), O(n)
+class Solution {
+    func sortedListToBST(_ head: ListNode?) -> TreeNode? {
+        guard let node = head else {return nil}
+        var arr = [Int]()    
+        var curr: ListNode? = head
+        while curr != nil {
+            arr.append(curr!.val)
+            curr = curr!.next
+        }
+        return createTreeNode(arr)
+    }
+
+    func createTreeNode(_ arr: [Int]) -> TreeNode? {
+        if arr.count == 0 {return nil}
+        if arr.count == 1 {
+            return TreeNode(arr[0], nil, nil)
+        }
+        let node = TreeNode(arr[arr.endIndex/2])
+        let left = createTreeNode(Array(arr[0..<arr.endIndex/2]))
+        let right = createTreeNode(Array(arr[arr.endIndex/2+1..<arr.endIndex]))
+        node.left = left
+        node.right = right
+        return node
+    }
+}
