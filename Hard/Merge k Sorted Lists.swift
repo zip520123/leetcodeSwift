@@ -54,3 +54,41 @@ func mergeKLists(_ lists: [ListNode?]) -> ListNode? {
     }
     return head.next
 }
+
+//O(n log n), O(n)
+class Solution {
+    func mergeKLists(_ lists: [ListNode?]) -> ListNode? {
+        if lists.endIndex == 0 {return nil}
+        if lists.endIndex == 1 {return lists[0]}
+        let left = mergeKLists(Array(lists[0..<lists.endIndex/2]))
+        let right = mergeKLists(Array(lists[(lists.endIndex/2)...]))
+        return merge(left, right)
+    }
+
+    func merge(_ l: ListNode?, _ r: ListNode?) -> ListNode? {
+        let head = ListNode()
+        var curr: ListNode? = head
+        var l1 = l, l2 = r
+        while l1 != nil && l2 != nil {
+            if l1!.val < l2!.val {
+                curr!.next = l1
+                l1 = l1!.next
+            } else {
+                curr!.next = l2
+                l2 = l2!.next
+            }
+            curr = curr!.next
+        }
+        while l1 != nil {
+            curr!.next = l1
+            l1 = l1!.next
+            curr = curr!.next
+        }
+        while l2 != nil {
+            curr!.next = l2
+            l2 = l2!.next
+            curr = curr!.next
+        }
+        return head.next
+    }
+}
