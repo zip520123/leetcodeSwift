@@ -43,3 +43,44 @@ class Trie {
 
 
 }
+
+class Trie {
+    class TrieNode {
+        var dict = [Character: TrieNode]()
+        var isEnd = false
+    }   
+    let root = TrieNode()
+    
+    func insert(_ word: String) {
+        var curr = root
+        for char in word {
+            if curr.dict[char] == nil {
+                curr.dict[char] = TrieNode()
+            }
+            curr = curr.dict[char]!
+        }
+        curr.isEnd = true
+    }
+    
+    func search(_ word: String) -> Bool {
+        var curr = root
+        for char in word {
+            if curr.dict[char] == nil {
+                return false
+            }
+            curr = curr.dict[char]!
+        }
+        return curr.isEnd
+    }
+    
+    func startsWith(_ prefix: String) -> Bool {
+        var curr = root
+        for char in prefix {
+            if curr.dict[char] == nil {
+                return false
+            }
+            curr = curr.dict[char]!
+        }
+        return true
+    }
+}
