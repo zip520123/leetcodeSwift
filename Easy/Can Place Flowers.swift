@@ -30,3 +30,33 @@
         }
         return n <= 0
     }
+
+    func canPlaceFlowers(_ flowerbed: [Int], _ n: Int) -> Bool {
+
+        var flowerbed = flowerbed
+        var count = 0
+        for i in 0..<flowerbed.endIndex {
+            if flowerbed[i] == 0 {
+                if i == 0 {
+                    if i+1 < flowerbed.endIndex && flowerbed[i+1] == 0 {
+                        flowerbed[i] = 1
+                        count += 1
+                    } else if i+1 == flowerbed.endIndex {
+                        flowerbed[i] = 1
+                        count += 1
+                    }
+                } else if i == flowerbed.endIndex-1 {
+                    if i-1 >= 0 && flowerbed[i-1] == 0 {
+                        flowerbed[i] = 1
+                        count += 1
+                    }
+                } else {
+                    if i-1 >= 0 && flowerbed[i-1] == 0 && i+1 < flowerbed.endIndex && flowerbed[i+1] == 0 {
+                        flowerbed[i] = 1
+                        count += 1
+                    } 
+                }
+            } 
+        }
+        return count >= n
+    }
