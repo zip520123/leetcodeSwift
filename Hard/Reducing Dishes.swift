@@ -15,3 +15,18 @@
         }
         return res
     }
+
+//O(n log n), O(n)
+    func maxSatisfaction(_ satisfaction: [Int]) -> Int {
+        let arr = satisfaction.sorted()
+        var res = 0, suffixSum = 0
+        for i in (0..<arr.endIndex).reversed() {
+            if suffixSum + arr[i] > 0 {
+                suffixSum += arr[i]
+                res += suffixSum
+            } else {
+                break
+            }
+        }
+        return res
+    }
