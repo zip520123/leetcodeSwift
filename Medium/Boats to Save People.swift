@@ -1,5 +1,5 @@
 //Boats to Save People
-//O(n), O(1)
+//O(n log n), O(n)
     func numRescueBoats(_ people: [Int], _ limit: Int) -> Int {
         let arr = people.sorted()
         var i = 0, j = arr.endIndex-1
