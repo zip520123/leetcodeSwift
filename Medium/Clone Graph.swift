@@ -37,3 +37,18 @@ class Solution {
         return newNode
     }
 }
+
+class Solution {
+    var dict = [Int: Node]()
+    func cloneGraph(_ node: Node?) -> Node? {
+        guard let node = node else {return nil}
+        if dict[node.val] == nil {
+            let newNode = Node(node.val)
+            dict[node.val] = newNode
+            for nei in node.neighbors {
+                newNode.neighbors.append(cloneGraph(nei)) 
+            }
+        }
+        return dict[node.val]
+    }
+}
