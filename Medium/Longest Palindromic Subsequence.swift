@@ -17,3 +17,21 @@
         }
         return dfs(0,n-1)
     }
+
+//O(n^2), O(n^2)
+    func longestPalindromeSubseq(_ s: String) -> Int {
+        let arr = Array(s)
+        let n = arr.endIndex
+        var dp = [[Int]](repeating: [Int](repeating: 0, count: n), count: n)
+        for i in (0..<n).reversed() {
+            dp[i][i] = 1
+            for j in (i+1)..<n {
+                if arr[i] == arr[j] {
+                    dp[i][j] = dp[i+1][j-1]+2
+                } else {
+                    dp[i][j] = max(dp[i+1][j], dp[i][j-1])
+                }
+            }
+        }
+        return dp[0][n-1]
+    }
