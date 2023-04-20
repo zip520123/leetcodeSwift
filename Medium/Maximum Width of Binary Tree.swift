@@ -63,3 +63,27 @@
         
         return maxLen
     }
+
+//O(n),O(n) process exited with signal SIGILL
+    func widthOfBinaryTree(_ root: TreeNode?) -> Int {
+        var res = 0
+        guard let node = root else { return 0 }
+        var queue: [(TreeNode, Int)] = [(node,0)]
+        while !queue.isEmpty {
+            let temp = queue
+            queue.removeAll()
+            for (subNode, col) in temp {
+                if let left = subNode.left {
+                    queue.append((left,col*2))
+                }
+                if let right = subNode.right {
+                    queue.append((right,col*2+1))
+                }
+            }
+            
+            let firstIndex = temp.first!.1
+            let lastIndex = temp.last!.1
+            res = max(res, lastIndex-firstIndex+1 )
+        }
+        return res
+    }
