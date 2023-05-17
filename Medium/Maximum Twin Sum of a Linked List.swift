@@ -14,3 +14,31 @@
         }
         return res
     }
+
+//O(n), O(1)
+    func pairSum(_ head: ListNode?) -> Int {
+        var fast = head
+        var slow = head
+        while fast != nil, fast!.next != nil, fast!.next!.next != nil {
+            slow = slow!.next
+            fast = fast!.next!.next
+        }
+        let mid = slow!.next
+        slow!.next = nil
+        var prev: ListNode?
+        var curr = mid
+        while curr != nil {
+            let temp = curr!.next
+            curr!.next = prev
+            prev = curr
+            curr = temp
+        }
+        curr = head
+        var res = 0
+        while prev != nil {
+            res = max(res, prev!.val + curr!.val)
+            prev = prev!.next
+            curr = curr!.next
+        }
+        return res
+    }
