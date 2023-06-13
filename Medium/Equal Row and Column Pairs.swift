@@ -1,5 +1,5 @@
 // Equal Row and Column Pairs
-//O(rows*cols), O(rows+cols)
+//O(rows*cols*rows), O(rows+cols)
 class Solution {
     func equalPairs(_ grid: [[Int]]) -> Int {
         var res = 0
