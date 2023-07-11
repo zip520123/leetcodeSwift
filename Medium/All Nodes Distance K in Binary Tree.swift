@@ -104,3 +104,43 @@ class Solution {
         return tempQueue.map { $0.val }
     }
 }
+
+//O(n), O(n)
+func distanceK(_ root: TreeNode?, _ target: TreeNode?, _ k: Int) -> [Int] {
+    var graph = [Int: [Int]]()
+    guard let node = root else {return []}
+    var queue: [(parent: TreeNode?, node: TreeNode)] = [(nil, node)]
+    while !queue.isEmpty {
+        let temp = queue
+        queue = []
+        for (parent, node) in temp {
+            if let parent = parent {
+                graph[parent.val ,default:[]].append(node.val)
+                graph[node.val, default:[]].append(parent.val)
+            }
+            if let left = node.left {
+                queue.append((node, left))
+            }
+            if let right = node.right {
+                queue.append((node, right))
+            }
+        }
+    }
+    
+    var queue2 = [target!.val]
+    var seens = Set<Int>()
+    seens.insert(target!.val)
+    for _ in 0..<k {
+        let temp = queue2
+        queue2 = []
+        for node in temp {
+            for next in graph[node, default: []] {
+                if seens.contains(next) == false {
+                    seens.insert(next)
+                    queue2.append(next)
+                }
+            }
+        }
+    }
+    return queue2
+}
