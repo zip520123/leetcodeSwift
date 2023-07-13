@@ -64,3 +64,39 @@ func canFinish(_ numCourses: Int, _ prerequisites: [[Int]]) -> Bool {
         }
         return true
     }
+
+//O(n), O(n)
+func canFinish(_ numCourses: Int, _ prerequisites: [[Int]]) -> Bool {
+    var graph = [Int: Set<Int>]()
+    var preCourses = [Int: [Int]]()
+    var queue = [Int]()
+    for prerequisite in prerequisites {
+        graph[prerequisite[0], default: []].insert(prerequisite[1])
+        preCourses[prerequisite[1], default: []].append(prerequisite[0])
+    }
+    for i in 0..<numCourses {
+        if graph[i, default:[]].count == 0 {
+            queue.append(i)
+        }
+    }
+    
+    while !queue.isEmpty {
+        let temp = queue
+        queue = []
+        for node in temp {
+            for preCourse in preCourses[node, default: []] {
+                graph[preCourse, default: []].remove(node)
+                if graph[preCourse, default: []].count == 0 {
+                    queue.append(preCourse)
+                }
+            }
+        }
+    }
+    for i in 0..<numCourses {
+        if graph[i, default:[]].count > 0 {
+            return false
+        }
+    }
+    return queue.isEmpty
+
+}
