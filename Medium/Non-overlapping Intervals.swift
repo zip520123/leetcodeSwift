@@ -94,11 +94,9 @@ the longer interval will always overlap with more or the same number of future i
 //O(n), O(1)
     func eraseOverlapIntervals(_ intervals: [[Int]]) -> Int {
         let arr = intervals.sorted { a,b in 
-            if a[0] == b[0] {
-                return a[1] < b[1]
-            }
             return a[0] < b[0]
         }
+        
         var l = 0, r = 1, res = 0
         while r < arr.endIndex {
             if arr[l][1] <= arr[r][0] {
