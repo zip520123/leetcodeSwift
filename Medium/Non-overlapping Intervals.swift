@@ -1,4 +1,5 @@
 /*Non-overlapping Intervals*/
+//O(n log n), O(1)
 func eraseOverlapIntervals(_ intervals: [[Int]]) -> Int {
     var left = 0, right = 1
     var count = 0
@@ -32,6 +33,7 @@ func eraseOverlapIntervals(_ intervals: [[Int]]) -> Int {
     return count
 }
 
+//O(n log n), O(1)
 func eraseOverlapIntervals(_ intervals: [[Int]]) -> Int {
         
         let sorted = intervals.sorted {
@@ -64,6 +66,7 @@ if two intervals are overlapping,
 we want to remove the interval that has the longer end point -- 
 the longer interval will always overlap with more or the same number of future intervals compared to the shorter one
 */
+//O(n log n), O(1)
         func eraseOverlapIntervals(_ intervals: [[Int]]) -> Int {
         var sorted = intervals.sorted {a, b in 
                                        if a[0] != b[0] {
@@ -91,7 +94,7 @@ the longer interval will always overlap with more or the same number of future i
         return res
     }
 
-//O(n), O(1)
+//O(n log n), O(1)
     func eraseOverlapIntervals(_ intervals: [[Int]]) -> Int {
         let arr = intervals.sorted { a,b in 
             return a[0] < b[0]
