@@ -31,6 +31,24 @@
         return res
     }
 
+// O(n^k), O(n^k)
+    func combine(_ n: Int, _ k: Int) -> [[Int]] {
+        var res = [[Int]]()
+        func dfs(_ curr: [Int], _ currN: Int) {
+            if curr.endIndex == k {
+                res.append(curr)
+                return
+            }
+            guard currN <= n else {return}
+            for i in currN...n {
+                dfs(curr+[i], i+1)
+            }
+        }
+
+        dfs([], 1)
+        return res
+    }
+
     /* kami
     func combine(_ n: Int, _ k: Int) -> [[Int]] {
         var res = [[Int]]()
