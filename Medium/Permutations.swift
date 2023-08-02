@@ -35,3 +35,20 @@ Output:
         dfs(nums,[])
         return res
     }
+
+// O(n!), O(n!)
+    func permute(_ nums: [Int]) -> [[Int]] {
+        var res = [[Int]]()
+
+        func dfs(_ arr: [Int], _ path: [Int]) {
+            if arr.isEmpty {
+                res.append(path)
+                return
+            }
+            for i in 0..<arr.endIndex {
+                dfs(Array(arr[0..<i]) + Array(arr[(i+1)...]), path + [arr[i]])
+            }
+        }
+        dfs(nums, [])
+        return res
+    }
