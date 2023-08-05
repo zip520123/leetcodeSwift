@@ -56,7 +56,6 @@ func generateTrees(_ n: Int) -> [TreeNode?] {
     
     func dfs(_ arr: [Int]) -> [TreeNode?] {
         if arr.isEmpty {return [nil]}
-        if arr.endIndex == 1 {return [TreeNode(arr[0])]}
         var res = [TreeNode?]()
         for i in 0..<arr.endIndex {
             
