@@ -50,3 +50,29 @@ class Solution {
         return res
     }
 }
+
+// O(n!), O(n!)
+func generateTrees(_ n: Int) -> [TreeNode?] {
+    
+    func dfs(_ arr: [Int]) -> [TreeNode?] {
+        if arr.isEmpty {return [nil]}
+        if arr.endIndex == 1 {return [TreeNode(arr[0])]}
+        var res = [TreeNode?]()
+        for i in 0..<arr.endIndex {
+            
+            let left = dfs(Array(arr[0..<i]))
+            let right = dfs(Array(arr[i+1..<arr.endIndex]))
+            for l in left {
+                for r in right {
+                    let node = TreeNode(arr[i])
+                    node.left = l
+                    node.right = r
+                    res.append(node)
+                }
+            }
+        }
+        return res
+    }
+
+    return dfs(Array(1...n))
+}
