@@ -34,3 +34,24 @@
         }
         return matrix[row][l] == target
     }
+
+// O(log (rows * cols)), O(1)
+    func searchMatrix(_ matrix: [[Int]], _ target: Int) -> Bool {
+        let rows = matrix.endIndex, cols = matrix[0].endIndex
+        let n = rows*cols
+        var l = 0, r = n-1
+        while l<r {
+            let mid = l+((r-l)>>1)
+            let row = mid / cols
+            let col = mid % cols
+            if matrix[row][col] < target {
+                l = mid + 1
+            } else  {
+                r = mid
+            }
+
+        }
+        let row = l/cols
+        let col = l%cols
+        return matrix[row][col] == target
+    }
