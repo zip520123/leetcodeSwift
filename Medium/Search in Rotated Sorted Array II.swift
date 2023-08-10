@@ -26,7 +26,7 @@ func search(_ nums: [Int], _ target: Int) -> Bool {
     
     return false
 }
-// O(n)~o(log n), O(1)
+// O(n)~Θ(log n)~Ω(1), O(1)
     func search(_ nums: [Int], _ target: Int) -> Bool {
         var l = 0, r = nums.endIndex-1
         while l<=r {
