@@ -47,3 +47,27 @@
         return lessHead.next
         
     }
+// O(n), O(1)
+    func partition(_ head: ListNode?, _ x: Int) -> ListNode? {
+        guard let root = head else { return nil }
+        var t = ListNode()
+        let tHead = t
+        var curr: ListNode? = root
+        var d = ListNode()
+        let dHead = d
+        while curr != nil {
+            if curr!.val < x {
+                d.next = curr
+                curr = curr!.next
+                d = d.next!
+                d.next = nil
+            } else {
+                t.next = curr
+                curr = curr!.next
+                t = t.next!
+                t.next = nil
+            }
+        }
+        d.next = tHead.next
+        return dHead.next
+    }
