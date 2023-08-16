@@ -37,3 +37,21 @@ class Solution {
     }
 
 }
+
+// O(n), O(n)
+func maxSlidingWindow(_ nums: [Int], _ k: Int) -> [Int] {
+    var queue = [Int](), res = [Int]()
+    for (i,n) in nums.enumerated() {
+        while !queue.isEmpty && nums[queue.last!] < n {
+            queue.removeLast()
+        }
+        queue.append(i)
+        if i >= k-1 {
+            res.append(nums[queue[0]])
+        }
+        if queue[0] == i-k+1 {
+            queue.removeFirst()
+        }
+    }
+    return res
+}
