@@ -29,3 +29,37 @@
         }
         return res
     }
+
+//O(n), O(n)
+func updateMatrix(_ mat: [[Int]]) -> [[Int]] {
+    let rows = mat.endIndex, cols = mat[0].endIndex
+    var dp = mat
+    var queue = [[Int]]()
+    for row in 0..<dp.endIndex {
+        for col in 0..<dp[row].endIndex {
+            if dp[row][col] == 1 {
+                dp[row][col] = -1
+            } else {
+                queue.append([row,col])
+            }
+        }
+    }
+    while !queue.isEmpty {
+        let temp = queue
+        queue = []
+        for node in temp {
+            let row = node[0], col = node[1]
+            let val = dp[row][col]
+            for (dx,dy) in [(1,0),(0,1),(-1,0),(0,-1)] {
+                let nextRow = row+dy
+                let nextCol = col+dx
+                guard nextRow >= 0 && nextRow < rows && nextCol >= 0 && nextCol < cols else {continue}
+                if dp[nextRow][nextCol] == -1 {
+                    dp[nextRow][nextCol] = val + 1
+                    queue.append([nextRow,nextCol])
+                }
+            }
+        }
+    }
+    return dp
+}
