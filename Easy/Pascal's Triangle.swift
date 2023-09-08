@@ -46,3 +46,18 @@
         
         return res
     }
+
+    // O(n), O(1)
+    func generate(_ numRows: Int) -> [[Int]] {
+        var res = [[Int]]()
+        for i in 0..<numRows {
+            var curr = [Int](repeating: 1, count: i+1)
+            var j = 1
+            while j < i {
+                curr[j] = res[i-1][j-1]+res[i-1][j] 
+                j += 1   
+            }
+            res.append(curr)
+        }
+        return res
+    }
