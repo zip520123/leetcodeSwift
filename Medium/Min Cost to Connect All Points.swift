@@ -41,3 +41,43 @@
         
         return res
     }
+
+// O(n^2), O(n^2)
+   func minCostConnectPoints(_ points: [[Int]]) -> Int {
+        var paths = [(i: Int, j: Int, wei: Int)]()
+        for i in 0..<points.endIndex-1 {
+            for j in i+1..<points.endIndex {
+                let p1 = points[i], p2 = points[j]
+                let wei = abs(p1[0]-p2[0]) + abs(p1[1]-p2[1])
+                paths.append((i,j,wei))
+            }
+        }
+        paths.sort { $0.wei < $1.wei }
+
+        var dict = [[Int]: [Int]]()
+        for p in points {
+            dict[p] = p
+        }
+
+        func find(_ p: [Int]) -> [Int] {
+            if dict[p] != p {
+                dict[p] = find(dict[p]!)
+            }
+            return dict[p]!
+        }
+
+        var edge = 0, res = 0
+        for path in paths {
+            let p1 = points[path.i], p2 = points[path.j]
+            let root1 = find(p1), root2 = find(p2)
+            if root1 != root2 {
+                dict[root1] = root2
+                edge += 1
+                res += path.wei
+                if edge == points.count-1 {
+                    break
+                }
+            }
+        }
+        return res
+    }
