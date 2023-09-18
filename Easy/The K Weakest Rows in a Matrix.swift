@@ -28,3 +28,26 @@
         }
         return res
     }
+    
+// O(n log n), O(n)
+    func kWeakestRows(_ mat: [[Int]], _ k: Int) -> [Int] {
+        var dict = [Int: Int]()
+        for (i, row) in mat.enumerated() {
+            var count = 0
+            for col in row {
+                if col == 1 {
+                    count += 1
+                } else {
+                    break
+                }
+            }
+            dict[i] = count
+        }
+        let arr = dict.sorted { a, b in 
+            if a.value == b.value {
+                return a.key < b.key
+            }
+            return a.value < b.value
+        }.map(\.key)
+        return Array(arr[0..<k])
+    }
