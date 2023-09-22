@@ -51,3 +51,17 @@
         }
         return l == arrS.endIndex
     }
+
+// O(t), O(1)
+    func isSubsequence(_ s: String, _ t: String) -> Bool {
+        var l = 0
+        if s == "" {return true}
+        let larr = Array(s), rarr = Array(t)
+        for char in rarr {
+            if larr[l] == char {
+                l += 1
+                if l == larr.endIndex {return true}
+            }
+        }
+        return false
+    }
