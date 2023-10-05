@@ -13,6 +13,21 @@
         return Array(res)
     }
 
+// O(n), O(n)
+    func majorityElement(_ nums: [Int]) -> [Int] {
+        var dict = [Int: Int]()
+        for n in nums {
+            dict[n, default: 0] += 1
+        }
+        var res = [Int]()
+        for (key, val) in dict {
+            if val > nums.endIndex/3 {
+                res.append(key)
+            }
+        } 
+        return res
+    }
+
 //O(n) space O(1)
 func majorityElement(_ nums: [Int]) -> [Int] {
         var candidate1 = 0, candidate2 = 1, count1 = 0, count2 = 0
