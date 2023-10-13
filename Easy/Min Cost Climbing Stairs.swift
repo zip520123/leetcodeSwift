@@ -1,5 +1,6 @@
 //Min Cost Climbing Stairs
 //dp 
+// O(n), O(n)
 func minCostClimbingStairs(_ cost: [Int]) -> Int {
     var dp = [0,0]
     for i in 2...cost.endIndex {
@@ -25,6 +26,28 @@ func minCostClimbingStairs(_ cost: [Int]) -> Int {
         arr[i] += min(arr[i-1],arr[i-2])
     }
     return min(arr[arr.endIndex-1], arr[arr.endIndex-2])
+}
+
+// O(n), O(n)
+func minCostClimbingStairs(_ cost: [Int]) -> Int {
+    let arr = cost + [0]
+    var dp = arr.map { _ in 0}
+    for i in 2..<dp.endIndex {
+        dp[i] = min(dp[i-1]+arr[i-1], dp[i-2]+arr[i-2])
+    }
+    return dp.last!
+}
+
+// O(n), O(1)
+func minCostClimbingStairs(_ cost: [Int]) -> Int {
+    let arr = cost + [0]
+    var dp1 = 0, dp2 = 0
+    for i in 2..<arr.endIndex {
+        let t = min(dp1+arr[i-1], dp2+arr[i-2])
+        dp2 = dp1
+        dp1 = t
+    }
+    return dp1
 }
 
 //O(n), O(n) Jump Game VI, queue
