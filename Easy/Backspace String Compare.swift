@@ -59,3 +59,30 @@
         
         return l == -1 && r == -1
     }
+
+// O(s+t), O(s+t) stack
+    func backspaceCompare(_ s: String, _ t: String) -> Bool {
+        var stack = [Character]()
+        for char in s {
+            switch char {
+                case "#":
+                    if !stack.isEmpty {
+                        stack.removeLast()
+                    }
+                default:
+                    stack.append(char)
+            }
+        }
+        var stack2 = [Character]()
+        for char in t {
+            switch char {
+                case "#":
+                    if !stack2.isEmpty {
+                        stack2.removeLast()
+                    }
+                default:
+                    stack2.append(char)
+            }
+        }
+        return stack == stack2
+    }
