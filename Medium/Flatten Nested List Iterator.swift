@@ -101,6 +101,33 @@ class NestedIterator {
     }
 }
 
+class NestedIterator {
+    let arr: [Int]
+    private var index = 0
+    init(_ nestedList: [NestedInteger]) {
+        var queue = nestedList
+        var arr = [Int]()
+        while !queue.isEmpty {
+            let node = queue.removeFirst()
+            if node.isInteger() {
+                arr.append(node.getInteger())
+            } else {
+                queue = node.getList() + queue
+            }
+        }
+        self.arr = arr
+    }
+    
+    func next() -> Int {
+        defer { index += 1 }
+        return arr[index]
+    }
+    
+    func hasNext() -> Bool {
+        index < arr.endIndex
+    }
+}
+
 
 class NestedIterator {
     private var nestedList: [NestedInteger]
@@ -133,5 +160,42 @@ class NestedIterator {
             nestedList = list + nestedList
             return getCurrent()
         }
+    }
+}
+
+class NestedIterator {
+
+    let arr: [Int]
+    private var index = 0
+    init(_ nestedList: [NestedInteger]) {
+        var arr = [Int]()
+        for subArr in nestedList.map { Self.dfs($0) } {
+            arr += subArr
+        }
+        self.arr = arr
+    }
+
+    static func dfs(_ n: NestedInteger) -> [Int] {
+        
+        if n.isInteger() {
+            return [n.getInteger()]
+        } else {
+            let subArrs = n.getList().map { Self.dfs($0) }
+            var arrs = [Int]()
+            for arr in subArrs {
+                arrs += arr
+            }
+            return arrs
+        }
+    }
+    
+    func next() -> Int {
+        let res = arr[index]
+        index += 1
+        return res
+    }
+    
+    func hasNext() -> Bool {
+        index < arr.endIndex
     }
 }
