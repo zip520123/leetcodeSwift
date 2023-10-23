@@ -32,3 +32,10 @@
         let mask = Int("1010101010101010101010101010101", radix: 2)!
         return n > 0 && n & (n-1) == 0 && (mask & n) == n
     }
+
+// O(1), O(1)
+func isPowerOfFour(_ n: Int) -> Bool {
+    if n <= 0 {return false}
+    let logarithm_base4 = log(Double(n)) / log(Double(4))
+    return logarithm_base4 == Double(Int(logarithm_base4))
+}
