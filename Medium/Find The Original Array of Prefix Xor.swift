@@ -7,3 +7,12 @@ func findArray(_ pref: [Int]) -> [Int] {
     }
     return res
 }
+
+// O(n), O(1)
+func findArray(_ pref: [Int]) -> [Int] {
+    var res = pref
+    for i in (1..<pref.endIndex).reversed() {
+        res[i] ^= res[i-1]
+    }
+    return res
+}
