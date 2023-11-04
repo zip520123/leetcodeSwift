@@ -46,3 +46,26 @@
         dfs(root)
         return res
     }
+
+// O(n log n), O(n)
+    func findMode(_ root: TreeNode?) -> [Int] {
+        var dict = [Int: Int]()
+        func dfs(_ root: TreeNode?) {
+            guard let node = root else {return}
+            dict[node.val, default: 0] += 1
+            dfs(node.left)
+            dfs(node.right)
+        }
+        dfs(root)
+        let arr = dict.sorted(by: { node1, node2 in return node1.value > node2.value})
+        var res = [Int]()
+        var currMax = arr[0].value
+        for (key, val) in arr {
+            if val == currMax {
+                res.append(key)
+            } else {
+                break
+            }
+        }
+        return res
+    }
