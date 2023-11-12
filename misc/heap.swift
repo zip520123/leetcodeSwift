@@ -1,18 +1,17 @@
 class Heap {
     private var arr = [Int]()
-    private let compare: (Int, Int) -> Bool 
+    private let compare: (Int, Int) -> Bool
     init(_ c: @escaping (Int, Int)->Bool = {$0<$1}) {
         self.compare = c
     }
-    
+
     func insert(_ n: Int) {
         arr.append(n)
-        var parentIndex = (arr.endIndex-1)/2
+
         var currIndex = arr.endIndex-1
-        while currIndex != 0, compare(arr[currIndex], arr[parentIndex]) {
-            (arr[parentIndex], arr[currIndex]) = (arr[currIndex], arr[parentIndex])
-            currIndex = parentIndex
-            parentIndex /= 2
+        while currIndex > 0 && compare(arr[currIndex], arr[(currIndex-1)/2]) {
+            arr.swapAt((currIndex-1)/2, currIndex) 
+            currIndex = (currIndex-1)/2
         }
     }
     
@@ -21,38 +20,125 @@ class Heap {
     }
     
     func removeTop() -> Int {
+        if arr.count == 1 {return arr.removeLast()}
         let res = arr[0]
-        arr[0] = arr[arr.endIndex-1]
-        arr.removeLast()
+        arr[0] = arr.removeLast()
+
+        // arr[0] = arr[arr.endIndex-1]
+        // arr.removeLast() 5x slower
+        
         var currIndex = 0
-        var leftIndex = currIndex*2+1
-        var rightIndex = currIndex*2+2
-        var targetIndex = currIndex
-        while leftIndex < arr.endIndex || rightIndex < arr.endIndex {
-            if leftIndex < arr.endIndex, compare(arr[leftIndex], arr[currIndex]) {
+        
+        while true {
+            let leftIndex = currIndex*2+1
+            let rightIndex = currIndex*2+2
+            var targetIndex = currIndex
+
+            if leftIndex < arr.endIndex && compare(arr[leftIndex], arr[targetIndex]) {
                 targetIndex = leftIndex
             }
-            if rightIndex < arr.endIndex, compare(arr[rightIndex], arr[currIndex]) {
+            if rightIndex < arr.endIndex && compare(arr[rightIndex], arr[targetIndex]) {
                 targetIndex = rightIndex
             }
             if targetIndex == currIndex {break}
-            (arr[currIndex], arr[targetIndex]) = (arr[targetIndex], arr[currIndex]) 
+            arr.swapAt(targetIndex, currIndex) 
+            // (arr[currIndex], arr[targetIndex]) = (arr[targetIndex], arr[currIndex]) TLE
             currIndex = targetIndex
-            leftIndex = currIndex*2+1
-            rightIndex = currIndex*2+2
+
         }
-        
         return res
     }
-
 }
 
-let heap = Heap()
-heap.insert(10)
-heap.top()
-heap.insert(3)
-heap.insert(2)
+class Heap {
+    private var heap: [Int] = []
 
-for _ in 0...2 {
-    print(heap.removeTop())
+    func insert(_ element: Int) {
+        heap.append(element)
+        var currentIndex = heap.count - 1
+
+        while currentIndex > 0 && heap[currentIndex] < heap[(currentIndex-1)/2] {
+            heap.swapAt(currentIndex, (currentIndex-1)/2)
+            currentIndex = (currentIndex-1)/2
+        }
+    }
+
+    func removeTop() -> Int {
+        if heap.count == 1 {return heap.removeFirst()}
+
+        let topElement = heap[0]
+
+        heap[0] = heap.removeLast()
+        // heap[0] = heap[heap.endIndex-1] x5 slower
+        // heap.removeLast()
+
+        var currentIndex = 0
+
+        while true {
+            let leftChildIndex = 2*currentIndex+1
+            let rightChildIndex = 2*currentIndex+2
+
+            var minIndex = currentIndex
+            if leftChildIndex < heap.count && heap[leftChildIndex] < heap[minIndex] {
+                minIndex = leftChildIndex
+            }
+            if rightChildIndex < heap.count && heap[rightChildIndex] < heap[minIndex] {
+                minIndex = rightChildIndex
+            }
+            if minIndex == currentIndex {
+                break
+            }
+            heap.swapAt(currentIndex, minIndex)
+            currentIndex = minIndex
+        }
+        return topElement
+    }
+}
+
+class Heap<T: Comparable> {
+    private var arr = [T]()
+    var isEmpty: Bool { return arr.isEmpty }
+    func insert(_ n: T) {
+        arr.append(n)
+
+        var currIndex = arr.endIndex-1
+        while currIndex > 0 && arr[currIndex] < arr[(currIndex-1)/2] {
+            arr.swapAt((currIndex-1)/2, currIndex) 
+            currIndex = (currIndex-1)/2
+        }
+    }
+    
+    func top() -> T {
+        arr[0]
+    }
+    
+    func removeTop() -> T {
+        if arr.count == 1 {return arr.removeLast()}
+        let res = arr[0]
+        arr[0] = arr.removeLast()
+
+        // arr[0] = arr[arr.endIndex-1]
+        // arr.removeLast() 5x slower
+        
+        var currIndex = 0
+        
+        while true {
+            let leftIndex = currIndex*2+1
+            let rightIndex = currIndex*2+2
+            var targetIndex = currIndex
+
+            if leftIndex < arr.endIndex && arr[leftIndex] < arr[targetIndex] {
+                targetIndex = leftIndex
+            }
+            if rightIndex < arr.endIndex && arr[rightIndex] < arr[targetIndex] {
+                targetIndex = rightIndex
+            }
+            if targetIndex == currIndex {break}
+            arr.swapAt(targetIndex, currIndex) 
+            // (arr[currIndex], arr[targetIndex]) = (arr[targetIndex], arr[currIndex]) TLE
+            currIndex = targetIndex
+
+        }
+        return res
+    }
 }
