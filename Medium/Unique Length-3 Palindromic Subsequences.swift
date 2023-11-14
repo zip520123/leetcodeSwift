@@ -40,3 +40,28 @@ func countPalindromicSubsequence(_ s: String) -> Int {
     }
     return res
 }
+
+// O(n), O(1)
+func countPalindromicSubsequence(_ s: String) -> Int {
+    let arr = Array(s)
+    var res = 0
+    var charL = [Character: Int]()
+    var charR = [Character: Int]()
+    for i in 0..<arr.endIndex {
+        if charL[arr[i]] == nil {
+            charL[arr[i]] = i
+        }
+        charR[arr[i]] = i
+    }
+    for (key, l) in charL {
+        let r = charR[key]!
+        if r > l {
+            var set = Set<Character>()
+            for i in l+1..<r {
+                set.insert(arr[i])
+            }
+            res += set.count
+        } 
+    }
+    return res
+}
