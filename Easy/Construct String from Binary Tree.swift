@@ -44,3 +44,23 @@
         }
         return res
     }
+
+// O(n), O(h)
+    func tree2str(_ root: TreeNode?) -> String {
+        guard let node = root else {return ""}
+        var res = "\(node.val)"
+        if let left = node.left {
+            res += "("
+            res += tree2str(left)
+            res += ")"
+        }
+        if let right = node.right {
+            if node.left == nil {
+                res += "()"
+            }
+            res += "("
+            res += tree2str(right)
+            res += ")"
+        }
+        return res
+    }
