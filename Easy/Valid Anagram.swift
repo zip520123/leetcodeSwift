@@ -16,7 +16,7 @@ func isAnagram(_ s: String, _ t: String) -> Bool {
     return true
 }
 
-//time O(s+t) space O(s)
+//time O(s+t) space O(s+t)
 func isAnagram(_ s: String, _ t: String) -> Bool {
     var sdict = Dictionary<Character,Int>()
     for char in s {
@@ -27,4 +27,18 @@ func isAnagram(_ s: String, _ t: String) -> Bool {
         tdict[char,default:0]+=1
     }
     return sdict == tdict
+}
+
+// O(s+t), O(s)
+func isAnagram(_ s: String, _ t: String) -> Bool {
+    if s.count != t.count {return false}
+    var dict = [Character: Int]()
+    for char in s {
+        dict[char, default: 0] += 1
+    }
+    for char in t {
+        dict[char, default: 0] -= 1
+        if dict[char]! < 0 {return false}
+    }
+    return true
 }
