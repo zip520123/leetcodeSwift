@@ -25,3 +25,26 @@
         }
         return res
     }
+
+// O(n), O(n)
+    func minCost(_ colors: String, _ neededTime: [Int]) -> Int {
+        let arr = Array(colors)
+        var stack = [(color: Character, t: Int)]()
+        var res = 0
+        for i in 0..<arr.endIndex {
+            let currColor = arr[i], currTime = neededTime[i]
+            if !stack.isEmpty {
+                let lastColor = stack.last!.color, lastTime = stack.last!.t
+                if lastColor == currColor {
+                    stack.removeLast()
+                    res += min(lastTime, currTime)
+                    stack.append((currColor, max(lastTime, currTime)))
+                } else {
+                    stack.append((currColor, currTime))    
+                }
+            } else {
+                stack.append((currColor, currTime))
+            }
+        }
+        return res
+    }
