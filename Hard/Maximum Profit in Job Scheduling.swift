@@ -65,3 +65,31 @@ Step 3: Take a dynamic programming approach to determine the optimal profit. At 
         }
         return dp[0]
     }
+
+// O(n log n), O(n)
+func jobScheduling(_ startTime: [Int], _ endTime: [Int], _ profit: [Int]) -> Int {
+    let n = startTime.endIndex
+    let jobs = (0..<n).map { i in (start: startTime[i], end: endTime[i], p: profit[i])}.sorted { job1,job2 in 
+        return job1.start < job2.start
+    }
+    
+    let arr = (0..<n).map { i in 
+        var l = i+1, r = n
+        let endTime = jobs[i].end
+        while l<r {
+            let mid = l+(r-l)>>1
+            if jobs[mid].start < endTime {
+                l = mid+1
+            } else {
+                r = mid
+            }
+        }
+        return l
+    }
+
+    var dp = (0...n).map {_ in 0}
+    for i in (0..<n).reversed() {
+        dp[i] = max(jobs[i].p + dp[arr[i]], dp[i+1])
+    }
+    return dp[0]
+}
