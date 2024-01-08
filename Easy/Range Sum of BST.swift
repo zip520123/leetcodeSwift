@@ -58,3 +58,30 @@
         }
         return res
     }
+
+    func rangeSumBST(_ root: TreeNode?, _ low: Int, _ high: Int) -> Int {
+        guard let root else {return 0}
+        var res = 0
+        if root.val >= low && root.val <= high {
+            res += root.val
+        }
+        return res + rangeSumBST(root.left, low, high) + rangeSumBST(root.right, low, high)
+    }
+
+    func rangeSumBST(_ root: TreeNode?, _ low: Int, _ high: Int) -> Int {
+        guard let root else {return 0}
+        var res = 0
+        var q = [root]
+        while !q.isEmpty {
+            let temp = q
+            q = []
+            for node in temp {
+                if node.val >= low, node.val <= high {
+                    res += node.val
+                }
+                if node.left != nil && node.val >= low {q.append(node.left!)}
+                if node.right != nil && node.val <= high {q.append(node.right!)}
+            }
+        }
+        return res
+    }
