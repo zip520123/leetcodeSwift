@@ -29,3 +29,29 @@
         dfs(root!)
         return res
     }
+
+// O(n), O(h)
+    func maxAncestorDiff(_ root: TreeNode?) -> Int {
+        var res = 0
+
+        func dfs(_ node: TreeNode) -> (minN: Int, maxN: Int) {
+            var curr = 0, currMinN = node.val, currMaxN = node.val
+            if let left = node.left {
+                let (leftMinN, leftMaxN) = dfs(left)
+                curr = max(curr, abs(node.val-leftMinN), abs(node.val-leftMaxN))
+                currMinN = min(currMinN, leftMinN)
+                currMaxN = max(currMaxN, leftMaxN)
+            }
+            if let right = node.right {
+                let (rightMinN, rightMaxN) = dfs(right)
+                curr = max(curr, abs(node.val-rightMinN), abs(node.val-rightMaxN))
+                currMinN = min(currMinN, rightMinN)
+                currMaxN = max(currMaxN, rightMaxN)
+            }
+            res = max(res, curr)
+            return (currMinN, currMaxN)
+        }
+        guard let root else {return 0}
+        dfs(root)
+        return res
+    }
