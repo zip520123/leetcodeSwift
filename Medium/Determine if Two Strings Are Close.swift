@@ -28,3 +28,26 @@
         
         return keySet1 == keySet2 && countDict1 == countDict2 
     }
+
+// O(n), O(n)
+    func closeStrings(_ word1: String, _ word2: String) -> Bool {
+        let set1 = Set(Array(word1)), set2 = Set(Array(word2))
+        if set1 != set2 {return false}
+        var memo1 = [Character: Int]()
+        for char in word1 {
+            memo1[char, default: 0] += 1
+        }
+        var memo2 = [Character: Int]()
+        for char in word2 {
+            memo2[char, default: 0] += 1
+        }
+        var memo3 = [Int: Int]()
+        for (_, val) in memo1 {
+            memo3[val, default: 0] += 1
+        }
+        var memo4 = [Int: Int]()
+        for (_, val) in memo2 {
+            memo4[val, default: 0] += 1
+        }
+        return memo3 == memo4
+    }
