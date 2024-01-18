@@ -35,9 +35,8 @@ func climbStairs(_ n: Int) -> Int {
 //O(n),O(1)
 func climbStairs(_ n: Int) -> Int {
     if n == 1 {return 1}
-    if n == 2 {return 2}
-    var a = 1, b = 2
-    for _ in 2..<n {
+    var a = 1, b = 1
+    for i in 2...n {
         let t = a+b
         a = b
         b = t
