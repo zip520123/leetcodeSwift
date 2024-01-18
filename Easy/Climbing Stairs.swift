@@ -60,15 +60,25 @@ func climbStairs(_ n: Int) -> Int {
     return dfs(n)
 }
 
-    //O(n), O(n)
-    func climbStairs(_ n: Int) -> Int {
-        var arr = [0,1,2]
-        arr[1] = 1
-        arr[2] = 2
-        var i = 3
-        while i <= n {
-            arr.append(arr[i-1]+arr[i-2])
-            i += 1
-        }
-        return arr[n]
+//O(n), O(n)
+func climbStairs(_ n: Int) -> Int {
+    var arr = [0,1,2]
+    arr[1] = 1
+    arr[2] = 2
+    var i = 3
+    while i <= n {
+        arr.append(arr[i-1]+arr[i-2])
+        i += 1
     }
+    return arr[n]
+}
+
+// O(n), O(n)
+func climbStairs(_ n: Int) -> Int {
+    if n == 1 {return 1}
+    var arr = [1,1]
+    for i in 2...n {
+        arr.append(arr[i-1]+arr[i-2])
+    }
+    return arr[n]
+}
