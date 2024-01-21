@@ -112,3 +112,38 @@ class Solution {
         
         return res
     }
+
+// O(n!), O(n^2)
+func solveNQueens(_ n: Int) -> [[String]] {
+    var res = [[String]]()
+    var mat = [[String]](repeating: [String](repeating: ".", count: n), count: n)
+    var visitedDiagonal = Set<Int>()
+    var visitedAntidiagonal = Set<Int>()
+    var visitedCols = Set<Int>()
+    func dfs(_ row: Int) {
+        if row == n {
+            res.append(mat.map { $0.joined() })
+            return
+        }
+        for col in 0..<n {
+            let diagnaol = row - col
+            let antidiagonal = row + col
+            if visitedCols.contains(col) == false,
+                visitedDiagonal.contains(diagnaol) == false,
+                visitedAntidiagonal.contains(antidiagonal) == false {
+                    visitedCols.insert(col)
+                    visitedDiagonal.insert(diagnaol)
+                    visitedAntidiagonal.insert(antidiagonal)
+                    mat[row][col] = "Q"
+                    dfs(row+1)
+                    visitedCols.remove(col)
+                    visitedDiagonal.remove(diagnaol)
+                    visitedAntidiagonal.remove(antidiagonal)
+                    mat[row][col] = "."
+                }
+        }
+
+    }
+    dfs(0)
+    return res
+}
