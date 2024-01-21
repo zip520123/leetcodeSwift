@@ -57,3 +57,16 @@ func rob(_ nums: [Int]) -> Int {
         }
         return dp2
     }
+
+// O(n), O(n)
+    func rob(_ nums: [Int]) -> Int {
+        if nums.endIndex == 1 {return nums[0]}
+        if nums.endIndex == 2 {return max(nums[0], nums[1])}
+
+        var arr = nums
+        arr[1] = max(nums[0],nums[1])
+        for i in 2..<nums.endIndex {
+            arr[i] = max(arr[i]+arr[i-2], arr[i-1])
+        }
+        return arr.last!
+    }
