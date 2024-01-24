@@ -66,3 +66,38 @@ func pseudoPalindromicPaths (_ root: TreeNode?) -> Int {
         dfs(root, [:])
         return res
     }
+
+// O(n), O(h), MTE
+class Solution {
+    func pseudoPalindromicPaths (_ root: TreeNode?) -> Int {
+        var res = 0
+        func dfs(_ node: TreeNode?, _ path: [Int]) {
+            guard let node else {return}
+            let currPath = path + [node.val]
+            if node.left == nil, node.right == nil {
+                if Self.isPalindrome(currPath) {
+                    res += 1
+                }
+                return
+            }
+            dfs(node.left, currPath)
+            dfs(node.right, currPath)
+        }
+        dfs(root, [])
+        return res
+    }
+
+    private static func isPalindrome(_ arr: [Int]) -> Bool {
+        var memo = [Int: Int]()
+        for n in arr {
+            memo[n, default: 0] += 1
+        }
+        var even = 0
+        for (_, val) in memo {
+            if val % 2 == 1 {
+                even += 1
+            }
+        }
+        return even <= 1
+    }
+}
