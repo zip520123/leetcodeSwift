@@ -92,12 +92,12 @@ class Solution {
         for n in arr {
             memo[n, default: 0] += 1
         }
-        var even = 0
+        var odd = 0
         for (_, val) in memo {
             if val % 2 == 1 {
-                even += 1
+                odd += 1
             }
         }
-        return even <= 1
+        return odd <= 1
     }
 }
