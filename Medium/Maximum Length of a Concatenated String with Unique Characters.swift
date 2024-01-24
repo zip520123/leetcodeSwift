@@ -14,19 +14,35 @@
         return dp.map { $0.count }.max()!
     }
 
-    func maxLength(_ arr: [String]) -> Int {
-        var res = 0
-        func dfs(_ path: Set<Character>, _ index: Int) {
-            res = max(res, path.count)
-            if index == arr.endIndex {return}
-            for i in index..<arr.endIndex {
-                let currSet = Set(arr[i])
-                if currSet.count < arr[i].count {continue}
-                if currSet.isDisjoint(with: path) {
-                    dfs(currSet.union(path), i+1)
-                }
+func maxLength(_ arr: [String]) -> Int {
+    var dp = [Set<Character>()]
+    for s in arr {
+        let curr_set = Set(s)
+        if curr_set.count < s.count {continue}
+        
+        for group in dp {
+            if group.isDisjoint(with: curr_set) {
+                dp.append(group.union(curr_set))
             }
         }
-        dfs(Set(), 0)
-        return res
     }
+    return dp.map { $0.count }.max()!
+}
+
+func maxLength(_ arr: [String]) -> Int {
+    var res = 0
+    func dfs(_ path: Set<Character>, _ index: Int) {
+        res = max(res, path.count)
+        if index == arr.endIndex {return}
+        for i in index..<arr.endIndex {
+            let currSet = Set(arr[i])
+            if currSet.count < arr[i].count {continue}
+            if currSet.isDisjoint(with: path) {
+                dfs(currSet.union(path), i+1)
+            }
+        }
+    }
+    dfs(Set(), 0)
+    return res
+}
+
