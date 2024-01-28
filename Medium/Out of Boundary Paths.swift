@@ -53,3 +53,24 @@
         
         return dfs(startRow, startColumn, 0)
     }
+
+// O(mnMove), O(mnMove)
+    func findPaths(_ m: Int, _ n: Int, _ maxMove: Int, _ startRow: Int, _ startColumn: Int) -> Int {
+        var memo = [[Int]: Int]()
+        func dfs(_ move: Int, _ row: Int, _ col: Int) -> Int {
+            if memo[[move, row, col]] != nil {
+                return memo[[move, row, col]]!
+            }
+            if row < 0 || row == m || col < 0 || col == n { return 1 }
+            if move == 0 {return 0}
+            var res = 0
+            res += dfs(move-1, row+1, col)
+            res += dfs(move-1, row-1, col)
+            res += dfs(move-1, row, col+1)
+            res += dfs(move-1, row, col-1)
+            memo[[move, row, col]] = res % Int(1E9+7)
+            return memo[[move, row, col]]!
+        }
+
+        return dfs(maxMove, startRow, startColumn)
+    }
