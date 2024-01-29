@@ -41,3 +41,35 @@ class MyQueue {
         stack.isEmpty && stack2.isEmpty
     }
 }
+
+//
+class MyQueue {
+    var s1 = [Int]()
+    var s2 = [Int]()
+    
+    func push(_ x: Int) {
+        s1.append(x)
+    }
+    
+    func pop() -> Int {
+        if s2.isEmpty {
+            while !s1.isEmpty {
+                s2.append(s1.removeLast())
+            }
+        }
+        return s2.removeLast()
+    }
+    
+    func peek() -> Int {
+        if s2.isEmpty {
+            while !s1.isEmpty {
+                s2.append(s1.removeLast())
+            }
+        }
+        return s2.last!
+    }
+    
+    func empty() -> Bool {
+        s1.isEmpty && s2.isEmpty
+    }
+}
