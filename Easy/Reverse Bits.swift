@@ -1,4 +1,5 @@
 /*Reverse Bits*/
+//O(1), O(1)
 func reverseBits(_ n: Int) -> Int {
     var n = n
     var result = 0
@@ -10,7 +11,7 @@ func reverseBits(_ n: Int) -> Int {
     return result
 }
 
-//
+//O(1), O(1)
 func reverseBits(_ n: Int) -> Int {
     var n = n
     var res = [Int]()
