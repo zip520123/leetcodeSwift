@@ -1,18 +1,17 @@
 //Binary Tree Vertical Order Traversal
-//O(n log n) O(n)
+//O(n log n) O(n), ??
     func verticalOrder(_ root: TreeNode?) -> [[Int]] {
-        var dict = [Int:[Int:[Int]]]()
-        func dfs(_ node: TreeNode?, _ row: Int, _ col: Int) {
-            guard let node = node else {return}
-            dict[col, default:[:]][row, default:[]].append(node.val)
-            dfs(node.left, row + 1, col - 1)
-            dfs(node.right, row + 1, col + 1)
+        var memo = [Int: [Int]]()
+        func dfs(_ index: Int, _ node: TreeNode?) {
+            guard let node else {return}
+            memo[index, default: []].append(node.val)
+            dfs(index-1, node.left)
+            dfs(index+1, node.right)
         }
-        dfs(root,0,0)
-        let list = dict.sorted { $0.key < $1.key }
-                        .map { $0.value.sorted { $0.key < $1.key }
-                              .flatMap { $0.value } }
-        return list
+        dfs(0, root)
+        
+        let arr = memo.sorted { a, b in a.key < b.key }.map { $0.value }
+        return arr
     }
 //O(n log n) O(n)
     func verticalOrder(_ root: TreeNode?) -> [[Int]] {
@@ -49,6 +48,36 @@
         }
         for i in minCol...maxCol {
             res.append(colDict[i]!)
+        }
+        return res
+    }
+
+// O(n), O(n)
+    func verticalOrder(_ root: TreeNode?) -> [[Int]] {
+        var memo = [Int: [Int]]()
+        var maxN = 0, minN = 0
+        guard let node = root else {return []}
+        var queue: [(col: Int, node: TreeNode)] = [(0, node)]
+        while !queue.isEmpty {
+            let temp = queue
+            queue = []
+            for curr in temp {   
+                memo[curr.col, default: []].append(curr.node.val)
+                maxN = max(maxN, curr.col)
+                minN = min(minN, curr.col)
+                if let left = curr.node.left {
+                    queue.append((curr.col-1, left))
+                }
+                if let right = curr.node.right {
+                    queue.append((curr.col+1, right))
+                }
+            }
+        }
+
+        
+        var res = [[Int]]()
+        for i in minN...maxN {
+            res.append(memo[i]!)
         }
         return res
     }
