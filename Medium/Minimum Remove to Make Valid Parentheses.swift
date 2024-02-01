@@ -58,3 +58,32 @@
         }
         return res
     }
+
+// O(n), O(n)
+    func minRemoveToMakeValid(_ s: String) -> String {
+        var stack = [Int]()
+        var incorrect = Set<Int>()
+        let arr = Array(s)
+        for i in 0..<arr.endIndex {
+            if arr[i] == ")" {
+                if stack.isEmpty {
+                    incorrect.insert(i)
+                } else{
+                    stack.removeLast()
+                }
+            }
+            if arr[i] == "(" {
+                stack.append(i)
+            }
+        }
+        for i in stack {
+            incorrect.insert(i)
+        }
+        var res = ""
+        for i in 0..<arr.endIndex {
+            if incorrect.contains(i) == false {
+                res += String(arr[i])
+            }
+        }
+        return res
+    }
