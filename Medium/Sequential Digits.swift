@@ -20,6 +20,38 @@
             
             r += 1
         }
-        
         return res
     }
+
+// O(n log n), O(n)
+func sequentialDigits(_ low: Int, _ high: Int) -> [Int] {
+    var res = [Int]()
+    for n in 1..<9 {
+        var curr = n
+        var digit = n+1
+        while curr*10 + digit <= high {
+            curr = curr*10 + digit
+            if curr >= low { res.append(curr) }
+            digit += 1
+            if digit == 10 { break }
+        }
+    }
+    return res.sorted()
+}
+
+// O(n), O(1)
+func sequentialDigits(_ low: Int, _ high: Int) -> [Int] {
+    var res = [Int]()
+    let arr = Array("123456789")
+    for digits in 2..<10 {
+        var l = 0
+        while l+digits < 10 {
+            let curr = Int(String(arr[l..<l+digits]))!
+            if curr >= low && curr <= high {
+                res.append(curr)
+            }
+            l += 1
+        }
+    }
+    return res
+}
