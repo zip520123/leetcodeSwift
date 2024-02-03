@@ -14,3 +14,19 @@ class Solution {
         return res
     }
 }
+
+// O(n), O(n)
+func depthSum(_ nestedList: [NestedInteger]) -> Int {
+    var res = 0
+    func dfs(_ node: NestedInteger, _ depth: Int) -> Int {
+        if node.isInteger() {
+            return node.getInteger() * depth
+        }
+        var curr = 0
+        for subNode in node.getList() {
+            curr += dfs(subNode, depth + 1)
+        }
+        return curr
+    }
+    return nestedList.reduce(0, { acc, node in acc + dfs(node, 1) })
+}
