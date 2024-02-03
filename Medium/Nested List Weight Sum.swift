@@ -17,7 +17,6 @@ class Solution {
 
 // O(n), O(n)
 func depthSum(_ nestedList: [NestedInteger]) -> Int {
-    var res = 0
     func dfs(_ node: NestedInteger, _ depth: Int) -> Int {
         if node.isInteger() {
             return node.getInteger() * depth
