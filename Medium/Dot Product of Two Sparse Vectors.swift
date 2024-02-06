@@ -38,3 +38,20 @@ class SparseVector {
         return res
     }
 }
+
+class SparseVector {
+    private(set) var memo = [Int: Int]()
+    init(_ nums: [Int]) {
+        for i in 0..<nums.endIndex {
+            memo[i, default: 0] = nums[i]
+        }
+    }
+
+    func dotProduct(_ vec: SparseVector) -> Int {
+        var res = 0
+        for (key, val) in vec.memo {
+            res += self.memo[key, default: 0] * val
+        }
+        return res
+    }
+}

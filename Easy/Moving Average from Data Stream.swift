@@ -18,7 +18,7 @@ class MovingAverage {
     }
 }
 
-//O(n) O(n)
+//O(1) O(n)
 class MovingAverage {
 
     let size: Int
