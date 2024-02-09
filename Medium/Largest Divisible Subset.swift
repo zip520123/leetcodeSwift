@@ -25,6 +25,33 @@
         return res    
     }
 
+    func largestDivisibleSubset(_ nums: [Int]) -> [Int] {
+        let arr = nums.sorted()
+        var dp :[[Int]] = arr.map { _ in [-1, 1]}
+         
+        var resIndex = 0
+        var currlength = 1
+        for i in 1..<arr.endIndex {
+            for j in 0..<i {
+                if arr[i] % arr[j] == 0 {
+                    if dp[i][1] < dp[j][1] + 1 {
+                        dp[i] = [j, dp[j][1] + 1]
+                    }
+                    if dp[i][1] > currlength {
+                        resIndex = i
+                        currlength = dp[i][1]
+                    }
+                }
+            }
+        }
+
+        var res = [Int]()
+        while resIndex != -1 {
+            res.append(arr[resIndex])
+            resIndex = dp[resIndex][0]
+        } 
+        return res
+    }
 // O(n^2), O(n^2)
     func largestDivisibleSubset(_ nums: [Int]) -> [Int] {
         let arr = nums.sorted()
