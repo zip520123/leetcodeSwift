@@ -18,7 +18,7 @@ func isValidPalindrome(_ s: String, _ k: Int) -> Bool {
     return n - dp[n][n] <= k
 }
 
-// O(n^2), O(n^2) distence between its reversed divied by 2
+// O(n^2), O(n^2) distence between its reversed str divied by 2
 func isValidPalindrome(_ s: String, _ k: Int) -> Bool {
     let s1 = Array(s)
     let s2 = Array(s1.reversed())
