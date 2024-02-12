@@ -18,3 +18,21 @@ func majorityElement(_ nums: [Int]) -> Int {
     }
     return candidate
 }
+
+// O(n), O(1)
+func majorityElement(_ nums: [Int]) -> Int {
+    var res = 0, count = 0
+    for n in nums {
+        if res == n {
+            count += 1
+        } else {
+            if count == 0 {
+                res = n
+                count = 1
+            } else {
+                count -= 1
+            }
+        }
+    }
+    return res
+}
