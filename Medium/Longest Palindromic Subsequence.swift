@@ -20,19 +20,42 @@
 
 //O(n^2), O(n^2)
     func longestPalindromeSubseq(_ s: String) -> Int {
-        let arr = Array(s)
-        var dp = [[Int]](repeating: [Int](repeating: 0, count: s.count + 1), count: s.count + 1)
-        let arr2 = Array(arr.reversed())
-        for i in 1...arr.endIndex {
-            for j in 1...arr.endIndex {
-                if arr[i-1] == arr2[j-1] {
+        let s1 = Array(s), s2 = Array(s1.reversed())
+        let n = s1.endIndex
+        var dp = [[Int]](repeating: [Int](repeating: 0, count: n+1), count: n+1)
+        for i in 1...n {
+            for j in 1...n {
+                if s1[i-1] == s2[j-1] {
                     dp[i][j] = dp[i-1][j-1] + 1
                 } else {
                     dp[i][j] = max(dp[i-1][j], dp[i][j-1])
                 }
             }
         }
-        return dp[arr.endIndex][arr.endIndex]
+        return dp[n][n]
+    }
+
+// O(n^2), O(n^2)
+    func longestPalindromeSubseq(_ s: String) -> Int {
+        let s1 = Array(s), s2 = Array(s1.reversed())
+        let n = s1.endIndex
+
+        var dp = [[Int]](repeating: [Int](repeating: 0, count: n+1), count: n+1)
+        for i in 1...n {
+            dp[0][i] = dp[0][i-1] + 1
+            dp[i][0] = dp[i-1][0] + 1
+        }
+        for i in 1...n {
+            for j in 1...n {
+                if s1[i-1] == s2[j-1] {
+                    dp[i][j] = dp[i-1][j-1]
+                } else {
+                    dp[i][j] = min(dp[i-1][j], dp[i][j-1]) + 1
+                }
+            }
+        }
+
+        return n - dp[n][n] / 2
     }
 
 /*

@@ -103,3 +103,43 @@ class TicTacToe {
         return 0
     }
 }
+
+// O(1), O(n)
+class TicTacToe {
+    let n: Int
+    var p1Rows = [Int: Int]()
+    var p1Cols = [Int: Int]()
+    var p1Diag = [Int: Int]()
+    var p1AntiDiag = [Int: Int]()
+    var p2Rows = [Int: Int]()
+    var p2Cols = [Int: Int]()
+    var p2Diag = [Int: Int]()
+    var p2AntiDiag = [Int: Int]()
+
+    init(_ n: Int) {
+        self.n = n
+    }
+    
+    func move(_ row: Int, _ col: Int, _ player: Int) -> Int {
+        if player == 1 {
+            p1Rows[row, default: 0] += 1
+            if p1Rows[row]! == n {return 1}
+            p1Cols[col, default: 0] += 1
+            if p1Cols[col]! == n {return 1}
+            p1Diag[row-col, default: 0] += 1
+            if p1Diag[row-col]! == n {return 1}
+            p1AntiDiag[row+col, default: 0] += 1
+            if p1AntiDiag[row+col]! == n {return 1}
+        } else {
+            p2Rows[row, default: 0] += 1
+            if p2Rows[row]! == n {return 2}
+            p2Cols[col, default: 0] += 1
+            if p2Cols[col]! == n {return 2}
+            p2Diag[row-col, default: 0] += 1
+            if p2Diag[row-col]! == n {return 2}
+            p2AntiDiag[row+col, default: 0] += 1
+            if p2AntiDiag[row+col]! == n {return 2}
+        }
+        return 0
+    }
+}
