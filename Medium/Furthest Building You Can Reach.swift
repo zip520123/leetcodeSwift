@@ -99,3 +99,27 @@ class Solution {
         }
         return heights.endIndex - 1
     }
+
+// O(n^2), O(n^2), MLE
+    func furthestBuilding(_ heights: [Int], _ bricks: Int, _ ladders: Int) -> Int {
+        let n = heights.endIndex
+        var memo = [[Int]: Int]()
+        func dfs(_ index: Int, _ b: Int, _ l: Int) -> Int {
+            if index == n-1 { return index }
+            if memo[[index,b,l]] != nil {return memo[[index, b, l]]!}
+            if heights[index] >= heights[index+1] {
+                return dfs(index+1, b, l)
+            }
+            var res = index
+            let diff = heights[index+1] - heights[index] 
+            if b >= diff {
+                res = max(res, dfs(index+1, b - diff, l))
+            }
+            if l > 0 {
+                res = max(res, dfs(index+1, b, l-1))
+            }
+            memo[[index,b,l]] = res
+            return res
+        }
+        return dfs(0, bricks, ladders)
+    }
