@@ -28,3 +28,20 @@ func isSameTree(_ p: TreeNode?, _ q: TreeNode?) -> Bool {
     }
     return true
 }
+
+// O(n), O(n)
+func isSameTree(_ p: TreeNode?, _ q: TreeNode?) -> Bool {
+    var queue: [(TreeNode?, TreeNode?)] = [(p,q)]
+    while !queue.isEmpty {
+        let temp = queue
+        queue = []
+        for (node1, node2) in temp {
+            if node1 == nil && node2 == nil { continue }
+            if node1 == nil || node2 == nil { return false }
+            if node1!.val != node2!.val { return false }
+            queue.append((node1!.left, node2!.left))
+            queue.append((node1!.right, node2!.right))
+        }
+    }
+    return true
+}
