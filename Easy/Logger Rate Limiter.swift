@@ -14,3 +14,22 @@ class Logger {
         }
     }
 }
+
+class Logger {
+    private var memo = [String: Int]()
+    
+    func shouldPrintMessage(_ timestamp: Int, _ message: String) -> Bool {
+        if memo[message] == nil {
+            memo[message] = timestamp
+            return true
+        } else {
+            let curr = memo[message]!
+            if curr <= timestamp - 10 {
+                memo[message] = timestamp
+                return true
+            } else {
+                return false
+            }
+        }
+    }
+}
