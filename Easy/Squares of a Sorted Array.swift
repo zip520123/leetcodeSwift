@@ -23,3 +23,20 @@ func sortedSquares(_ nums: [Int]) -> [Int] {
         
         return res
     }
+
+// O(n), O(n)
+func sortedSquares(_ nums: [Int]) -> [Int] {
+    var res = [Int]()
+    let arr = nums.map { $0 * $0 }
+    var l = 0, r = arr.endIndex-1
+    while l<=r {
+        if arr[l] < arr[r] {
+            res.append(arr[r])
+            r -= 1
+        } else {
+            res.append(arr[l])
+            l += 1
+        }
+    }
+    return res.reversed()
+}
