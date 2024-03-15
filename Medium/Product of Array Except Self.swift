@@ -73,3 +73,27 @@ func productExceptSelf(_ nums: [Int]) -> [Int] {
     return res
     
 }
+
+// O(n), O(n)
+func productExceptSelf(_ nums: [Int]) -> [Int] {
+    let n = nums.endIndex
+    var arr1 = (0..<n).map { _ in 0 }
+    var arr2 = (0..<n).map { _ in 0 }
+    
+    var curr = 1
+    arr1[0] = nums[0]
+    for i in 1..<n {
+        arr1[i] = nums[i] * arr1[i-1]
+    }
+    arr2[n-1] = nums[n-1]
+    for i in (0..<n-1).reversed() {
+        arr2[i] = nums[i] * arr2[i+1]
+    }
+    var res = (0..<n).map { _ in 0 }
+    for i in 1..<n-1 {
+        res[i] = arr1[i-1] * arr2[i+1]
+    }
+    res[0] = arr2[1]
+    res[n-1] = arr1[n-2]
+    return res
+}
