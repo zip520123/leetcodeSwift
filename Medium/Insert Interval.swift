@@ -129,6 +129,46 @@ func insert(_ intervals: [[Int]], _ newInterval: [Int]) -> [[Int]] {
     return intervals
 }
 
-let input = [[1,3],[6,9]]
-let input2 = [2,5]
-print(insert(input, input2))
+// O(n), O(n)
+func insert(_ intervals: [[Int]], _ newInterval: [Int]) -> [[Int]] {
+    let n = intervals.endIndex
+    if n == 0 { return [newInterval]}
+    if newInterval[1] < intervals[0][0] { return [newInterval] + intervals }
+    if intervals.last![1] < newInterval[0] {return intervals + [newInterval] }
+    var res = [[Int]]()
+    for i in 0..<n {
+        let interval = intervals[i]
+        res.append(interval)
+        if isOverLap(res.last!, newInterval) {
+            let last = res.removeLast()
+            res.append([min(last[0], newInterval[0]) , max(last[1], newInterval[1])])
+            for j in i+1..<n {
+
+                if isOverLap(res.last!, intervals[j]) {
+                    let last = res.removeLast()
+                    res.append([min(last[0], intervals[j][0]), max(last[1], intervals[j][1])])
+                } else {
+                    res.append(intervals[j])
+                }
+            }
+            return res
+        } else if res.last![1] < newInterval[0], i+1<n, newInterval[1] < intervals[i+1][0] {
+            res.append(newInterval)
+            for j in i+1..<n {
+                res.append(intervals[j])
+            }
+            return res
+        }
+    }
+    return []
+}
+
+func isOverLap(_ interval1: [Int], _ interval2: [Int]) -> Bool {
+    if interval1[0] < interval2[0], interval1[1] < interval2[0] {
+        return false
+    }
+    if interval2[0] < interval1[0], interval2[1] < interval1[0] {
+        return false
+    }
+    return true
+}
