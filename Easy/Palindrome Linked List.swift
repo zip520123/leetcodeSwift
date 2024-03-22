@@ -28,3 +28,22 @@
         
         return true
     }
+
+// O(n), O(n)
+    func isPalindrome(_ head: ListNode?) -> Bool {
+        var arr = [Int]()
+        var curr = head
+        while curr != nil {
+            arr.append(curr!.val)
+            curr = curr!.next
+        }
+        var l = 0, r = arr.endIndex-1
+        while l<r {
+            if arr[l] != arr[r] {
+                return false
+            }
+            l += 1
+            r -= 1
+        }
+        return true
+    }
