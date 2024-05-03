@@ -25,3 +25,28 @@ class Solution {
         return res
     }
 }
+
+// O(n), O(n)
+func compareVersion(_ version1: String, _ version2: String) -> Int {
+    let arr1 = version1.split(separator: ".").map { Int($0)! }, arr2 = version2.split(separator: ".").map { Int($0)! }
+    var l = 0, r = 0
+    while l < arr1.endIndex, r < arr2.endIndex {
+        if arr1[l] < arr2[r] {
+            return -1
+        }
+        if arr1[l] > arr2[r] {
+            return 1
+        }
+        l += 1
+        r += 1
+    }
+    while l<arr1.endIndex {
+        if arr1[l] > 0 { return 1 }
+        l += 1
+    }
+    while r<arr2.endIndex {
+        if arr2[r] > 0 {return -1}
+        r += 1
+    }
+    return 0
+}
