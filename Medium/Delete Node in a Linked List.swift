@@ -14,3 +14,15 @@
         }
         
     }
+
+// O(n), O(1)
+func deleteNode(_ node: ListNode?) {
+    var curr = node
+    var prev: ListNode?
+    while curr != nil, curr!.next != nil {
+        prev = curr
+        curr!.val = curr!.next!.val
+        curr = curr!.next
+    }
+    prev!.next = nil
+}
