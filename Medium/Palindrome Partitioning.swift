@@ -30,3 +30,23 @@ class Solution {
         return true
     }
 }
+
+// O(n!), O(n)
+    func partition(_ s: String) -> [[String]] {
+        let arr = Array(s)
+        
+        func dfs(_ index: Int, _ path: [String]) -> [[String]] {
+            if index == arr.endIndex {
+                return [path]
+            }
+            var res = [[String]]()
+            for i in index..<arr.endIndex {
+                if Self.isPalindrome(Array(arr[index...i])) {
+                    res += dfs(i+1, path + [String(Array(arr[index...i]))])
+                }
+            }   
+            return res
+        }
+        
+        return dfs(0,[])
+    }
