@@ -1,5 +1,5 @@
 /*Jump Game*/
-//time O(n^2) space O(1)
+//time O(n^2) space O(n)
 func canJump(_ nums: [Int]) -> Bool {
     let ncount = nums.count
     var dp = Array(repeating: false, count: ncount)
