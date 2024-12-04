@@ -16,9 +16,6 @@ func canMakeSubsequence(_ str1: String, _ str2: String) -> Bool {
         }
         l += 1
     }
-    if r == arr2.endIndex {
-        return true
-    }
-    return false
 
+    return r == arr2.endIndex
 }
