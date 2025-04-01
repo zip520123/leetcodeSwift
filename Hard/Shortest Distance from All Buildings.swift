@@ -49,3 +49,58 @@ class Solution {
         return res == Int.max ? -1 : res
     }
 }
+
+// O(grid*buildings) O(grid)
+func shortestDistance(_ grid: [[Int]]) -> Int {
+    let rows = grid.endIndex, cols = grid[0].endIndex
+    var distances = [[Int]](repeating: [Int](repeating: 0, count: cols), count: rows)
+    var buildingsAbleToMeetAtThePoint = [[Int]: Int]()
+    var buildings = 0
+    for row in 0..<rows {
+        for col in 0..<cols {
+            if grid[row][col] == 1 {
+                buildings += 1
+                var queue = [(row, col)]
+                var seen = Set<[Int]>()
+                var level = 0
+                while !queue.isEmpty {
+                    let temp = queue
+                    queue = []
+                    level += 1
+                    for node in temp {
+                        let (currRow, currCol) = node
+                        for delta in [(0,1), (1,0), (-1,0), (0, -1)] {
+                            let (dx, dy) = delta
+                            let nextRow = currRow + dx, nextCol = currCol + dy
+                            if 0 <= nextRow && nextRow < rows && 0 <= nextCol && nextCol < cols 
+                            && seen.contains([nextRow, nextCol]) == false 
+                            && grid[nextRow][nextCol] == 0 {
+                                seen.insert([nextRow, nextCol])
+                                distances[nextRow][nextCol] += level
+                                buildingsAbleToMeetAtThePoint[[nextRow,nextCol], default: 0] += 1
+                                queue.append((nextRow, nextCol))
+                            }
+                    
+                        }
+                    }
+                    
+                    
+                }   
+
+            }
+        }
+    }
+    var res = Int.max
+    for row in 0..<rows {
+        for col in 0..<cols {
+            if buildingsAbleToMeetAtThePoint[[row, col], default: 0] == buildings {
+                res = min(res, distances[row][col] )
+            }
+        }
+    }
+    
+    if res == Int.max {
+        return -1
+    }
+    return res
+}
