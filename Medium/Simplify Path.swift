@@ -99,3 +99,42 @@ class Solution {
         }
         return res == "" ? "/" : res
     }
+
+// O(n), O(n)
+func simplifyPath(_ path: String) -> String {
+    var arr = Array(path)
+    var stack = [Character]()
+    for char in arr {
+        if !stack.isEmpty && stack.last! == "/" && char == "/" {
+            stack.removeLast()
+        }
+        stack.append(char)
+    }
+    if !stack.isEmpty && stack.last! == "/" {
+        stack.removeLast()
+    }
+    if !stack.isEmpty && stack.first! == "/" {
+        stack.removeFirst()
+    }
+    var splited_arr = String(stack).split(separator: "/") 
+    var file_stack = [String]()
+    for file in splited_arr {
+        if file == ".." {
+            if !file_stack.isEmpty {
+                file_stack.removeLast()
+            }
+        } else if file == "." {
+
+        } else {
+            file_stack.append(String(file))
+        }
+    }
+    var res = ""
+    for file in file_stack {
+        res += "/" + file
+    }
+    if res == "" {
+        return "/"
+    }
+    return res
+}
