@@ -35,3 +35,27 @@ func isPalindrome(_ s: String) -> Bool {
         }
         return true
     }
+
+    func isPalindrome(_ s: String) -> Bool {
+        var arr = [Character]()
+        for char in s {
+            switch char {
+                case "a"..."z", "0"..."9":
+                    arr.append(char)
+                case "A"..."Z":
+                    arr.append(Character(char.lowercased()))
+                default:
+                    break
+            }
+        }
+
+        var left = 0, right = arr.endIndex - 1 
+        while left < right {
+            if arr[left] != arr[right] {
+                return false
+            }
+            left += 1
+            right -= 1
+        }
+        return true
+    }
