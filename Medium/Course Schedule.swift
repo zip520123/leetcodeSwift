@@ -100,3 +100,67 @@ func canFinish(_ numCourses: Int, _ prerequisites: [[Int]]) -> Bool {
     return queue.isEmpty
 
 }
+
+// O(n+e), O(n)
+func canFinish(_ numCourses: Int, _ prerequisites: [[Int]]) -> Bool {
+    var graph = [Int: [Int]]()
+    var preCouresCount = [Int: Int]()
+    for i in 0..<prerequisites.endIndex {
+        let preCourse = prerequisites[i][1], course = prerequisites[i][0]
+        graph[preCourse, default: []].append(course)
+        preCouresCount[course, default: 0] += 1
+    }
+    var queue = [Int]()
+    var completeCourses = 0
+    for course in 0..<numCourses {
+        if preCouresCount[course, default: 0] == 0 {
+            queue.append(course)
+            completeCourses += 1
+        }
+    }
+
+    while !queue.isEmpty {
+        let node = queue.removeFirst()
+        for nextCourse in graph[node, default: []] {
+            preCouresCount[nextCourse]! -= 1
+            if preCouresCount[nextCourse]! == 0 {
+                queue.append(nextCourse)
+                completeCourses += 1
+            }
+        }
+    }
+    return completeCourses == numCourses
+}
+
+func canFinish(_ numCourses: Int, _ prerequisites: [[Int]]) -> Bool {
+    var graph = [Int: [Int]]()
+    
+    for i in 0..<prerequisites.endIndex {
+        let preCourse = prerequisites[i][1], course = prerequisites[i][0]
+        graph[preCourse, default: []].append(course)
+    }
+    var visitList = [Int](repeating: 0, count: numCourses)
+    // 0 non visit, 1 visiting, 2 visited
+    func dfs(_ node: Int) -> Bool {
+        if visitList[node] == 1 {
+            return false
+        }
+        if visitList[node] == 2 {
+            return true
+        }
+        visitList[node] = 1
+        for nextNode in graph[node, default: []] {
+            if dfs(nextNode) == false {
+                return false
+            }
+        }
+        visitList[node] = 2
+        return true
+    }
+    for course in 0..<numCourses {
+        if dfs(course) == false {
+            return false
+        }
+    }
+    return true
+}
