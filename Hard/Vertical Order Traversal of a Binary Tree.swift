@@ -96,3 +96,48 @@ class Solution {
         }
         return res
     }
+
+// O(n), O(n) BFS
+    func verticalOrder(_ root: TreeNode?) -> [[Int]] {
+        guard let root = root else {return []}
+        
+        func numberOfLeft(_ root: TreeNode, _ curr_shift: Int) -> Int {
+            var shift = curr_shift
+            if let left = root.left {
+                shift = max(shift, numberOfLeft(left, curr_shift + 1))
+            }
+            if let right = root.right {
+                shift = max(shift, numberOfLeft(right, curr_shift - 1))
+            }
+            return shift
+        }
+        func numberOfRight(_ root: TreeNode, _ curr_shift: Int) -> Int {
+            var shift = curr_shift
+            if let left = root.left {
+                shift = max(shift, numberOfRight(left, curr_shift - 1))
+            }
+            if let right = root.right {
+                shift = max(shift, numberOfRight(right, curr_shift + 1))
+            }
+            return shift
+        }
+        let left_nodes = numberOfLeft(root, 0)
+        let right_nodes = numberOfRight(root, 0)
+        
+        var res = [[Int]](repeating: [Int](), count: left_nodes+1+right_nodes)
+        var queue = [(node: root, index: left_nodes)]
+        while !queue.isEmpty {
+            let temp = queue
+            queue = []
+            for (node, index) in temp {
+                res[index].append(node.val)
+                if let left = node.left {
+                    queue.append((left, index-1))
+                }
+                if let right = node.right {
+                    queue.append((right, index+1))
+                }
+            }
+        }
+        return res
+    }

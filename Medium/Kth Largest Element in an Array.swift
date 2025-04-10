@@ -115,3 +115,28 @@ func findKthLargest(_ nums: [Int], _ k: Int) -> Int {
 
     return dfs(0,n-1)
 }
+
+// O(n^2), O(n)
+func findKthLargest(_ nums: [Int], _ k: Int) -> Int {
+    var nums = nums
+    let n = nums.endIndex - 1
+    func dfs(_ left: Int, _ right: Int) -> Int {
+        var l = left, r = left, p = right
+        while r < p {
+            if nums[r] >= nums[p] {
+                (nums[r], nums[l]) = (nums[l], nums[r])
+                l += 1
+            }
+            r += 1
+        }
+        (nums[l], nums[p]) = (nums[p], nums[l])
+        if l == k-1 {
+            return nums[l]
+        } else if l > k-1 {
+            return dfs(0, l - 1)
+        } else {
+            return dfs(l+1, right)
+        }
+    }
+    return dfs(0, n)
+}
