@@ -29,3 +29,20 @@ func depthSum(_ nestedList: [NestedInteger]) -> Int {
     }
     return nestedList.reduce(0, { acc, node in acc + dfs(node, 1) })
 }
+
+// O(n), O(n)
+func depthSum(_ nestedList: [NestedInteger]) -> Int {
+    return depthInt(nestedList)   
+}
+
+func depthInt(_ nestedInteger: [NestedInteger], _ depth: Int = 1) -> Int {
+    var res = 0
+    for node in nestedInteger {
+        if node.isInteger() {
+            res += node.getInteger() * depth
+        } else {
+            res += depthInt(node.getList(), depth + 1)
+        }
+    }
+    return res
+}
